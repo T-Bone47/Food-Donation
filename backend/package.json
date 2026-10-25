@@ -1,0 +1,38 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for SIH Hackathon using Express.js & Supabase",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "start:dev": "npm run dev",
+    "test": "node --test --test-concurrency=1 --import ./test/support/test-env.js test/unit",
+    "test:integration": "node --test --test-concurrency=1 --import ./test/support/test-env.js test/integration",
+    "test:all": "npm test && npm run test:integration"
+  },
+  "keywords": [
+    "express",
+    "supabase",
+    "backend",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.5.0",
+    "helmet": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
