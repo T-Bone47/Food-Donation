@@ -29,6 +29,24 @@ export const LIMITS = {
   quantityMax: 1_000_000,
 };
 
+export function isValidPhone(phone) {
+  if (phone === null || phone === undefined || phone === "") return true;
+  if (typeof phone !== "string") return false;
+  const value = phone.trim();
+  if (value.length === 0) return true;
+  if (value.length > LIMITS.phone || value.length < 5) return false;
+  return /^[+]?[0-9\s\-()]{5,30}$/.test(value);
+}
+
+export function isValidPincode(pincode) {
+  if (pincode === null || pincode === undefined || pincode === "") return true;
+  if (typeof pincode !== "string") return false;
+  const value = pincode.trim();
+  if (value.length === 0) return true;
+  if (value.length > LIMITS.pincode || value.length < 3) return false;
+  return /^[a-zA-Z0-9\s\-]{3,20}$/.test(value);
+}
+
 export function isValidEmail(email) {
   if (typeof email !== "string") return false;
   const value = email.trim();

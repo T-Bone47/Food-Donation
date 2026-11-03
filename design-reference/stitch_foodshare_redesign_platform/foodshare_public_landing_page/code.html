@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary-container": "#005137",
+        "on-tertiary-fixed": "#002114",
+        "surface-tint": "#2d6a48",
+        "surface": "#f8f9ff",
+        "inverse-surface": "#213145",
+        "on-secondary": "#ffffff",
+        "tertiary-fixed-dim": "#45dfa4",
+        "surface-variant": "#d3e4fe",
+        "secondary-fixed": "#dae2fd",
+        "surface-dim": "#cbdbf5",
+        "error": "#ba1a1a",
+        "primary": "#003820",
+        "surface-container-lowest": "#ffffff",
+        "on-primary": "#ffffff",
+        "on-background": "#0b1c30",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#b0f1c7",
+        "on-surface": "#0b1c30",
+        "background": "#f8f9ff",
+        "on-primary-fixed": "#002111",
+        "on-primary-container": "#84c39b",
+        "primary-fixed-dim": "#95d4ac",
+        "surface-container-low": "#eff4ff",
+        "primary-container": "#0f5132",
+        "on-tertiary": "#ffffff",
+        "on-surface-variant": "#404942",
+        "on-secondary-container": "#5c647a",
+        "outline-variant": "#c0c9c0",
+        "on-primary-fixed-variant": "#0f5132",
+        "tertiary": "#003825",
+        "secondary-container": "#dae2fd",
+        "tertiary-fixed": "#68fcbf",
+        "surface-container-highest": "#d3e4fe",
+        "surface-container-high": "#dce9ff",
+        "on-tertiary-fixed-variant": "#005137",
+        "inverse-primary": "#95d4ac",
+        "secondary": "#565e74",
+        "secondary-fixed-dim": "#bec6e0",
+        "on-secondary-fixed-variant": "#3f465c",
+        "surface-bright": "#f8f9ff",
+        "outline": "#707971",
+        "surface-container": "#e5eeff",
+        "error-container": "#ffdad6",
+        "on-tertiary-container": "#28cc93",
+        "inverse-on-surface": "#eaf1ff",
+        "on-secondary-fixed": "#131b2e"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "space-xs": "0.25rem",
+        "space-md": "1rem",
+        "margin": "1rem",
+        "space-xl": "2rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "margin-desktop": "2rem",
+        "gutter-desktop": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-xl": ["Geist"],
+        "headline-lg": ["Geist"],
+        "display-lg": ["Geist"],
+        "body-md": ["Geist"],
+        "headline-md": ["Geist"],
+        "data-mono-sm": ["JetBrains Mono"],
+        "label-md": ["Geist"],
+        "label-lg": ["Geist"],
+        "data-mono-md": ["JetBrains Mono"],
+        "body-lg": ["Geist"],
+        "body-sm": ["Geist"],
+        "headline-xl-mobile": ["Geist"],
+        "data-mono-lg": ["JetBrains Mono"]
+      },
+      "fontSize": {
+        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "data-mono-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "500"}],
+        "data-mono-md": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-xl-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "data-mono-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><main class="w-full min-h-screen bg-surface flex items-center justify-center"><div class="flex flex-col w-full">
+<!-- Top Command Telemetry Ticker -->
+<section class="w-full bg-surface-container-low py-space-sm px-margin-desktop">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-space-sm font-data-mono-sm text-data-mono-sm">
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+          NETWORK LIVE
+        </span>
+<span class="hidden sm:inline">DISPATCH NODE CLUSTER: US-EAST-04</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface">SYS LATENCY: 24ms</span>
+</div>
+<div class="flex items-center gap-space-lg text-on-surface-variant font-medium">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-tertiary-container">eco</span>
+<span>428,500+ KG DIVERTED</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">lunch_dining</span>
+<span>1.2M+ MEALS DELIVERED</span>
+</div>
+<div class="hidden md:flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-sm text-surface-tint">verified</span>
+<span>890+ NGO PARTNERS</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Hero Section with Logistics HUD Graphic -->
+<section class="relative w-full bg-surface py-space-xl px-margin-desktop overflow-hidden">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-center">
+<!-- Headline & Call to Actions -->
+<div class="lg:col-span-7 flex flex-col gap-space-md z-10">
+<div class="inline-flex items-center gap-2 self-start px-3 py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-data-mono-sm text-data-mono-sm">
+<span class="material-symbols-outlined text-xs">precision_manufacturing</span>
+          ENTERPRISE RECIRCULATION INFRASTRUCTURE
+        </div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight text-balance">
+          The Operating System for Zero-Waste Food Rescue.
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+          Connecting enterprise surplus donors, refrigerated volunteer dispatch fleets, and certified hunger-relief hubs through deterministic, real-time routing.
+        </p>
+<!-- CTA Cluster -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-sm">
+<a class="px-space-lg py-3 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-sm hover:opacity-90 transition-all flex items-center gap-2" href="#demo">
+<span>Launch Demo Mode</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<a class="px-space-lg py-3 rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container-highest transition-all flex items-center gap-2" href="#access">
+<span>Access Platform</span>
+<span class="material-symbols-outlined text-sm">vpn_key</span>
+</a>
+<a class="font-label-lg text-label-lg text-surface-tint hover:underline flex items-center gap-1 ml-2" href="#live-lifecycle">
+            Explore Live Impact
+            <span class="material-symbols-outlined text-sm">north_east</span>
+</a>
+</div>
+<!-- Telemetry Indicators -->
+<div class="grid grid-cols-3 gap-space-sm pt-space-lg">
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant block">AVG ROUTE ETA</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">18.4 min</span>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed-dim block mt-0.5">↓ 3.2m from baseline</span>
+</div>
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant block">COLD-CHAIN RETENTION</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">99.98%</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant block mt-0.5">Sensor-verified</span>
+</div>
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant block">CO2e SAVINGS</span>
+<span class="font-headline-md text-headline-md text-tertiary-container font-semibold">814.2 t</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant block mt-0.5">EPA WARM aligned</span>
+</div>
+</div>
+</div>
+<!-- Right Graphic: Real-time Dispatch HUD Card -->
+<div class="lg:col-span-5 relative">
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed-dim animate-ping"></span>
+<span class="font-data-mono-md text-data-mono-md text-on-surface font-semibold">ACTIVE RESCUE #RC-8924</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm px-2 py-0.5 bg-primary-fixed text-on-primary-fixed rounded">DISPATCHED</span>
+</div>
+<!-- Cargo Card View with Monospace Tags -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>MANIFEST SOURCE</span>
+<span class="text-on-surface font-semibold">Metro Grocers Direct #14</span>
+</div>
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>RECEIVING HUB</span>
+<span class="text-on-surface font-semibold">Hope Harbor Pantry</span>
+</div>
+<div class="flex justify-between items-center font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>CARGO PAYLOAD</span>
+<span class="text-on-surface font-semibold">240 kg Fresh Produce, Dairy</span>
+</div>
+</div>
+<!-- Ambient Telemetry HUD -->
+<div class="bg-inverse-surface text-inverse-on-surface p-space-md rounded-lg flex items-center justify-between font-data-mono-sm">
+<div class="flex flex-col">
+<span class="text-tertiary-fixed text-xs">TEMPERATURE SENSOR</span>
+<span class="font-data-mono-md text-white font-bold">3.4°C [NOMINAL]</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-tertiary-fixed text-xs">ESTIMATED ARRIVAL</span>
+<span class="font-data-mono-md text-white font-bold">14:28 EST (07m)</span>
+</div>
+</div>
+<!-- Visual Map Location Preview -->
+<div class="w-full h-44 bg-surface-container-high rounded-lg relative overflow-hidden flex items-end p-space-sm" data-location="Brooklyn, New York, USA" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAk1tz9k3exGnNU5k_gz7FXKMCQmTPBe62_jC9QPIn98lvUhXtdhFY0WBRobyPRQwmDrmmvdAWwnoMdOyrIkjtTBDjmSZayeSKKHf-ZDmfg6MUp0IoaLuG0Oj_xWTofbXUMCB4wsyRhh0QW0fK6G8Ae8jEY2XuyJsdnjtSSLIVR4JKZA2m9mhMI3Obn0Tm7E6pTBfkFQ4Yqt3HGQ7YgwivTA6xwIfOAS49G4sKW1HE')">
+<div class="bg-surface/90 backdrop-blur px-3 py-1.5 rounded text-on-surface font-data-mono-sm text-data-mono-sm flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-xs text-primary">navigation</span>
+<span>GEO-CORRIDOR: 4TH AVE EXPRESSWAY</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-md text-label-md text-on-surface-variant pt-space-xs">
+<span>DRIVER: Marcus V. (Vehicle #V-401)</span>
+<span class="text-primary font-medium">Chain of Custody 3/5 Complete</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5-Stage Circular Rescue Lifecycle -->
+<section class="w-full bg-surface-container-lowest py-space-xl px-margin-desktop" id="live-lifecycle">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-data-mono-sm text-data-mono-sm text-surface-tint uppercase font-semibold">Standard Operating Protocol</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">5-Stage Deterministic Custody Lifecycle</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Zero ambiguity from harvest surplus to recipient staging. Each transition enforces automated compliance, cold-chain checks, and dual confirmation.
+        </p>
+</div>
+<!-- Pipeline Tracker -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-md">
+<!-- Step 1: AVAILABLE -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between transition-all hover:shadow-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm font-semibold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface">01. LOGGED</span>
+<span class="material-symbols-outlined text-primary text-base">inventory_2</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-space-sm">AVAILABLE</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Donor logs surplus weights, perishability windows, and allergen classifications via quick-manifest interface.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+            Trigger: AI Expiry Filter
+          </div>
+</div>
+<!-- Step 2: ASSIGNED -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between transition-all hover:shadow-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm font-semibold px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">02. ROUTED</span>
+<span class="material-symbols-outlined text-secondary text-base">alt_route</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-space-sm">ASSIGNED</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              System calculates proximity algorithms, vehicle capacity, and pantry refrigeration capability to match optimal volunteer.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+            Latency: < 90 seconds
+          </div>
+</div>
+<!-- Step 3: PICKED UP -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between transition-all hover:shadow-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm font-semibold px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed">03. TRANSIT</span>
+<span class="material-symbols-outlined text-primary-container text-base">local_shipping</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-space-sm">PICKED UP</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Physical custody handoff sealed with BLE sensor sync and thermal envelope logging. Driver confirms weight verification.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+            Cold-Chain: Active BLE
+          </div>
+</div>
+<!-- Step 4: DELIVERED -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between transition-all hover:shadow-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm font-semibold px-2 py-0.5 rounded bg-surface-variant text-on-surface">04. STAGED</span>
+<span class="material-symbols-outlined text-surface-tint text-base">where_to_vote</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-space-sm">DELIVERED</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Reaches certified NGO destination. Hub supervisor conducts sensory inspection and records geotagged receipt.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+            Dual Sign-off Required
+          </div>
+</div>
+<!-- Step 5: COMPLETED -->
+<div class="bg-primary text-on-primary p-space-md rounded-xl flex flex-col justify-between transition-all hover:shadow-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm font-semibold px-2 py-0.5 rounded bg-primary-container text-on-primary">05. AUDITED</span>
+<span class="material-symbols-outlined text-tertiary-fixed text-base">task_alt</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white mt-space-sm">COMPLETED</h3>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim">
+              Tax deductibility documentation issued, carbon offsets minted, and meals tally synced to public dashboard.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm font-data-mono-sm text-data-mono-sm text-tertiary-fixed">
+            Ledger Immutability
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Multi-Role Operating Ecosystem Grid -->
+<section class="w-full bg-surface py-space-xl px-margin-desktop">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="flex flex-col gap-1">
+<span class="font-data-mono-sm text-data-mono-sm text-surface-tint uppercase font-semibold">Unified Platform Stakeholders</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Purpose-Built Modules for Every Actor</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Donor Portal -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Donor Portal</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Built for commercial kitchens, supermarket distribution centers, and caterers. Instant scheduling, automated IRS compliance, and recurring dispatch profiles.
+            </p>
+</div>
+<div class="mt-space-md pt-space-md bg-surface-container-low p-space-sm rounded">
+<div class="flex items-center gap-1.5 font-data-mono-sm text-data-mono-sm text-on-surface">
+<span class="material-symbols-outlined text-xs text-primary">receipt_long</span>
+              Section 170(e)(3) Ready
+            </div>
+</div>
+</div>
+<!-- Volunteer Fleet -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Volunteer Network</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Turnkey mobile web task discovery. Dynamic turn-by-turn routing with traffic clearance, one-tap rescue claims, and instant credential verification.
+            </p>
+</div>
+<div class="mt-space-md pt-space-md bg-surface-container-low p-space-sm rounded">
+<div class="flex items-center gap-1.5 font-data-mono-sm text-data-mono-sm text-on-surface">
+<span class="material-symbols-outlined text-xs text-secondary">share_location</span>
+              Geo-Proof Pickup Flow
+            </div>
+</div>
+</div>
+<!-- NGO Distribution Hubs -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">foundation</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">NGO Hub Manager</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Real-time cold-storage capacity signaling. Immediate match between arriving cargo nutrition breakdown and community demographic requirements.
+            </p>
+</div>
+<div class="mt-space-md pt-space-md bg-surface-container-low p-space-sm rounded">
+<div class="flex items-center gap-1.5 font-data-mono-sm text-data-mono-sm text-on-surface">
+<span class="material-symbols-outlined text-xs text-primary-container">qr_code_scanner</span>
+              Dual Confirmation Logs
+            </div>
+</div>
+</div>
+<!-- Admin Operations Center -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-surface-tint">
+<span class="material-symbols-outlined">dashboard_customize</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Admin Ops Console</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              System-wide oversight for regional food banks. Emergency reallocation tools, cold-chain violation alerts, and municipal ESG disclosure reports.
+            </p>
+</div>
+<div class="mt-space-md pt-space-md bg-surface-container-low p-space-sm rounded">
+<div class="flex items-center gap-1.5 font-data-mono-sm text-data-mono-sm text-on-surface">
+<span class="material-symbols-outlined text-xs text-surface-tint">analytics</span>
+              Automated GHG Accounting
+            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual In-Field Documentation Showcase -->
+<section class="w-full bg-surface-container-low py-space-xl px-margin-desktop">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-space-lg items-center">
+<div class="relative overflow-hidden rounded-xl shadow-md">
+<img class="w-full h-80 object-cover" data-alt="A clean industrial logistics warehouse with commercial refrigeration equipment and workers in high-visibility vests staging crates of fresh organic vegetables and dairy, natural soft lighting with enterprise aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHM3paMDo3NIDouIxmpNTvFLFlH0zc6dGEM6dPKb_7k35nylfeqkCp72Ptm7m0funoU0iRyDx8hEa-dSV30uYymrjVIDuPqnoxrXuohjqiXckga8n2CkFOH2I6T5m1i1RrAtJk8Qzz2GJsnHdbv_S6bIreKYuu-Gu8RZYooBexy-3HU1qGLuZlWro98sMu5BKdrdyLM73Go7uJ5uVi03GWvfkO6GMgawBQtEvZjWw"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-on-surface/90 to-transparent p-space-md text-surface">
+<span class="font-data-mono-sm text-data-mono-sm text-primary-fixed uppercase">Real-Time Verification</span>
+<p class="font-headline-md text-headline-md text-white font-medium mt-0.5">Cold-Chain Staging Validation</p>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<span class="font-data-mono-sm text-data-mono-sm text-surface-tint uppercase font-semibold">Field Trust Mechanisms</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Guaranteed Quality with Continuous Cold-Chain Telemetry</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Food waste prevention is a health priority. Our software links low-cost Bluetooth probes to enforce USDA perishable safe boundaries at pickup, transit, and receipt.
+        </p>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary mt-0.5">verified_user</span>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block font-semibold">Strict 501(c)(3) Vetting</span>
+<span class="font-body-md text-body-md text-on-surface-variant">All receiving recipient agencies are continuously validated against IRS and state non-profit registries.</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary mt-0.5">thermostat</span>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block font-semibold">Zero-Tolerate Temperature Logs</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Immediate dispatch quarantine if perishable thresholds deviate during high-heat transit routes.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Infrastructure & Compliance Badges -->
+<section class="w-full bg-surface-container-lowest py-space-xl px-margin-desktop">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="text-center max-w-2xl mx-auto flex flex-col gap-space-xs">
+<span class="font-data-mono-sm text-data-mono-sm text-surface-tint uppercase font-semibold">Security & Architecture</span>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Enterprise Safety & Data Isolation</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Architecture built from the ground up to support strict donor liability protection, privacy controls, and municipal compliance reporting.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Supabase Row-Level Security</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Strict multi-tenant cryptographic partitioning ensures donor route data and beneficiary operational metrics are never exposed outside authorized rings.
+          </p>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Bill Emerson Act Compliance</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Full compliance with federal and state Good Samaritan food donation statutes, ensuring comprehensive civil and criminal protection for all donors.
+          </p>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">co2</span>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Automated Carbon Accounting</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Calculations aligned with the EPA WARM Model, transforming rescue manifests into auditable Scope 3 reduction reports for corporate sustainability goals.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Call-To-Action Banner -->
+<section class="w-full bg-primary-container text-on-primary py-space-xl px-margin-desktop" id="demo">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed uppercase font-medium">Deploy or Test Sandbox</span>
+<h2 class="font-headline-xl text-headline-xl text-white">Ready to streamline surplus rescue logistics?</h2>
+<p class="font-body-lg text-body-lg text-primary-fixed-dim">
+          Join municipal coordinators, national grocery retailers, and hunger-relief alliances leveraging our open standard for surplus redistribution.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-space-lg py-3 rounded-lg bg-surface text-primary font-label-lg text-label-lg shadow-sm hover:bg-surface-bright transition-all" onclick="alert('Demo environment initialized. Switch roles from the top bar.')">
+          Explore Interactive Sandbox
+        </button>
+<button class="px-space-lg py-3 rounded-lg bg-tertiary-container text-white font-label-lg text-label-lg shadow-sm hover:opacity-90 transition-all" onclick="alert('Enterprise onboarding inquiry logged.')">
+          Schedule Stakeholder Briefing
+        </button>
+</div>
+</div>
+</section>
+<!-- Platform Footer -->
+<footer class="w-full bg-surface-container-highest py-space-xl px-margin-desktop">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-xl">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-space-md">
+<div class="col-span-2 flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">cyclone</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">FOOD RESCUE OS</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mt-1">
+            An open platform standard for rapid perishable food redistribution, audit-ready ESG accounting, and local food sovereignty networks.
+          </p>
+<div class="flex items-center gap-space-sm pt-space-xs font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>VERSION 4.2.0-PROD</span>
+<span>•</span>
+<span class="text-surface-tint">SYSTEMS OPERATIONAL</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Platform</span>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#demo">Donor Portal</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#demo">Volunteer App</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#demo">Hub Inventory</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#demo">Ops Dispatch HUD</a>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Protocols</span>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">Cold-Chain Standard</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">API Documentation</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">RLS Security Whitepaper</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">Carbon Verification</a>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Governance</span>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">IRS 170(e)(3) Guide</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">Emerson Act Terms</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">Open Source License</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" href="#">Contact Coordinators</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-md border-t-0 font-data-mono-sm text-data-mono-sm text-on-surface-variant">
+<span>© 2025 Food Rescue Operating System Foundation. Released under Apache-2.0.</span>
+<div class="flex gap-space-md">
+<a class="hover:underline" href="#">Privacy Statement</a>
+<a class="hover:underline" href="#">Security Disclosure</a>
+<a class="hover:underline" href="#">GitHub Repository</a>
+</div>
+</div>
+</div>
+</footer>
+</div></main></body></html>

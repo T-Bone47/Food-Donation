@@ -1,3 +1,5 @@
+import { getDemoDonationById, getDemoNGOVerificationStatus } from "../services/demo.service.js";
+
 /**
  * Role-based authorization middleware.
  * Requires req.auth to be set by authenticate middleware.
@@ -92,6 +94,28 @@ export function requireDonationOwnership(supabase) {
       });
     }
 
+    if (req.auth.isDemo) {
+      const demoDonation = getDemoDonationById(donationId);
+      if (!demoDonation) {
+        return res.status(404).json({
+          error: {
+            code: "NOT_FOUND",
+            message: "Donation not found.",
+          },
+        });
+      }
+      if (req.auth.userId !== demoDonation.donor_id && req.auth.role !== "Admin") {
+        return res.status(403).json({
+          error: {
+            code: "FORBIDDEN",
+            message: "You do not have permission to access this donation.",
+          },
+        });
+      }
+      req.donation = demoDonation;
+      return next();
+    }
+
     const { data: donation, error } = await supabase
       .from("donations")
       .select("donor_id")
@@ -145,6 +169,37 @@ export function requireAssignmentOwnership(supabase) {
       });
     }
 
+    if (req.auth.isDemo) {
+      const demoDonation = getDemoDonationById(donationId);
+      if (!demoDonation) {
+        return res.status(404).json({
+          error: {
+            code: "NOT_FOUND",
+            message: "Donation not found.",
+          },
+        });
+      }
+      const assignment = demoDonation.assignment;
+      if (!assignment) {
+        return res.status(404).json({
+          error: {
+            code: "NOT_FOUND",
+            message: "Active assignment not found for this donation.",
+          },
+        });
+      }
+      if (req.auth.userId !== assignment.volunteer_id && req.auth.role !== "Admin") {
+        return res.status(403).json({
+          error: {
+            code: "FORBIDDEN",
+            message: "You are not assigned to this donation.",
+          },
+        });
+      }
+      req.assignment = assignment;
+      return next();
+    }
+
     const { data: assignment, error } = await supabase
       .from("assignments")
       .select("volunteer_id")
@@ -196,6 +251,20 @@ export function requireApprovedNGO(supabase) {
           message: "Only NGOs can confirm receipt.",
         },
       });
+    }
+
+    if (req.auth.isDemo) {
+      const demoProfile = getDemoNGOVerificationStatus(req.auth.userId);
+      if (!demoProfile || demoProfile.verification_status !== "approved") {
+        return res.status(403).json({
+          error: {
+            code: "FORBIDDEN",
+            message: "Your NGO is not yet approved to confirm receipts.",
+          },
+        });
+      }
+      req.ngoProfile = demoProfile;
+      return next();
     }
 
     const { data: profile, error } = await supabase

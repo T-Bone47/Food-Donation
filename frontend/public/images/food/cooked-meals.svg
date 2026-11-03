@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#123D2B"/>
+      <stop offset="100%" stop-color="#0A2419"/>
+    </linearGradient>
+    <linearGradient id="terracottaBowl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C87552"/>
+      <stop offset="100%" stop-color="#9C5234"/>
+    </linearGradient>
+    <linearGradient id="biryaniGold" x1="0%" y1="0%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#F2C94C"/>
+      <stop offset="60%" stop-color="#DDAA48"/>
+      <stop offset="100%" stop-color="#B27824"/>
+    </linearGradient>
+    <radialGradient id="steamGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="400" height="260" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Subtle Botanical Motif Background -->
+  <g opacity="0.08" stroke="#FFFFFF" stroke-width="1.5" fill="none">
+    <path d="M 40,240 Q 60,140 160,80 Q 200,60 260,30" />
+    <path d="M 80,180 Q 110,170 120,150" />
+    <path d="M 120,140 Q 150,130 160,110" />
+    <path d="M 160,100 Q 190,90 200,70" />
+    <circle cx="260" cy="30" r="4" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Ambient Light Halo -->
+  <circle cx="200" cy="155" r="110" fill="url(#steamGlow)"/>
+
+  <!-- Serving Board Shadow -->
+  <ellipse cx="200" cy="180" rx="140" ry="42" fill="#000000" opacity="0.3" filter="url(#shadow)"/>
+
+  <!-- Artisanal Wooden Platter Base -->
+  <ellipse cx="200" cy="175" rx="135" ry="38" fill="#2E1C14"/>
+  <ellipse cx="200" cy="172" rx="133" ry="36" fill="#3D261C"/>
+  <ellipse cx="200" cy="170" rx="128" ry="34" fill="#4A3024"/>
+
+  <!-- Terracotta Artisanal Bowl -->
+  <path d="M 85,145 Q 90,195 200,195 Q 310,195 315,145 Z" fill="url(#terracottaBowl)" filter="url(#shadow)"/>
+  <ellipse cx="200" cy="145" rx="115" ry="32" fill="#B05E3C"/>
+  <ellipse cx="200" cy="144" rx="111" ry="29" fill="#202B25"/>
+
+  <!-- Warm Stew & Golden Biryani Feast Base -->
+  <ellipse cx="200" cy="142" rx="106" ry="26" fill="url(#biryaniGold)"/>
+
+  <!-- Garnish, Spices & Herb Accents -->
+  <!-- Basmati grains & aromatic saffron rice mounds -->
+  <ellipse cx="170" cy="138" rx="28" ry="12" fill="#FCEECB"/>
+  <ellipse cx="225" cy="141" rx="25" ry="11" fill="#F5DF9E"/>
+  <ellipse cx="198" cy="136" rx="22" ry="10" fill="#FFF6DC"/>
+
+  <!-- Sautéed vegetables, cashews and roasted aromatics -->
+  <ellipse cx="155" cy="142" rx="9" ry="5" fill="#D36B3B" transform="rotate(-15 155 142)"/>
+  <ellipse cx="240" cy="144" rx="10" ry="6" fill="#C87552" transform="rotate(20 240 144)"/>
+  <ellipse cx="185" cy="146" rx="7" ry="4" fill="#E6A15C" transform="rotate(40 185 146)"/>
+  <ellipse cx="215" cy="136" rx="6" ry="4" fill="#EFC37A" transform="rotate(-25 215 136)"/>
+
+  <!-- Fresh Cilantro & Mint Sprigs -->
+  <g fill="#16865B" stroke="#0D5C3E" stroke-width="0.8">
+    <!-- Center sprig -->
+    <path d="M 200,135 C 196,128 190,126 188,122 C 193,122 198,125 200,135 Z"/>
+    <path d="M 200,135 C 204,127 210,125 212,121 C 207,122 202,126 200,135 Z"/>
+    <path d="M 200,135 C 200,125 198,120 200,116 C 202,120 201,126 200,135 Z"/>
+    <circle cx="200" cy="128" r="1.5" fill="#FAF8F1"/>
+  </g>
+
+  <!-- Pomegranate seeds / Red spice jewel accents -->
+  <circle cx="178" cy="136" r="3" fill="#A82828"/>
+  <circle cx="222" cy="142" r="2.8" fill="#A82828"/>
+  <circle cx="165" cy="143" r="2.5" fill="#A82828"/>
+  <circle cx="230" cy="137" r="2.5" fill="#A82828"/>
+
+  <!-- Delicate Rising Culinary Steam Plumes -->
+  <g stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.38">
+    <path d="M 180,118 Q 170,95 185,78 T 175,45" />
+    <path d="M 202,112 Q 215,90 200,70 T 210,38" stroke-width="3" opacity="0.48"/>
+    <path d="M 224,116 Q 235,96 222,80 T 232,50" />
+  </g>
+
+  <!-- Elegant Category Tag Pill -->
+  <g transform="translate(24, 24)">
+    <rect width="112" height="26" rx="13" fill="#16865B" fill-opacity="0.9" stroke="#34D399" stroke-width="1"/>
+    <circle cx="13" cy="13" r="4" fill="#FAF8F1"/>
+    <text x="24" y="17" fill="#FAF8F1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="0.5">COOKED MEALS</text>
+  </g>
+
+  <!-- Temperature & Freshness Badge -->
+  <g transform="translate(296, 24)">
+    <rect width="80" height="26" rx="13" fill="#202B25" fill-opacity="0.8" stroke="#DDEBDD" stroke-width="0.8"/>
+    <text x="40" y="17" fill="#DDEBDD" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">WARM • 65°C</text>
+  </g>
+</svg>
+

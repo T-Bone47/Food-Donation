@@ -42,53 +42,59 @@ export async function getPersonalImpact(userId, userRole) {
     throw new ValidationError("Unsupported role for impact calculation");
   }
 
-  const { data: donations, error } = await donationsQuery;
+  try {
+    const { data: donations, error } = await donationsQuery;
 
-  if (error) {
-    throw new ValidationError(error.message);
+    if (error) {
+      console.warn(`[IMPACT] Personal impact query error (${error.message}). Returning empty impact.`);
+      return getEmptyImpact();
+    }
+
+    const completedDonations = donations || [];
+    const totalCompleted = completedDonations.length;
+
+    // Aggregate by unit
+    const byUnit = {};
+    let totalQuantity = 0;
+
+    for (const d of completedDonations) {
+      const qty = Number(d.quantity) || 0;
+      const unit = d.unit || "servings";
+      totalQuantity += qty;
+      byUnit[unit] = (byUnit[unit] || 0) + qty;
+    }
+
+    // Aggregate by category
+    const byCategory = {};
+    for (const d of completedDonations) {
+      const cat = d.food_category || "Other";
+      byCategory[cat] = (byCategory[cat] || 0) + 1;
+    }
+
+    // Recent activity (last 30 days)
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const recentDonations = completedDonations.filter((d) => d.updated_at >= thirtyDaysAgo);
+
+    return {
+      totalCompletedDonations: totalCompleted,
+      totalQuantity,
+      byUnit,
+      byCategory,
+      recentActivity: {
+        last30Days: recentDonations.length,
+        donations: recentDonations.map((d) => ({
+          id: d.id,
+          quantity: d.quantity,
+          unit: d.unit,
+          foodCategory: d.food_category,
+          completedAt: d.updated_at,
+        })),
+      },
+    };
+  } catch (err) {
+    console.warn(`[IMPACT] Unexpected error getting personal impact (${err.message}). Returning empty impact.`);
+    return getEmptyImpact();
   }
-
-  const completedDonations = donations || [];
-  const totalCompleted = completedDonations.length;
-
-  // Aggregate by unit
-  const byUnit = {};
-  let totalQuantity = 0;
-
-  for (const d of completedDonations) {
-    const qty = Number(d.quantity) || 0;
-    const unit = d.unit || "servings";
-    totalQuantity += qty;
-    byUnit[unit] = (byUnit[unit] || 0) + qty;
-  }
-
-  // Aggregate by category
-  const byCategory = {};
-  for (const d of completedDonations) {
-    const cat = d.food_category || "Other";
-    byCategory[cat] = (byCategory[cat] || 0) + 1;
-  }
-
-  // Recent activity (last 30 days)
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-  const recentDonations = completedDonations.filter((d) => d.updated_at >= thirtyDaysAgo);
-
-  return {
-    totalCompletedDonations: totalCompleted,
-    totalQuantity,
-    byUnit,
-    byCategory,
-    recentActivity: {
-      last30Days: recentDonations.length,
-      donations: recentDonations.map((d) => ({
-        id: d.id,
-        quantity: d.quantity,
-        unit: d.unit,
-        foodCategory: d.food_category,
-        completedAt: d.updated_at,
-      })),
-    },
-  };
 }
 
 /**
@@ -170,34 +176,52 @@ export async function getAggregateImpact(options = {}) {
  * Get dashboard stats for donor dashboard.
  */
 export async function getDonorDashboardStats(donorId) {
-  const { data: stats, error } = await supabase
-    .from("donations")
-    .select("status, quantity")
-    .eq("donor_id", donorId);
+  try {
+    const { data: stats, error } = await supabase
+      .from("donations")
+      .select("status, quantity")
+      .eq("donor_id", donorId);
 
-  if (error) {
-    throw new ValidationError(error.message);
+    if (error) {
+      console.warn(`[IMPACT] Supabase donor stats error: ${error.message}. Returning baseline fallback.`);
+      return {
+        totalDonations: 0,
+        byStatus: {},
+        completedQuantity: 0,
+        activeDonations: 0,
+        completedDonations: 0,
+      };
+    }
+
+    const donations = stats || [];
+    const byStatus = {};
+
+    for (const d of donations) {
+      const status = d.status || "UNKNOWN";
+      byStatus[status] = (byStatus[status] || 0) + 1;
+    }
+
+    const totalQuantity = donations
+      .filter((d) => d.status === "COMPLETED")
+      .reduce((sum, d) => sum + (Number(d.quantity) || 0), 0);
+
+    return {
+      totalDonations: donations.length,
+      byStatus,
+      completedQuantity: totalQuantity,
+      activeDonations: byStatus.AVAILABLE || 0,
+      completedDonations: byStatus.COMPLETED || 0,
+    };
+  } catch (err) {
+    console.warn(`[IMPACT] Unexpected error getting donor stats (${err.message}). Returning baseline fallback.`);
+    return {
+      totalDonations: 0,
+      byStatus: {},
+      completedQuantity: 0,
+      activeDonations: 0,
+      completedDonations: 0,
+    };
   }
-
-  const donations = stats || [];
-  const byStatus = {};
-
-  for (const d of donations) {
-    const status = d.status || "UNKNOWN";
-    byStatus[status] = (byStatus[status] || 0) + 1;
-  }
-
-  const totalQuantity = donations
-    .filter((d) => d.status === "COMPLETED")
-    .reduce((sum, d) => sum + (Number(d.quantity) || 0), 0);
-
-  return {
-    totalDonations: donations.length,
-    byStatus,
-    completedQuantity: totalQuantity,
-    activeDonations: byStatus.AVAILABLE || 0,
-    completedDonations: byStatus.COMPLETED || 0,
-  };
 }
 
 /**

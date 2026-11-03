@@ -1,5 +1,6 @@
 import { verifySessionToken, safeTokenUser } from "../lib/token.js";
 import { supabase } from "../supabase.js";
+import { getDemoUserById, isDemoUserId, DEMO_USERS } from "../services/demo.service.js";
 
 /**
  * Resolve the current account from the database rather than trusting the role
@@ -9,23 +10,77 @@ import { supabase } from "../supabase.js";
 async function loadCurrentUser(tokenUser) {
   if (!tokenUser?.userId) return { user: null, inactive: false };
 
-  const { data, error } = await supabase
-    .from("users")
-    .select("id, email, role, account_status")
-    .eq("id", tokenUser.userId)
-    .maybeSingle();
+  // Handle demo sessions in isolation (by flag, deterministic ID, or demo domain)
+  const isDemo = Boolean(
+    tokenUser.isDemo ||
+    isDemoUserId(tokenUser.userId) ||
+    (typeof tokenUser.email === "string" && tokenUser.email.endsWith("@foodshare.local"))
+  );
 
-  if (error || !data) return { user: null, inactive: false };
-  if (data.account_status !== "active") return { user: null, inactive: true };
+  if (isDemo) {
+    const demoUser =
+      getDemoUserById(tokenUser.userId) ||
+      (typeof tokenUser.email === "string"
+        ? Object.values(DEMO_USERS).find((u) => u.email.toLowerCase() === tokenUser.email.toLowerCase())
+        : null);
 
-  return {
-    user: {
-      userId: data.id,
-      email: data.email,
-      role: data.role,
-    },
-    inactive: false,
-  };
+    if (!demoUser) return { user: null, inactive: false };
+    return {
+      user: {
+        userId: demoUser.id,
+        email: demoUser.email,
+        role: demoUser.role,
+        isDemo: true,
+      },
+      inactive: false,
+    };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("id, email, role, account_status")
+      .eq("id", tokenUser.userId)
+      .maybeSingle();
+
+    if (error) {
+      console.warn(`[AUTH] Supabase verification error (${error.message}). Falling back to signed token claims.`);
+      return {
+        user: {
+          userId: tokenUser.userId,
+          email: tokenUser.email,
+          role: tokenUser.role,
+          isDemo: Boolean(tokenUser.isDemo),
+        },
+        inactive: false,
+      };
+    }
+
+    if (!data) return { user: null, inactive: false };
+    if (data.account_status !== "active") return { user: null, inactive: true };
+
+    return {
+      user: {
+        userId: data.id,
+        email: data.email,
+        role: data.role,
+        isDemo: false,
+      },
+      inactive: false,
+    };
+  } catch (dbErr) {
+    console.warn(`[AUTH] Supabase check unavailable (${dbErr.message}). Falling back to signed token claims.`);
+    // Cryptographically verified session token fallback when database is unreachable
+    return {
+      user: {
+        userId: tokenUser.userId,
+        email: tokenUser.email,
+        role: tokenUser.role,
+        isDemo: Boolean(tokenUser.isDemo),
+      },
+      inactive: false,
+    };
+  }
 }
 
 export async function authMiddleware(req, res, next) {

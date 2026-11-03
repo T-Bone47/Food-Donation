@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary-container": "#005137",
+        "on-tertiary-fixed": "#002114",
+        "surface-tint": "#2d6a48",
+        "surface": "#f8f9ff",
+        "inverse-surface": "#213145",
+        "on-secondary": "#ffffff",
+        "tertiary-fixed-dim": "#45dfa4",
+        "surface-variant": "#d3e4fe",
+        "secondary-fixed": "#dae2fd",
+        "surface-dim": "#cbdbf5",
+        "error": "#ba1a1a",
+        "primary": "#003820",
+        "surface-container-lowest": "#ffffff",
+        "on-primary": "#ffffff",
+        "on-background": "#0b1c30",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#b0f1c7",
+        "on-surface": "#0b1c30",
+        "background": "#f8f9ff",
+        "on-primary-fixed": "#002111",
+        "on-primary-container": "#84c39b",
+        "primary-fixed-dim": "#95d4ac",
+        "surface-container-low": "#eff4ff",
+        "primary-container": "#0f5132",
+        "on-tertiary": "#ffffff",
+        "on-surface-variant": "#404942",
+        "on-secondary-container": "#5c647a",
+        "outline-variant": "#c0c9c0",
+        "on-primary-fixed-variant": "#0f5132",
+        "tertiary": "#003825",
+        "secondary-container": "#dae2fd",
+        "tertiary-fixed": "#68fcbf",
+        "surface-container-highest": "#d3e4fe",
+        "surface-container-high": "#dce9ff",
+        "on-tertiary-fixed-variant": "#005137",
+        "inverse-primary": "#95d4ac",
+        "secondary": "#565e74",
+        "secondary-fixed-dim": "#bec6e0",
+        "on-secondary-fixed-variant": "#3f465c",
+        "surface-bright": "#f8f9ff",
+        "outline": "#707971",
+        "surface-container": "#e5eeff",
+        "error-container": "#ffdad6",
+        "on-tertiary-container": "#28cc93",
+        "inverse-on-surface": "#eaf1ff",
+        "on-secondary-fixed": "#131b2e"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "space-xs": "0.25rem",
+        "space-md": "1rem",
+        "margin": "1rem",
+        "space-xl": "2rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "margin-desktop": "2rem",
+        "gutter-desktop": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-xl": ["Geist"],
+        "headline-lg": ["Geist"],
+        "display-lg": ["Geist"],
+        "body-md": ["Geist"],
+        "headline-md": ["Geist"],
+        "data-mono-sm": ["JetBrains Mono"],
+        "label-md": ["Geist"],
+        "label-lg": ["Geist"],
+        "data-mono-md": ["JetBrains Mono"],
+        "body-lg": ["Geist"],
+        "body-sm": ["Geist"],
+        "headline-xl-mobile": ["Geist"],
+        "data-mono-lg": ["JetBrains Mono"]
+      },
+      "fontSize": {
+        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "data-mono-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "500"}],
+        "data-mono-md": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-xl-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "data-mono-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 bottom-0 w-72 bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="p-space-lg flex items-center gap-space-sm"><img alt="FoodShare Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VIyrBMq-M-78ofIphlxm0yEpuhN5e6LVeodRu84dCRmgw574YR0v5y3e5NvtL0_LZxKnrc62glSynNmoCLHL91GgerFLDp-qXU7d3LIU1DWERM5nokmwmPQzCjR_LKxq_SF-uFuDJnquhUjKGeIcOio5wel-hLPy2g_CirwLUjnZq204AUCk-_FlugxSOW1aYDTJET6hjtTw_X56SflwYJOZQwecYL0LS6PKBzWDc"/><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight leading-none text-on-primary">FOODSHARE</span><span class="font-data-mono-sm text-data-mono-sm uppercase text-primary-fixed-dim tracking-widest mt-1">OPERATING PLATFORM</span></div></div><div class="px-space-md py-space-sm"><div class="font-data-mono-sm text-data-mono-sm uppercase tracking-wider text-primary-fixed-dim px-space-sm mb-space-xs">Operations</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="overview-dashboard" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span>Overview / Dashboard</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="donations-dispatch" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Donations & Dispatch</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="task-management" href="#"><span class="material-symbols-outlined text-[18px]">assignment</span><span>Task Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="impact-analytics" href="#"><span class="material-symbols-outlined text-[18px]">analytics</span><span>Impact Analytics</span></a></nav></div><div class="px-space-md py-space-sm mt-space-sm"><div class="font-data-mono-sm text-data-mono-sm uppercase tracking-wider text-primary-fixed-dim px-space-sm mb-space-xs">Management</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="users-organizations" href="#"><span class="material-symbols-outlined text-[18px]">corporate_fare</span><span>Users & Organizations</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="ngo-verification" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span>NGO Verification</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Audit Log</span></a></nav></div></div><div class="p-space-md bg-tertiary"><div class="flex items-center justify-between p-space-sm bg-primary-container rounded-lg"><div class="flex flex-col"><span class="font-data-mono-sm text-data-mono-sm text-primary-fixed-dim uppercase">Context Role</span><span class="font-label-md text-label-md text-on-primary font-bold">ADMINISTRATOR</span></div><button class="flex items-center justify-center p-space-xs rounded text-primary-fixed hover:bg-tertiary-container hover:text-on-tertiary transition-colors" title="Switch Role" type="button"><span class="material-symbols-outlined text-[20px]">swap_horiz</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-0 flex-1"><div class="flex items-center gap-space-xs text-on-surface-variant font-data-mono-sm text-data-mono-sm"><span class="hover:text-on-surface transition-colors cursor-pointer">Platform</span><span>/</span><span class="hover:text-on-surface transition-colors cursor-pointer">Mission Control</span></div><div class="relative max-w-md w-full ml-space-sm"><div class="absolute inset-y-0 left-0 pl-space-sm flex items-center pointer-events-none"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">search</span></div><input class="w-full pl-9 pr-space-sm py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]" placeholder="Search donations, batch IDs, NGOs, volunteers... ⌘K" type="text"/></div></div><div class="flex items-center gap-space-md flex-shrink-0"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span><span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">SYSTEM NORMAL • 99.98% UPTIME</span></div><button class="flex items-center gap-space-xs px-space-sm py-1.5 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md hover:bg-tertiary-container hover:text-on-tertiary transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">smart_toy</span><span>Logistics AI</span></button><button class="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-error text-on-error font-data-mono-sm text-[10px]">4</span></button><div class="flex items-center gap-space-sm pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS0_HiGTUed-8ctASOB34zVWNECkDnGXWLnIFyUXb9LjdHKYbNtvzlUKfpjy387t0kx9Zd0drcV7D4pSf5DeqDBC0vK4inofRGXk7toXCyJEUXhq2bdiPK4uwgaKhK2ClO9cSN073RvBsFqB4QT8fqBUSQlm940BEUZvIdoKGXul849w0ZI4qDnNyL-YK6NEofApw4-CYrZx9OkGP5qpIVzpSwzRvgC8uxFrQ92hY"/><div class="hidden xl:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Ops Commander</span><span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant leading-tight">HQ Central</span></div></div></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="p-space-lg space-y-space-lg max-w-[1720px] mx-auto w-full">
+<!-- Top KPI Command Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Total Accounts -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-secondary font-medium tracking-wider">Total Accounts</span>
+<span class="p-1 rounded-lg bg-surface-container-low text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">3,420</span>
+<span class="inline-flex items-center font-data-mono-sm text-data-mono-sm text-tertiary-fixed-dim bg-tertiary-container px-1.5 py-0.5 rounded">
+            +8.4%
+          </span>
+</div>
+<div class="mt-space-xs font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span>
+<span>Consolidated ecosystem count</span>
+</div>
+</div>
+<!-- Donors -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-secondary font-medium tracking-wider">Donors (Corp/Retail)</span>
+<span class="p-1 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">1,280</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">37.4% share</span>
+</div>
+<div class="mt-space-xs font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim">trending_up</span>
+<span>412 commercial surplus nodes</span>
+</div>
+</div>
+<!-- Active Volunteers -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-secondary font-medium tracking-wider">Active Volunteers</span>
+<span class="p-1 rounded-lg bg-secondary-container text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">directions_bike</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">1,640</span>
+<span class="inline-flex items-center font-data-mono-sm text-data-mono-sm text-primary font-medium">94% ready</span>
+</div>
+<div class="mt-space-xs font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>218 in transit right now</span>
+</div>
+</div>
+<!-- Verified NGOs -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-secondary font-medium tracking-wider">Verified NGOs</span>
+<span class="p-1 rounded-lg bg-surface-container text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">450</span>
+<span class="inline-flex items-center font-data-mono-sm text-data-mono-sm text-primary-container bg-primary-fixed px-1.5 py-0.5 rounded">100% vetted</span>
+</div>
+<div class="mt-space-xs font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-surface-tint">shelves</span>
+<span>Distributed across 14 hubs</span>
+</div>
+</div>
+<!-- Flagged / Suspended -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-error font-medium tracking-wider">Flagged & Risk</span>
+<span class="p-1 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+</span>
+</div>
+<div class="mt-space-sm flex items-baseline justify-between">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">50</span>
+<span class="font-data-mono-sm text-data-mono-sm text-error font-medium">1.4% audit</span>
+</div>
+<div class="mt-space-xs font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error">warning</span>
+<span>12 custody violations pending</span>
+</div>
+</div>
+</div>
+<!-- Telemetry HUD & Status Strip -->
+<div class="bg-primary text-on-primary rounded-xl p-space-md shadow-md flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs bg-tertiary-container px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-tertiary-fixed text-[18px]">verified_user</span>
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-tertiary-fixed tracking-wider font-semibold">IDENTITY ORCHESTRATION</span>
+</div>
+<div class="hidden md:flex items-center gap-space-sm font-data-mono-sm text-data-mono-sm text-primary-fixed-dim">
+<span>PII ENCRYPTION: ACTIVE</span>
+<span class="opacity-40">•</span>
+<span>AUDIT TRAIL SYNC: IMMUTABLE</span>
+<span class="opacity-40">•</span>
+<span>FEDERATED IDENTITY: OIDC-V3</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-data-mono-sm text-data-mono-sm text-primary-fixed">CHAIN OF CUSTODY INTEGRITY</span>
+<div class="w-32 bg-primary-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-fixed-dim h-full w-[98.8%]"></div>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm font-bold text-on-primary">99.8%</span>
+</div>
+</div>
+<!-- Advanced Command Toolbar -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md space-y-space-md">
+<!-- Row 1: Search, Preset Role Switcher & Action CTAs -->
+<div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1 min-w-[280px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full pl-10 pr-24 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-secondary focus:bg-surface-container-lowest focus:outline-none transition-all shadow-inner" id="userSearchInput" placeholder="Search by legal name, organization, handle, email or tax hash... (Press / to focus)" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1 pointer-events-none">
+<kbd class="px-1.5 py-0.5 bg-surface-container text-secondary font-data-mono-sm text-data-mono-sm rounded shadow-sm">⌘K</kbd>
+</div>
+</div>
+<!-- Role Filter Tabs (Segmented Control) -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-lg overflow-x-auto" id="roleTabContainer">
+<button class="role-tab active px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm transition-all" data-role="all" type="button">
+            All Roles <span class="ml-1 text-secondary font-data-mono-sm">3.4k</span>
+</button>
+<button class="role-tab px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all" data-role="donor" type="button">
+            Donors <span class="ml-1 text-secondary font-data-mono-sm">1.2k</span>
+</button>
+<button class="role-tab px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all" data-role="volunteer" type="button">
+            Volunteers <span class="ml-1 text-secondary font-data-mono-sm">1.6k</span>
+</button>
+<button class="role-tab px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all" data-role="ngo" type="button">
+            NGOs <span class="ml-1 text-secondary font-data-mono-sm">450</span>
+</button>
+<button class="role-tab px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all" data-role="admin" type="button">
+            Admin <span class="ml-1 text-secondary font-data-mono-sm">50</span>
+</button>
+</div>
+<!-- Action CTAs -->
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<div class="relative">
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-low text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" id="exportDropdownBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+<span>Export</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<div class="hidden absolute right-0 mt-1 w-44 bg-surface-container-lowest rounded-lg shadow-xl p-1 z-30" id="exportDropdown">
+<button class="w-full text-left px-3 py-2 rounded text-body-sm hover:bg-surface-container flex items-center justify-between">
+<span>Export as CSV</span>
+<span class="font-data-mono-sm text-[10px] text-secondary">.csv</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-body-sm hover:bg-surface-container flex items-center justify-between">
+<span>Export as JSON</span>
+<span class="font-data-mono-sm text-[10px] text-secondary">.json</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded text-body-sm hover:bg-surface-container flex items-center justify-between">
+<span>Compliance Audit</span>
+<span class="font-data-mono-sm text-[10px] text-secondary">.pdf</span>
+</button>
+</div>
+</div>
+<button class="flex items-center gap-1.5 px-4 py-2 bg-primary-container text-on-primary-container hover:bg-tertiary-container hover:text-on-tertiary rounded-lg font-label-lg text-label-lg shadow-sm transition-colors" id="addNewUserBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>+ Add New User</span>
+</button>
+</div>
+</div>
+<!-- Row 2: Secondary Facet Filters & Live Counters -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-2">
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Status Dropdown -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-on-surface font-body-sm text-body-sm pl-3 pr-8 py-1.5 rounded-lg focus:outline-none cursor-pointer">
+<option value="all">Status: All (3,420)</option>
+<option value="active">Active (3,120)</option>
+<option value="pending">Pending Verification (250)</option>
+<option value="inactive">Inactive (100)</option>
+<option value="flagged">Flagged / Suspended (50)</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-secondary pointer-events-none absolute right-2 top-1.5">expand_more</span>
+</div>
+<!-- Tier Dropdown -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-on-surface font-body-sm text-body-sm pl-3 pr-8 py-1.5 rounded-lg focus:outline-none cursor-pointer">
+<option value="all">Tier: All Levels</option>
+<option value="enterprise">Tier 1: Enterprise Hub</option>
+<option value="certified">Tier 2: Certified Fleet</option>
+<option value="community">Tier 3: Community Dispatch</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-secondary pointer-events-none absolute right-2 top-1.5">expand_more</span>
+</div>
+<!-- Date Registered Selector -->
+<div class="flex items-center gap-1 bg-surface-container-low px-3 py-1.5 rounded-lg text-body-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="text-on-surface font-data-mono-sm text-data-mono-sm">Last 30 Days</span>
+<button class="hover:text-on-surface ml-1"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<!-- Clear Filters Button -->
+<button class="text-secondary hover:text-error font-data-mono-sm text-data-mono-sm px-2 py-1 transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">refresh</span>
+<span>Reset Facets</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm font-data-mono-sm text-data-mono-sm text-secondary">
+<span class="inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span>Real-time DB connection</span>
+</span>
+<span class="opacity-40">•</span>
+<span>Indexed in 1.4ms</span>
+</div>
+</div>
+</div>
+<!-- User Management Data Grid Stage -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Header & Bulk Selection Strip -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between text-secondary font-data-mono-sm text-data-mono-sm uppercase tracking-wider">
+<div class="flex items-center gap-space-sm">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" id="selectAllCheckbox" type="checkbox"/>
+<span class="normal-case text-on-surface font-semibold">Select 10 shown</span>
+</label>
+<span class="hidden items-center gap-2 pl-space-sm" id="bulkActions">
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">Bulk Notify</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">Update Role</button>
+<button class="px-2 py-1 bg-error-container text-on-error-container rounded font-label-md text-label-md hover:opacity-90 transition-opacity" type="button">Suspend (2)</button>
+</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="hidden sm:inline">Sorting by: <strong class="text-on-surface">Recent Activity (Desc)</strong></span>
+<div class="flex items-center gap-1 text-on-surface">
+<button class="p-1 rounded bg-surface-container text-primary" title="Table View"><span class="material-symbols-outlined text-[18px]">table_rows</span></button>
+<button class="p-1 rounded hover:bg-surface-container text-secondary" title="Grid View"><span class="material-symbols-outlined text-[18px]">grid_view</span></button>
+</div>
+</div>
+</div>
+<!-- Main Data Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse" id="usersTable">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-data-mono-sm text-data-mono-sm tracking-wider uppercase">
+<th class="py-3 pl-4 pr-2 w-10" scope="col"></th>
+<th class="py-3 px-4" scope="col">User / Organization</th>
+<th class="py-3 px-4" scope="col">Role & Ecosystem Tier</th>
+<th class="py-3 px-4" scope="col">Verification & Documents</th>
+<th class="py-3 px-4 text-right" scope="col">Volume & Throughput</th>
+<th class="py-3 px-4 text-right" scope="col">Reliability Index</th>
+<th class="py-3 pr-6 pl-4 text-center" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-md text-body-md text-on-surface">
+<!-- Row 1: Corporate Donor -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Corporate logo of Pacific Grocers Consortium against a clean modern architectural grocery interior with fresh produce logistics and soft daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACk-YB_yv0Hw4NbCsizlepKItHI_tJ95GbbsLdhgB88nvFRZoDhF_-h_MHNmWW2FXmy8mKmFqbNcb_3dyUkSKsUZ6t5maLJaVANCJXWnWffJbEVwo7QtGVJwbt4CXANGiZlMcSbOK3mRIJR8IHTYYw1Nrc5epfFU9jDfMfQKdjP-ueTfb_CYy3mAHOzwnm-0-0Np0jBStY1HgiZGq3Z0DZe-iXkX1MaFyYbGrB_-I"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Elena Vance</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" title="Verified Entity">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">e.vance@pacificgrocers.com</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">Pacific Grocers Consortium • Hub 04</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    DONOR • TIER 1 ENTERPRISE
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">EIN: #84-291884-B</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Fully Verified</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span>HACCP_Cert_2024.pdf</span>
+<span class="text-tertiary-fixed-dim font-bold">✓</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">142,800 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">512 consignments</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active 12m ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>99.8%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">star</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Cold-Chain: 100%</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[99.8%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Review Compliance Docs" type="button">
+<span class="material-symbols-outlined text-[18px]">fact_check</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Impersonate / Audit Session" type="button">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Verified NGO / Food Bank -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="St. Jude Hope Food Bank community logistics distribution pantry warehouse with organized shelf stacks and smiling intake coordinator." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfOhvoq9e-qwXtUfjcIOTUr8afZduk7jlPi-uLwVGyWDsfz_6k9PnFsE60656TazfnPHqpPFb_TpW-Qwus0x8gT82A_uizQinfVUqzT4OpONaw7hOITOYOb3D-GSJywga0n2flMzrXX-VYfgGAdd_89H7q6eBOhIpre-Fbw-T3zJIfGaHYMQwtKX96eGHL4KhmMHvEqpsmmRX6fGR8Xc45MgmHzpKHupjvNIlklL4"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Rev. Marcus Sterling</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" title="Verified Entity">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">marcus@stjudefoodbank.org</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">St. Jude Metropolitan Food Bank</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    NGO • REGIONAL DISTRIBUTION
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">501(c)(3) Validated</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Audit Cleared</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">policy</span>
+<span>State_Sanitary_902.pdf</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">324,500 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">1,204 intake claims</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active 3m ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>99.4%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Intake SLA: 14 min</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[99.4%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Review Compliance Docs" type="button">
+<span class="material-symbols-outlined text-[18px]">fact_check</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Impersonate / Audit Session" type="button">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Active Volunteer Driver -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Headshot portrait of a confident female volunteer courier wearing an insulated dispatch vest with smart tablet outdoors next to an EV delivery van." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_tlj3sj_x1SZqIvx_TKbjZDO_SEYehOqxgFN7Xd3KqIWrISFwJzHDGrghTnUviIkJSsOma824PIQgW2p3hvYhymCnkkhWFtAeict_QGGb9FD7L-w7N5tag7Q2ZTR0_qX8m2CRMVfU-xqI-oh9A9DRMO5JHevZRZw6Y_cX0UuhU810cMatTtDtHNnnecwAVAK7GjE4R7gg1Nru3c7az-_2u_A0Lue2d4U7Y82-fg"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Amina Chen</span>
+<span class="material-symbols-outlined text-[16px] text-surface-tint" title="Certified Handler">shield_with_heart</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">amina.dispatch@gmail.com</span>
+<span class="font-body-sm text-body-sm text-secondary truncate">North Quadrant Rapid Fleet</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span>
+                    VOLUNTEER • REFRIGERATED CARRIER
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Class B Commercial • Active</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">MVR & Background OK</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">electric_car</span>
+<span>EV Van ID: #FLT-098</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">19,420 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">348 completed drops</span>
+<span class="font-data-mono-sm text-[10px] text-tertiary-fixed-dim font-bold mt-0.5">En Route (Trip #892)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-on-surface font-semibold font-data-mono-md text-data-mono-md">
+<span>4.98 ★</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">99.1% On-Time</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary h-full w-[99.1%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Review Driver Telemetry" type="button">
+<span class="material-symbols-outlined text-[18px]">pin_drop</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Impersonate / Audit Session" type="button">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Pending Verification NGO -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group bg-error-container/5">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<div class="w-full h-full flex items-center justify-center bg-surface-container text-secondary font-headline-md">
+                      HH
+                    </div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Tariq Al-Mansoor</span>
+<span class="material-symbols-outlined text-[16px] text-secondary" title="Pending Documentation">pending</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">admin@harborhoperefuge.org</span>
+<span class="font-body-sm text-body-sm text-secondary truncate">Harbor Hope Community Kitchen</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    NGO • PROVISIONAL APPLICANT
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Awaiting 501(c)(3) determination</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-error-container bg-error-container/40 px-2 py-0.5 rounded w-fit">
+<span class="material-symbols-outlined text-[15px]">warning</span>
+<span class="font-data-mono-sm text-[11px] font-semibold">Docs Pending (2 of 4)</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">upload_file</span>
+<span>Needs Health Inspection Cert</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">0 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">Gate locked</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Applied 2d ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">UNRANKED</span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Awaiting First Shift</span>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-2.5 py-1 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" type="button">
+                    Review Docs
+                  </button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="Reject / Query" type="button">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Enterprise Supermarket Donor -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Modern supermarket chain logistics center showing cold storage and electric delivery trucks lined up at loading bay." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5A7is1cq0mdzRBdbEwKi3b_NSN60xZhmsr542KJYMZ_pfdrPNGPuLvRoyYX8T6isFYYLmm5U-WTo2kaQeK2tSuDG47smK9pbE3ryS999Rj99hg6MgmDAMqzd5ADFae5EMh0x4nLvp2n9vRLPsMwl2YsM93J2lplTYcUUFOEhBO3DZFwdWb2JOLgkol6lNKJSAn1BXmq3dUUf3F60rrn3Ci5ecGVleMwLKIvE6yAE"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Apex Hypermarkets HQ</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" title="Verified Tier 1">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">logistics-api@apexretail.io</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">28 Regional Store Endpoints</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    DONOR • TIER 1 HYPERMARKET
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Automated API Batch Feed</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Enterprise SLA Active</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+<span>OAuth M2M Credential Active</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">582,100 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">2,410 consignments</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active 1m ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>99.9%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Deviation: 0.01%</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[99.9%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="API Webhooks & Diagnostics" type="button">
+<span class="material-symbols-outlined text-[18px]">webhook</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Impersonate / Audit Session" type="button">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Flagged Suspended Account -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group bg-error-container/10">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-error-container text-on-error-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-error truncate line-through">Dmitri Volkov</span>
+<span class="material-symbols-outlined text-[16px] text-error" title="Flagged Account">report_problem</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">dmitri.v@expresscoldfreight.net</span>
+<span class="font-body-sm text-body-sm text-error font-medium truncate">Express Cold Freight LLC</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                    SUSPENDED • FLEET DRIVER
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-error font-semibold">Temp Breach: +14°C Spike</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-error">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span class="font-label-md text-label-md font-semibold">Audit Lock Active</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">gavel</span>
+<span>Incident #INC-8902 Pending Hearing</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">8,950 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">112 past deliveries</span>
+<span class="font-data-mono-sm text-[10px] text-error font-bold mt-0.5">Suspended 18h ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-error font-semibold font-data-mono-md text-data-mono-md">
+<span>81.2%</span>
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-error">Spoilage Flag: High</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-error h-full w-[81.2%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-2.5 py-1 bg-surface-container text-on-surface hover:bg-surface-container-high rounded font-label-md text-label-md transition-colors" type="button">
+                    Audit Case
+                  </button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="Reinstate or Expel" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: System Administrator -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-primary text-on-primary flex items-center justify-center flex-shrink-0 font-headline-md">
+                    SA
+                  </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Sarah Al-Hassan</span>
+<span class="material-symbols-outlined text-[16px] text-on-tertiary-container" title="System Administrator">security</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">s.alhassan@foodshare.org</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">HQ Dispatch Operations • SecOps</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+                    SUPER ADMIN • FULL PRIVILEGE
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">MFA Enforced • YubiKey FIDO2</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-label-md text-label-md font-semibold">Security Clearance L4</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">key</span>
+<span>SSH Ed25519 Registered</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">1,402 overrides</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">Admin audit logs</span>
+<span class="font-data-mono-sm text-[10px] text-tertiary-fixed-dim font-bold mt-0.5">Online Now</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>100%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Zero Breaches</span>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Admin Logs" type="button">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Modify Permissions" type="button">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8: Volunteer Cycle Courier -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a young male bike courier smiling with bicycle helmet against city backdrop, holding a cargo manifest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQMiAn366ZEwMv7C1ZPwLgkna6H7geJVG2PdtK51UnLwViVelM1zxeZ556mcTPTDG1LLTSPosBT0kl3YWgv2dtW0CTj8r1HHuXeR8RaoCHkDPVzZmOtg6PlwCECNbW4uG2eTlqBJ-M6JiEZuvpF11_FggC68DlE29jcUXhsrqPICRsIGa4kvdvkAAzH_hgPXURywXHdgzF_ZWhBA-euvU-NSg3_14yUBGMd7ypK_k"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Kofi Mensah</span>
+<span class="material-symbols-outlined text-[16px] text-surface-tint" title="Verified Carrier">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">k.mensah@urbanlogistics.net</span>
+<span class="font-body-sm text-body-sm text-secondary truncate">Downtown Cargo Bike Squad</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span>
+                    VOLUNTEER • URBAN COURIER
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Zero-Emission Cargo Bike</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">ID & Insurance Verified</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">pedal_bike</span>
+<span>Insured via FoodShare Mutual</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">4,820 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">210 rapid runs</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active 45m ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-on-surface font-semibold font-data-mono-md text-data-mono-md">
+<span>4.92 ★</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">98.4% On-Time</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary h-full w-[98.4%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Route History" type="button">
+<span class="material-symbols-outlined text-[18px]">timeline</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 9: Food Rescue Shelter NGO -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<div class="w-full h-full flex items-center justify-center bg-secondary-fixed text-on-secondary-fixed font-headline-md">
+                      NS
+                    </div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Lucia Morales</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" title="Verified NGO">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">directora@nochesincalle.org</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">Noche Sin Calle Emergency Shelter</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    NGO • OVERNIGHT RECIPIENT
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Licensed Food Prep Site</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Sanitation Permit Active</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">kitchen</span>
+<span>Walk-In Freezer Inspected</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">64,200 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">480 intake batches</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active 2h ago</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>99.7%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Distribution Rate: 100%</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[99.7%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Review Capacity Limits" type="button">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 10: Retail Bakery Donor -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 pl-4 pr-2">
+<input class="row-checkbox w-4 h-4 rounded text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-lg overflow-hidden bg-surface-container flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Artisanal bakery chef packaging freshly baked bread in sustainable paper bags for evening food rescue collection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0jd56Y4TK9vu6TMuooRmYy-2tpxco_2edd3rZNbYLVOeVa_SS-E97VdP-2Z1Kki89xUX3z9TB3OX0KN1ql29NLtWLcMWmyQ1dsg1KrSACERqDJ4f7YQtDPFpkjcHplD2O9Gi2rmuvb22KJHruT3ihieF1uqX8GOJgRLenZlKBD2tS5135hX67370zbcenzBO0OVRdQyKwW-5uyCfiV6LD58MPVvrV6xPPoiEgTJE"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface truncate">Henri Dupont</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" title="Verified Donor">verified</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary truncate">orders@boulangeriedupont.fr</span>
+<span class="font-body-sm text-body-sm text-primary font-medium truncate">Maison Dupont Artisanal Bakery</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    DONOR • TIER 3 LOCAL RETAIL
+                  </span>
+<span class="font-data-mono-sm text-[11px] text-secondary">Daily Baked Surplus Batch</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Retail Merchant Verified</span>
+</div>
+<div class="flex items-center gap-1 font-data-mono-sm text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">alarm</span>
+<span>Daily Pickup: 20:30 CST</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">11,200 kg</span>
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">640 drop events</span>
+<span class="font-data-mono-sm text-[10px] text-secondary mt-0.5">Active yesterday</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1 text-primary-container font-semibold font-data-mono-md text-data-mono-md">
+<span>99.2%</span>
+<span class="material-symbols-outlined text-[16px] text-primary">star</span>
+</div>
+<span class="font-data-mono-sm text-[11px] text-secondary">Packaging Quality: A+</span>
+<div class="w-16 bg-surface-container h-1 rounded-full mt-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[99.2%]"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 pr-6 pl-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="View Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Review Pickup Schedules" type="button">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-error hover:bg-surface-container transition-colors" title="More Context Actions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Density Control Bar -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex flex-col md:flex-row items-center justify-between gap-space-md text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="font-data-mono-sm text-data-mono-sm">Rows per page:</span>
+<select class="bg-surface-container-lowest text-on-surface font-data-mono-sm text-data-mono-sm px-2 py-1 rounded focus:outline-none cursor-pointer">
+<option selected="" value="10">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+<option value="100">100</option>
+</select>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm">
+            Showing <span class="font-semibold text-on-surface">1–10</span> of <span class="font-semibold text-on-surface">3,420</span> records
+          </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 rounded bg-surface-container-lowest text-secondary hover:text-on-surface disabled:opacity-40 transition-colors flex items-center" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">first_page</span>
+</button>
+<button class="px-2 py-1 rounded bg-surface-container-lowest text-secondary hover:text-on-surface disabled:opacity-40 transition-colors flex items-center" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1 mx-1 font-data-mono-sm text-data-mono-sm">
+<button class="w-8 h-8 rounded bg-primary-container text-on-primary-container font-bold flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center">3</button>
+<span class="px-1 text-secondary">...</span>
+<button class="w-8 h-8 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center">342</button>
+</div>
+<button class="px-2 py-1 rounded bg-surface-container-lowest text-secondary hover:text-on-surface transition-colors flex items-center" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+<button class="px-2 py-1 rounded bg-surface-container-lowest text-secondary hover:text-on-surface transition-colors flex items-center" type="button">
+<span class="material-symbols-outlined text-[18px]">last_page</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Insights & Operational Health Bottom Rail -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Fast Verification Queue Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">assignment_turned_in</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">Queue Velocity</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-primary font-bold">14 PENDING</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          Average turnaround for NGO compliance review is currently <strong class="text-on-surface">3.8 hours</strong>. 12 automated checks and 2 manual background verification checks remaining today.
+        </p>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">SLA Compliance: 98.2%</span>
+<a class="font-label-md text-label-md text-primary hover:underline flex items-center gap-0.5" href="#">
+            Process Next <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Chain of Custody Security Alert -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint text-[20px]">shield</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">Security & M2M Auth</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed-dim bg-tertiary-container px-2 py-0.5 rounded font-semibold">STABLE</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          All 48 Enterprise supermarket endpoints utilize automated JWT token cycling. Zero unauthorized credential access attempts recorded over past 72 hours.
+        </p>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">API Latency: 42ms avg</span>
+<a class="font-label-md text-label-md text-primary hover:underline flex items-center gap-0.5" href="#">
+            Audit Certificates <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Community Retention & Reliability -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">volunteer_activism</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">Fleet Utilization</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface font-bold">88.4% PEAK</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          1,640 registered couriers covering 14 city zones. Evening perishable dispatch window (18:00 - 21:00) is currently staffed at 102% target driver density.
+        </p>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm text-secondary">Active Dispatchers: 218</span>
+<a class="font-label-md text-label-md text-primary hover:underline flex items-center gap-0.5" href="#">
+            View Live Grid <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Create New User Modal Slide-over / Overlay (Interactive Element) -->
+<div class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4" id="newUserModal">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+<div class="px-space-lg py-space-md bg-primary text-on-primary flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[24px]">person_add</span>
+<div>
+<h2 class="font-headline-md text-headline-md font-semibold leading-tight">Provision Identity Node</h2>
+<p class="font-data-mono-sm text-data-mono-sm text-primary-fixed-dim">CREATE USER OR REGISTER ORGANIZATION ENTITY</p>
+</div>
+</div>
+<button class="p-1 rounded text-primary-fixed-dim hover:text-on-primary hover:bg-primary-container transition-colors" id="closeModalBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-space-lg space-y-space-md overflow-y-auto max-h-[819px]" id="newUserForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Entity / Full Name *</label>
+<input class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-inner" placeholder="e.g. Marcus Sterling" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Official Email Address *</label>
+<input class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-inner" placeholder="marcus@organization.org" required="" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Organization or Node Handle</label>
+<input class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-inner" placeholder="e.g. Hope Metropolitan Food Bank" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Role Allocation *</label>
+<select class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none cursor-pointer">
+<option value="donor">Donor (Corporate / Retail Surplus)</option>
+<option value="volunteer">Volunteer (Dispatch & Transport)</option>
+<option value="ngo">NGO (Intake & Food Bank)</option>
+<option value="admin">Administrator (Mission Control)</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Verification Track</label>
+<select class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none cursor-pointer">
+<option>Instant Sandbox / Pending Review</option>
+<option>Expedited KYC / Tax ID Exemption</option>
+<option>Pre-Validated Partner Consortium</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-secondary mb-1">Tax EIN / NGO Registry ID</label>
+<input class="w-full px-3 py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-lowest shadow-inner" placeholder="e.g. #94-1029384" type="text"/>
+</div>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-secondary">
+            Provisioning this account triggers an automated cryptographic magic-link invite and begins compliance document tracking on the NGO/Donor validation ledger.
+          </p>
+</div>
+<div class="pt-space-sm flex items-center justify-end gap-space-sm">
+<button class="px-4 py-2 bg-surface-container-low text-secondary hover:text-on-surface rounded-lg font-label-lg text-label-lg transition-colors" id="cancelModalBtn" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 bg-primary-container text-on-primary-container hover:bg-tertiary-container hover:text-on-tertiary rounded-lg font-label-lg text-label-lg shadow-sm transition-colors flex items-center gap-1.5" type="submit">
+<span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+<span>Confirm & Provision User</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toastContainer"></div>
+<script>
+    (function initUserManagement() {
+      // 1. Bulk Selection Handler
+      const selectAll = document.getElementById('selectAllCheckbox');
+      const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+      const bulkActions = document.getElementById('bulkActions');
+
+      if (selectAll) {
+        selectAll.addEventListener('change', () => {
+          const isChecked = selectAll.checked;
+          rowCheckboxes.forEach(cb => cb.checked = isChecked);
+          updateBulkState();
+        });
+      }
+
+      rowCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateBulkState);
+      });
+
+      function updateBulkState() {
+        const checkedCount = Array.from(rowCheckboxes).filter(c => c.checked).length;
+        if (checkedCount > 0) {
+          bulkActions.classList.remove('hidden');
+          bulkActions.classList.add('flex');
+        } else {
+          bulkActions.classList.add('hidden');
+          bulkActions.classList.remove('flex');
+          if (selectAll) selectAll.checked = false;
+        }
+      }
+
+      // 2. Export Dropdown Toggle
+      const exportBtn = document.getElementById('exportDropdownBtn');
+      const exportMenu = document.getElementById('exportDropdown');
+      if (exportBtn && exportMenu) {
+        exportBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          exportMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => {
+          if (!exportMenu.classList.contains('hidden')) {
+            exportMenu.classList.add('hidden');
+          }
+        });
+      }
+
+      // 3. Modal Show / Hide
+      const modal = document.getElementById('newUserModal');
+      const openBtn = document.getElementById('addNewUserBtn');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const cancelBtn = document.getElementById('cancelModalBtn');
+      const form = document.getElementById('newUserForm');
+
+      function openModal() {
+        if (modal) modal.classList.remove('hidden');
+      }
+      function closeModal() {
+        if (modal) modal.classList.add('hidden');
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          closeModal();
+          showToast('New user account provisioned successfully. Verification email dispatched.');
+          form.reset();
+        });
+      }
+
+      // 4. Role Filter Tabs Selection
+      const roleTabs = document.querySelectorAll('.role-tab');
+      roleTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          roleTabs.forEach(t => {
+            t.classList.remove('active', 'bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            t.classList.add('text-secondary');
+          });
+          tab.classList.add('active', 'bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+          tab.classList.remove('text-secondary');
+          
+          showToast(`Filtered grid by: ${tab.textContent.trim().split(' ')[0]}`);
+        });
+      });
+
+      // 5. Global Search Key Shortcut (Press / or ⌘K)
+      const searchInput = document.getElementById('userSearchInput');
+      window.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (searchInput) searchInput.focus();
+        }
+        if (e.key === '/' && document.activeElement !== searchInput && !['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) {
+          e.preventDefault();
+          if (searchInput) searchInput.focus();
+        }
+      });
+
+      // 6. Simple Toast notification generator
+      function showToast(message) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = 'pointer-events-auto bg-primary text-on-primary px-4 py-3 rounded-lg shadow-xl font-body-sm text-body-sm flex items-center gap-2 transform transition-all duration-200 translate-y-2 opacity-0';
+        toast.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim">info</span>
+          <span>${message}</span>
+        `;
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.classList.remove('translate-y-2', 'opacity-0');
+        });
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => toast.remove(), 200);
+        }, 3000);
+      }
+    })();
+  </script>
+</div></main></div></body></html>

@@ -108,6 +108,7 @@ export function safeTokenUser(payload) {
     userId: payload.userId,
     email: typeof payload.email === "string" ? payload.email : null,
     role: typeof payload.role === "string" ? payload.role : null,
+    isDemo: Boolean(payload.isDemo),
   };
 }
 

@@ -9,9 +9,12 @@ import {
   normalizeRole,
   isNonEmptyText,
   isWithinLength,
+  isValidPhone,
+  isValidPincode,
   LIMITS,
 } from "../lib/validators.js";
 import { ValidationError, ConflictError, UnauthorizedError } from "../middleware/errorHandler.js";
+import { isDemoUserId, getDemoUserById, DEMO_USERS } from "./demo.service.js";
 
 const BCRYPT_ROUNDS = 12;
 
@@ -132,11 +135,35 @@ export async function loginUser(email, password) {
 
   const normEmail = normalizeEmail(email);
 
-  const { data: user, error } = await supabase
-    .from("users")
-    .select("id, name, email, password_hash, role, organization, phonenumber, area, pincode, state, country, account_status, created_at")
-    .eq("email", normEmail)
-    .single();
+  // Check demo users first for immediate local demo session login
+  const demoMatch = Object.values(DEMO_USERS).find(
+    (u) => u.email.toLowerCase() === normEmail
+  );
+  if (demoMatch) {
+    const token = issueSessionToken({
+      userId: demoMatch.id,
+      email: demoMatch.email,
+      role: demoMatch.role,
+      isDemo: true,
+    });
+    return { user: safeUserProfile(demoMatch), token, isDemo: true };
+  }
+
+  let user = null;
+  let error = null;
+
+  try {
+    const res = await supabase
+      .from("users")
+      .select("id, name, email, password_hash, role, organization, phonenumber, area, pincode, state, country, account_status, created_at")
+      .eq("email", normEmail)
+      .single();
+    user = res.data;
+    error = res.error;
+  } catch (dbErr) {
+    console.warn(`[AUTH] Supabase login error: ${dbErr.message}`);
+    throw new UnauthorizedError("Authentication database unavailable. Please select Demo Mode on the login screen to test.");
+  }
 
   if (error || !user) {
     throw new UnauthorizedError("Invalid credentials");
@@ -155,15 +182,21 @@ export async function loginUser(email, password) {
     userId: user.id,
     email: user.email,
     role: user.role,
+    isDemo: false,
   });
 
-  return { user: safeUserProfile(user), token };
+  return { user: safeUserProfile(user), token, isDemo: false };
 }
 
 /**
  * Get user profile by ID.
  */
 export async function getUserProfile(userId) {
+  if (isDemoUserId(userId)) {
+    const demoUser = getDemoUserById(userId);
+    return demoUser ? safeUserProfile(demoUser) : null;
+  }
+
   const { data: user, error } = await supabase
     .from("users")
     .select("id, name, email, role, organization, phonenumber, area, pincode, state, country, account_status, created_at, updated_at")
@@ -208,6 +241,14 @@ export async function updateUserProfile(userId, updates) {
     );
   }
 
+  if (filtered.phonenumber && !isValidPhone(filtered.phonenumber)) {
+    throw new ValidationError("Invalid phone number format");
+  }
+
+  if (filtered.pincode && !isValidPincode(filtered.pincode)) {
+    throw new ValidationError("Invalid pincode format");
+  }
+
   for (const [field, max] of [
     ["organization", LIMITS.organization],
     ["phonenumber", LIMITS.phone],
@@ -226,6 +267,13 @@ export async function updateUserProfile(userId, updates) {
 
   if (filtered.name !== undefined) {
     filtered.name = filtered.name.trim();
+  }
+
+  if (isDemoUserId(userId)) {
+    const demoUser = getDemoUserById(userId);
+    if (!demoUser) throw new ValidationError("Demo user not found");
+    Object.assign(demoUser, filtered, { updated_at: new Date().toISOString() });
+    return safeUserProfile(demoUser);
   }
 
   const { data: user, error } = await supabase

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pantryBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#243427"/>
+      <stop offset="100%" stop-color="#121D15"/>
+    </linearGradient>
+    <linearGradient id="canMetal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D1D5DB"/>
+      <stop offset="35%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#9CA3AF"/>
+      <stop offset="100%" stop-color="#6B7280"/>
+    </linearGradient>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C388"/>
+      <stop offset="100%" stop-color="#B88A44"/>
+    </linearGradient>
+    <filter id="pantryShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="260" rx="16" fill="url(#pantryBg)"/>
+
+  <!-- Shelf Pantry Linework -->
+  <g opacity="0.08" stroke="#DDEBDD" stroke-width="1.5" fill="none">
+    <line x1="30" y1="200" x2="370" y2="200" stroke-width="3"/>
+    <line x1="30" y1="90" x2="370" y2="90" stroke-width="2"/>
+    <rect x="40" y="40" width="40" height="40" rx="4"/>
+    <rect x="90" y="40" width="30" height="40" rx="4"/>
+  </g>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="200" cy="195" rx="145" ry="26" fill="#000000" opacity="0.45"/>
+
+  <!-- Wooden Pantry Shelf Base -->
+  <rect x="50" y="185" width="300" height="12" rx="3" fill="#3D2918"/>
+  <rect x="50" y="185" width="300" height="4" fill="#5E4026"/>
+
+  <!-- Whole Grain Cereal Box (Left) -->
+  <g transform="translate(100, 100)" filter="url(#pantryShadow)">
+    <polygon points="10,15 45,5 80,12 80,85 10,85" fill="url(#boxGrad)"/>
+    <polygon points="10,15 45,5 45,85 10,85" fill="#CFA15A"/>
+    <!-- Box Cover Art -->
+    <rect x="15" y="32" width="25" height="35" rx="3" fill="#16865B"/>
+    <circle cx="27" cy="48" r="8" fill="#FCEECB"/>
+    <text x="27" y="51" fill="#123D2B" font-family="sans-serif" font-size="7" font-weight="800" text-anchor="middle">OATS</text>
+  </g>
+
+  <!-- Sealed Organic Legume Can (Center) -->
+  <g transform="translate(180, 115)" filter="url(#pantryShadow)">
+    <!-- Can Cylinder -->
+    <rect x="6" y="12" width="52" height="68" fill="url(#canMetal)"/>
+    <!-- Can Rim Top -->
+    <ellipse cx="32" cy="12" rx="26" ry="7" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="1"/>
+    <!-- Can Rim Bottom -->
+    <ellipse cx="32" cy="80" rx="26" ry="7" fill="#6B7280"/>
+    <!-- Kraft Label -->
+    <rect x="6" y="24" width="52" height="46" fill="#FAF8F1"/>
+    <rect x="10" y="30" width="44" height="6" fill="#C87552"/>
+    <circle cx="32" cy="48" r="8" fill="#DDEBDD"/>
+    <path d="M 32,43 C 28,47 36,49 32,53" stroke="#16865B" stroke-width="1.8" fill="none"/>
+    <text x="32" y="64" fill="#202B25" font-family="sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">LENTILS</text>
+  </g>
+
+  <!-- Glass Jar of Honey / Preserves (Right) -->
+  <g transform="translate(250, 125)" filter="url(#pantryShadow)">
+    <!-- Jar Body -->
+    <rect x="10" y="16" width="44" height="54" rx="8" fill="#FDE68A" fill-opacity="0.85" stroke="#FFFFFF" stroke-width="1.2"/>
+    <!-- Honey Fill -->
+    <rect x="12" y="26" width="40" height="42" rx="6" fill="#DDAA48"/>
+    <!-- Gingham Fabric Lid -->
+    <ellipse cx="32" cy="16" rx="25" ry="8" fill="#C87552"/>
+    <!-- Twine String -->
+    <line x1="12" y1="19" x2="52" y2="19" stroke="#5D3A1A" stroke-width="2"/>
+    <!-- Jar Label -->
+    <rect x="18" y="38" width="28" height="20" rx="2" fill="#FAF8F1"/>
+    <text x="32" y="50" fill="#202B25" font-family="sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">HONEY</text>
+  </g>
+
+  <!-- Category Tag Pill -->
+  <g transform="translate(24, 24)">
+    <rect width="144" height="26" rx="13" fill="#16865B" fill-opacity="0.9" stroke="#34D399" stroke-width="1"/>
+    <circle cx="13" cy="13" r="4" fill="#FAF8F1"/>
+    <text x="24" y="17" fill="#FAF8F1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="0.5">PACKAGED PANTRY</text>
+  </g>
+
+  <!-- Quality Stamp -->
+  <g transform="translate(282, 24)">
+    <rect width="94" height="26" rx="13" fill="#202B25" fill-opacity="0.8" stroke="#DDEBDD" stroke-width="0.8"/>
+    <text x="47" y="17" fill="#DDEBDD" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">SHELF-STABLE</text>
+  </g>
+</svg>
+

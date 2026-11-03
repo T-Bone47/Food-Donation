@@ -6,6 +6,8 @@ import * as ngoService from "../services/ngo.service.js";
 import * as donationService from "../services/donation.service.js";
 import * as impactService from "../services/impact.service.js";
 import * as notificationService from "../services/notification.service.js";
+import * as demoService from "../services/demo.service.js";
+import { broadcastRealtimeEvent } from "../services/realtime.service.js";
 import { notifySafely, NOTIFICATION_EVENTS } from "../services/notification.service.js";
 import { ValidationError, NotFoundError, ConflictError } from "../middleware/errorHandler.js";
 import { canTransition, transitionErrorMessage } from "../lib/lifecycle.js";
@@ -26,6 +28,14 @@ router.use(authMiddleware, requireRole("Admin"));
  */
 router.get("/verifications", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const demoProfile = demoService.getDemoNGOVerificationStatus();
+      return res.json({
+        data: { verifications: [demoProfile] },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { status, limit = 50, offset = 0 } = req.query;
     const verifications = await ngoService.listNGOVerifications({
       status,
@@ -68,6 +78,21 @@ router.patch("/verifications/:id", async (req, res, next) => {
       channels: ["in_app"],
     });
 
+    await notificationService.createAuditLog({
+      actorId: req.auth.userId,
+      action: "ngo.verification_reviewed",
+      resourceType: "ngo_profile",
+      resourceId: profile.id,
+      reason: notes || `Verification decision: ${decision}`,
+      metadata: { decision, ngoUserId: profile.user_id },
+    });
+
+    broadcastRealtimeEvent("ngo.verification_updated", profile, {
+      isDemo: Boolean(req.auth?.isDemo),
+      actorId: req.auth.userId,
+      entityId: profile.id,
+    });
+
     res.json({
       data: { profile },
       meta: { requestId: req.requestId },
@@ -83,6 +108,29 @@ router.patch("/verifications/:id", async (req, res, next) => {
  */
 router.get("/users", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      let users = demoService.getDemoAdminUsers();
+      const { role, status, search } = req.query;
+      if (role && role !== "all") {
+        users = users.filter((u) => u.role?.toLowerCase() === String(role).toLowerCase());
+      }
+      if (status && status !== "all") {
+        users = users.filter((u) => (u.account_status || "active").toLowerCase() === String(status).toLowerCase());
+      }
+      if (search && String(search).trim()) {
+        const q = String(search).trim().toLowerCase();
+        users = users.filter((u) =>
+          (u.name && u.name.toLowerCase().includes(q)) ||
+          (u.email && u.email.toLowerCase().includes(q)) ||
+          (u.organization && u.organization.toLowerCase().includes(q))
+        );
+      }
+      return res.json({
+        data: { users },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { role, status, limit = 50, offset = 0, search } = req.query;
 
     let query = supabase
@@ -126,6 +174,32 @@ router.patch("/users/:id", async (req, res, next) => {
       throw new ValidationError("Invalid account_status. Must be 'active', 'suspended', or 'rejected'");
     }
 
+    if (req.params.id === req.auth.userId) {
+      throw new ValidationError("Administrators cannot change their own account status");
+    }
+
+    const forbiddenKeys = Object.keys(req.body).filter((k) => k !== "account_status");
+    if (forbiddenKeys.length > 0) {
+      throw new ValidationError(`Cannot modify unauthorized fields: ${forbiddenKeys.join(", ")}`);
+    }
+
+    const { data: targetUser, error: fetchErr } = await supabase
+      .from("users")
+      .select("id, name, email, role, account_status")
+      .eq("id", req.params.id)
+      .maybeSingle();
+
+    if (fetchErr) {
+      throw new ValidationError(fetchErr.message);
+    }
+    if (!targetUser) {
+      throw new NotFoundError("User not found");
+    }
+
+    if (targetUser.role === "Admin") {
+      throw new ValidationError("Administrator accounts cannot be modified or suspended");
+    }
+
     const { data: user, error } = await supabase
       .from("users")
       .update({ account_status, updated_at: new Date().toISOString() })
@@ -137,17 +211,19 @@ router.patch("/users/:id", async (req, res, next) => {
       throw new ValidationError(error.message);
     }
 
-    if (!user) {
-      throw new NotFoundError("User not found");
-    }
-
     // Audit log
     await notificationService.createAuditLog({
       actorId: req.auth.userId,
       action: "user.status_changed",
       resourceType: "user",
       resourceId: user.id,
-      reason: `Account status changed to ${account_status}`,
+      reason: `Account status changed to ${account_status} by admin`,
+      metadata: {
+        previousStatus: targetUser.account_status,
+        newStatus: account_status,
+        targetEmail: user.email,
+        targetRole: user.role,
+      },
     });
 
     res.json({
@@ -165,6 +241,14 @@ router.patch("/users/:id", async (req, res, next) => {
  */
 router.get("/donations", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const donations = demoService.getDemoDonations({ status: req.query.status ? String(req.query.status).toUpperCase() : undefined });
+      return res.json({
+        data: { donations },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { status, limit = 50, offset = 0, search } = req.query;
 
     let query = supabase
@@ -205,6 +289,15 @@ router.get("/donations", async (req, res, next) => {
  */
 router.get("/donations/:id", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const donation = demoService.getDemoDonationById(req.params.id);
+      if (!donation) throw new NotFoundError("Donation not found");
+      return res.json({
+        data: { donation },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { data: donation, error } = await supabase
       .from("donations")
       .select(`
@@ -323,6 +416,22 @@ router.post("/donations/:id/expire", async (req, res, next) => {
  */
 router.get("/impact", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const stats = demoService.getDemoAdminStats();
+      return res.json({
+        data: {
+          impact: {
+            totalMealsServed: stats.totalMealsServed,
+            totalKgDiverted: stats.totalKgDiverted,
+            totalDeliveries: stats.completedDonations,
+            totalDonations: stats.totalDonations,
+            activeDonations: stats.activeDonations,
+          },
+        },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { startDate, endDate, groupBy = "day" } = req.query;
     const impact = await impactService.getAggregateImpact({
       startDate,
@@ -344,6 +453,14 @@ router.get("/impact", async (req, res, next) => {
  */
 router.get("/audit-logs", async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const logs = demoService.getDemoAdminAuditLogs();
+      return res.json({
+        data: { logs },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const { actorId, action, resourceType, limit = 100, offset = 0 } = req.query;
     const logs = await notificationService.getAuditLogs({
       actorId,

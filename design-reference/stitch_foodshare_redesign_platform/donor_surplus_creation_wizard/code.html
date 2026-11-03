@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary-container": "#005137",
+        "on-tertiary-fixed": "#002114",
+        "surface-tint": "#2d6a48",
+        "surface": "#f8f9ff",
+        "inverse-surface": "#213145",
+        "on-secondary": "#ffffff",
+        "tertiary-fixed-dim": "#45dfa4",
+        "surface-variant": "#d3e4fe",
+        "secondary-fixed": "#dae2fd",
+        "surface-dim": "#cbdbf5",
+        "error": "#ba1a1a",
+        "primary": "#003820",
+        "surface-container-lowest": "#ffffff",
+        "on-primary": "#ffffff",
+        "on-background": "#0b1c30",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#b0f1c7",
+        "on-surface": "#0b1c30",
+        "background": "#f8f9ff",
+        "on-primary-fixed": "#002111",
+        "on-primary-container": "#84c39b",
+        "primary-fixed-dim": "#95d4ac",
+        "surface-container-low": "#eff4ff",
+        "primary-container": "#0f5132",
+        "on-tertiary": "#ffffff",
+        "on-surface-variant": "#404942",
+        "on-secondary-container": "#5c647a",
+        "outline-variant": "#c0c9c0",
+        "on-primary-fixed-variant": "#0f5132",
+        "tertiary": "#003825",
+        "secondary-container": "#dae2fd",
+        "tertiary-fixed": "#68fcbf",
+        "surface-container-highest": "#d3e4fe",
+        "surface-container-high": "#dce9ff",
+        "on-tertiary-fixed-variant": "#005137",
+        "inverse-primary": "#95d4ac",
+        "secondary": "#565e74",
+        "secondary-fixed-dim": "#bec6e0",
+        "on-secondary-fixed-variant": "#3f465c",
+        "surface-bright": "#f8f9ff",
+        "outline": "#707971",
+        "surface-container": "#e5eeff",
+        "error-container": "#ffdad6",
+        "on-tertiary-container": "#28cc93",
+        "inverse-on-surface": "#eaf1ff",
+        "on-secondary-fixed": "#131b2e"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "space-xs": "0.25rem",
+        "space-md": "1rem",
+        "margin": "1rem",
+        "space-xl": "2rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem",
+        "margin-desktop": "2rem",
+        "gutter-desktop": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-xl": ["Geist"],
+        "headline-lg": ["Geist"],
+        "display-lg": ["Geist"],
+        "body-md": ["Geist"],
+        "headline-md": ["Geist"],
+        "data-mono-sm": ["JetBrains Mono"],
+        "label-md": ["Geist"],
+        "label-lg": ["Geist"],
+        "data-mono-md": ["JetBrains Mono"],
+        "body-lg": ["Geist"],
+        "body-sm": ["Geist"],
+        "headline-xl-mobile": ["Geist"],
+        "data-mono-lg": ["JetBrains Mono"]
+      },
+      "fontSize": {
+        "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "data-mono-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "500"}],
+        "data-mono-md": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+        "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-xl-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "data-mono-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 bottom-0 w-72 bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="p-space-lg flex items-center gap-space-sm"><img alt="FoodShare Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VIyrBMq-M-78ofIphlxm0yEpuhN5e6LVeodRu84dCRmgw574YR0v5y3e5NvtL0_LZxKnrc62glSynNmoCLHL91GgerFLDp-qXU7d3LIU1DWERM5nokmwmPQzCjR_LKxq_SF-uFuDJnquhUjKGeIcOio5wel-hLPy2g_CirwLUjnZq204AUCk-_FlugxSOW1aYDTJET6hjtTw_X56SflwYJOZQwecYL0LS6PKBzWDc"/><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight leading-none text-on-primary">FOODSHARE</span><span class="font-data-mono-sm text-data-mono-sm uppercase text-primary-fixed-dim tracking-widest mt-1">OPERATING PLATFORM</span></div></div><div class="px-space-md py-space-sm"><div class="font-data-mono-sm text-data-mono-sm uppercase tracking-wider text-primary-fixed-dim px-space-sm mb-space-xs">Operations</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="overview-dashboard" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span>Overview / Dashboard</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="donations-dispatch" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Donations &amp; Dispatch</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="task-management" href="#"><span class="material-symbols-outlined text-[18px]">assignment</span><span>Task Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="impact-analytics" href="#"><span class="material-symbols-outlined text-[18px]">analytics</span><span>Impact Analytics</span></a></nav></div><div class="px-space-md py-space-sm mt-space-sm"><div class="font-data-mono-sm text-data-mono-sm uppercase tracking-wider text-primary-fixed-dim px-space-sm mb-space-xs">Management</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="users-organizations" href="#"><span class="material-symbols-outlined text-[18px]">corporate_fare</span><span>Users &amp; Organizations</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="ngo-verification" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span>NGO Verification</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg text-primary-fixed-dim hover:bg-tertiary-container hover:text-on-tertiary transition-colors font-label-lg text-label-lg" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Audit Log</span></a></nav></div></div><div class="p-space-md bg-tertiary"><div class="flex items-center justify-between p-space-sm bg-primary-container rounded-lg"><div class="flex flex-col"><span class="font-data-mono-sm text-data-mono-sm text-primary-fixed-dim uppercase">Context Role</span><span class="font-label-md text-label-md text-on-primary font-bold">ADMINISTRATOR</span></div><button class="flex items-center justify-center p-space-xs rounded text-primary-fixed hover:bg-tertiary-container hover:text-on-tertiary transition-colors" title="Switch Role" type="button"><span class="material-symbols-outlined text-[20px]">swap_horiz</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-0 flex-1"><div class="flex items-center gap-space-xs text-on-surface-variant font-data-mono-sm text-data-mono-sm"><span class="hover:text-on-surface transition-colors cursor-pointer">Platform</span><span>/</span><span class="hover:text-on-surface transition-colors cursor-pointer">Mission Control</span></div><div class="relative max-w-md w-full ml-space-sm"><div class="absolute inset-y-0 left-0 pl-space-sm flex items-center pointer-events-none"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">search</span></div><input class="w-full pl-9 pr-space-sm py-1.5 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]" placeholder="Search donations, batch IDs, NGOs, volunteers... ⌘K" type="text"/></div></div><div class="flex items-center gap-space-md flex-shrink-0"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span><span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">SYSTEM NORMAL • 99.98% UPTIME</span></div><button class="flex items-center gap-space-xs px-space-sm py-1.5 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md hover:bg-tertiary-container hover:text-on-tertiary transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">smart_toy</span><span>Logistics AI</span></button><button class="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-error text-on-error font-data-mono-sm text-[10px]">4</span></button><div class="flex items-center gap-space-sm pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS0_HiGTUed-8ctASOB34zVWNECkDnGXWLnIFyUXb9LjdHKYbNtvzlUKfpjy387t0kx9Zd0drcV7D4pSf5DeqDBC0vK4inofRGXk7toXCyJEUXhq2bdiPK4uwgaKhK2ClO9cSN073RvBsFqB4QT8fqBUSQlm940BEUZvIdoKGXul849w0ZI4qDnNyL-YK6NEofApw4-CYrZx9OkGP5qpIVzpSwzRvgC8uxFrQ92hY"/><div class="hidden xl:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Ops Commander</span><span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant leading-tight">HQ Central</span></div></div></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Page Header & Operational Breadcrumbs Context -->
+<div class="px-space-margin-desktop pt-space-lg pb-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+<span>Operations</span>
+<span>/</span>
+<span>Donor Portal</span>
+<span>/</span>
+<span class="text-on-surface font-label-md text-label-md">Stage New Surplus Manifest</span>
+</div>
+<div class="flex items-center gap-space-md mt-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Surplus Ingestion Wizard</h1>
+<span class="px-space-sm py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-data-mono-sm font-semibold tracking-wide">PACIFIC GROCERS HUB #04 • DOCK COLD-02</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant">Auto-Saved Draft <strong class="text-on-surface">#MNF-9042</strong> • AI Estimator Sync Active</span>
+</div>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">history</span>
+<span>Revision History</span>
+</button>
+</div>
+</div>
+<!-- Stepper Navigation Track -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm">
+<!-- Step 1: Completed -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-container font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Step 01 • Complete</span>
+<span class="font-label-md text-label-md text-on-surface truncate">Cargo Classification</span>
+</div>
+</div>
+<!-- Step 2: Active / In-Focus -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-primary text-on-primary shadow-sm">
+<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-data-mono-sm text-data-mono-sm font-bold">
+            02
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-data-mono-sm text-[10px] text-primary-fixed-dim uppercase tracking-wider">Step 02 • Active</span>
+<span class="font-label-md text-label-md text-on-primary font-semibold truncate">Weight &amp; Palletization</span>
+</div>
+</div>
+<!-- Step 3: Upcoming -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-container text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+            03
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Step 03</span>
+<span class="font-label-md text-label-md text-on-surface-variant truncate">Cold-Chain Protocol</span>
+</div>
+</div>
+<!-- Step 4: Upcoming -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-container text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+            04
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Step 04</span>
+<span class="font-label-md text-label-md text-on-surface-variant truncate">Dock &amp; Courier Window</span>
+</div>
+</div>
+<!-- Step 5: Upcoming -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-container text-on-surface-variant font-data-mono-sm text-data-mono-sm">
+            05
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase tracking-wider">Step 05</span>
+<span class="font-label-md text-label-md text-on-surface-variant truncate">IRS § 170(e)(3) Review</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Dynamic Workspace -->
+<div class="px-space-margin-desktop pb-space-xl">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-gutter-desktop items-start">
+<!-- Left/Center Primary Form Stages (8 Cols) -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg">
+<!-- Section A: Food Category Selection & Manifest Sub-Items -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="flex h-6 w-6 items-center justify-center rounded bg-primary text-on-primary font-data-mono-sm text-data-mono-sm">A</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Cargo &amp; Perishability Categorization</h2>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant">BATCH IDENTIFIER: <strong>US-PAC-2024-8841B</strong></span>
+</div>
+<!-- Category Badges / Pills -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Primary Temperature &amp; Sector Category</label>
+<div class="flex flex-wrap gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">kitchen</span>
+<span>Fresh Dairy &amp; Chilled Organics</span>
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">soup_kitchen</span>
+<span>Prepared Commercial Meals</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">bakery_dining</span>
+<span>Artisan Bakery</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">nutrition</span>
+<span>Fresh Produce</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">ac_unit</span>
+<span>Frozen Proteins</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+<span>Ambient Pantry</span>
+</button>
+</div>
+</div>
+<!-- Manifest Itemization List -->
+<div class="flex flex-col gap-space-sm mt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Active Itemized Line Items (3 Products)</span>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+<span>CSV Barcode Ingest</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Line Item</span>
+</button>
+</div>
+</div>
+<!-- Table of Line Items -->
+<div class="overflow-x-auto rounded-lg bg-surface-container-low">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container font-data-mono-sm text-data-mono-sm text-on-surface-variant uppercase">
+<th class="py-2.5 px-3">Item Description</th>
+<th class="py-2.5 px-3">Perishability / Expiry</th>
+<th class="py-2.5 px-3">Storage Spec</th>
+<th class="py-2.5 px-3">Allergen Notice</th>
+<th class="py-2.5 px-3 text-right">Batch Qty</th>
+<th class="py-2.5 px-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-lowest font-body-sm text-body-sm">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container">egg_alt</span>
+<div>
+<div class="font-label-md text-label-md font-medium text-on-surface">Greek Organic Yogurt Tubs (500g)</div>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">UPC 0-41220-89124-2</span>
+</div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-data-mono-sm text-data-mono-sm font-semibold text-error">In 4 Days</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-data-mono-sm text-[11px]">Chilled (2–4°C)</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-data-mono-sm text-[11px]">Dairy [Grade A]</span>
+</td>
+<td class="py-2.5 px-3 text-right font-data-mono-md text-data-mono-md text-on-surface font-semibold">120 units</td>
+<td class="py-2.5 px-3 text-right">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors" title="Remove" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container">local_drink</span>
+<div>
+<div class="font-label-md text-label-md font-medium text-on-surface">Pasteurized Whole Milk Crates (1L)</div>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">UPC 0-41220-99411-0</span>
+</div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-data-mono-sm text-data-mono-sm font-semibold text-error">In 3 Days</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-data-mono-sm text-[11px]">Chilled (2–4°C)</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-data-mono-sm text-[11px]">Dairy [Lactose]</span>
+</td>
+<td class="py-2.5 px-3 text-right font-data-mono-md text-data-mono-md text-on-surface font-semibold">80 units</td>
+<td class="py-2.5 px-3 text-right">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors" title="Remove" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container">lunch_dining</span>
+<div>
+<div class="font-label-md text-label-md font-medium text-on-surface">Artisanal Hard Cheeses Selection</div>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">UPC 0-38819-20419-7</span>
+</div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-data-mono-sm text-data-mono-sm font-semibold text-on-surface">In 14 Days</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-data-mono-sm text-[11px]">Chilled (4.0°C)</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-data-mono-sm text-[11px]">Dairy</span>
+</td>
+<td class="py-2.5 px-3 text-right font-data-mono-md text-data-mono-md text-on-surface font-semibold">45 units</td>
+<td class="py-2.5 px-3 text-right">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors" title="Remove" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Upload Dropzone Callout -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">qr_code_scanner</span>
+<span class="font-body-sm text-body-sm">Have a warehouse manifest export? Drag and drop spreadsheet (.CSV, .XLSX) or handheld scanner session log.</span>
+</div>
+<button class="font-label-md text-label-md text-primary font-semibold hover:underline" type="button">Select File</button>
+</div>
+</div>
+</div>
+<!-- Section B: Calibrated Net Weight, Packaging & Palletization -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="flex h-6 w-6 items-center justify-center rounded bg-primary text-on-primary font-data-mono-sm text-data-mono-sm">B</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Weight, Packaging &amp; Handling Constraints</h2>
+</div>
+<span class="px-space-sm py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-data-mono-sm">SCALE API: ONLINE</span>
+</div>
+<!-- Scale Sync & Gross/Net Calculation -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md p-space-md rounded-lg bg-surface-container-low">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">Gross Scale Readout</span>
+<button class="flex items-center gap-1 text-[11px] text-primary font-data-mono-sm hover:underline" title="Re-sync terminal scale" type="button">
+<span class="material-symbols-outlined text-[14px]">sync</span> Synced
+                </button>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">245.5</span>
+<span class="font-data-mono-md text-data-mono-md text-on-surface-variant">KG</span>
+</div>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Mettler Toledo Bay Scale #02</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">Container Tare (Totes)</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface-variant">13.5</span>
+<span class="font-data-mono-md text-data-mono-md text-on-surface-variant">KG</span>
+</div>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">6x Insulated Units @ 2.25kg</span>
+</div>
+<div class="flex flex-col gap-1 p-space-sm rounded bg-surface-container-lowest shadow-sm">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-primary font-semibold">Net Cargo Weight</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-primary">232.0</span>
+<span class="font-data-mono-md text-data-mono-md text-primary font-semibold">KG</span>
+</div>
+<span class="font-data-mono-sm text-[10px] text-tertiary font-medium">Eligible for Food Bank Pallet Transfer</span>
+</div>
+</div>
+<!-- Packaging Unit Selector -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Packaging &amp; Containment Architecture</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-primary-container text-on-primary-container flex flex-col gap-1 cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-[20px]">icecream</span>
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-primary">Insulated Modular Totes</span>
+<span class="font-data-mono-sm text-[10px] text-on-primary-container opacity-90">Pre-Cooled • Thermal Liners</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container text-on-surface flex flex-col gap-1 cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">pallet</span>
+<span class="w-3 h-3 rounded-full bg-surface-container-highest"></span>
+</div>
+<span class="font-label-md text-label-md font-medium">Euro Pallets (1200×800)</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Shrink-Wrapped Single Tier</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container text-on-surface flex flex-col gap-1 cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">inventory</span>
+<span class="w-3 h-3 rounded-full bg-surface-container-highest"></span>
+</div>
+<span class="font-label-md text-label-md font-medium">Reusable Plastic Crates (RPC)</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Perforated Air-Flow Standard</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container text-on-surface flex flex-col gap-1 cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">package_2</span>
+<span class="w-3 h-3 rounded-full bg-surface-container-highest"></span>
+</div>
+<span class="font-label-md text-label-md font-medium">Corrugated Cartons</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Waxed Commercial Grade</span>
+</div>
+</div>
+</div>
+<!-- Stacking & Safety Directives -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant">Logistics &amp; Safety Directives</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<label class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container-low cursor-pointer">
+<input checked="" class="mt-1 h-4 w-4 accent-primary rounded cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Fragile / Upright Only</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Max stack limit: 3 totes</span>
+</div>
+</label>
+<label class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container-low cursor-pointer">
+<input checked="" class="mt-1 h-4 w-4 accent-primary rounded cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Cold Chain Continuous</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Reefer van mandatory (≤4°C)</span>
+</div>
+</label>
+<label class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container-low cursor-pointer">
+<input class="mt-1 h-4 w-4 accent-primary rounded cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Chemical Proximity Warning</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">Isolate from sanitizers &amp; fuel</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Section C: Time-Critical Dispatch & Dock Logistics -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="flex h-6 w-6 items-center justify-center rounded bg-primary text-on-primary font-data-mono-sm text-data-mono-sm">C</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Time-Critical Dispatch &amp; Staging Dock</h2>
+</div>
+<div class="flex items-center gap-1 text-tertiary font-data-mono-sm text-data-mono-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>3H 30M SAFE SLACK WINDOW</span>
+</div>
+</div>
+<!-- Staging Logistics Metadata -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-2 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">Designated Staging Node</span>
+<span class="material-symbols-outlined text-[18px] text-primary">warehouse</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface">Bay 3B (Cold Dock Stage Area)</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-data-mono-sm text-[11px]">Chiller Set: 3.0°C</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-data-mono-sm text-[11px]">RFID Sensor: #SN-8941</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">Courier Facility Gate Protocol</span>
+<span class="material-symbols-outlined text-[18px] text-primary">pin_invoke</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface">
+                Roll-up at <strong>Gate 4 North</strong>. Driver must scan digital dispatch pass barcode at reader for automated arm elevation.
+              </div>
+<div class="font-data-mono-sm text-[11px] text-on-surface-variant">Assigned Dockmaster: Marcus Vance (Desk: x402)</div>
+</div>
+</div>
+<!-- Safe Window Slider Visualizer -->
+<div class="flex flex-col gap-2 p-space-md rounded-lg bg-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Active Dispatch Window</span>
+<span class="font-data-mono-sm text-data-mono-sm text-on-surface-variant">Today, October 24</span>
+</div>
+<span class="font-data-mono-sm text-data-mono-sm text-tertiary-fixed-dim bg-primary px-2 py-0.5 rounded font-medium">OPTIMAL TIMEFRAME</span>
+</div>
+<!-- Visual Bar -->
+<div class="w-full bg-surface-container-lowest h-3 rounded-full relative overflow-hidden mt-1">
+<div class="absolute left-[15%] right-[25%] top-0 bottom-0 bg-primary-container rounded-full"></div>
+<div class="absolute left-[20%] top-0 bottom-0 w-1 bg-tertiary-fixed"></div>
+</div>
+<div class="flex items-center justify-between font-data-mono-sm text-[11px] text-on-surface-variant mt-1">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">15:00 (Immediate Ready)</span>
+<span>Dock Staging Finalized</span>
+</div>
+<div class="flex flex-col text-center">
+<span class="font-bold text-primary">16:45 (AI Optimal Target)</span>
+<span>Peak Fleet Proximity</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-semibold text-error">18:30 (Hard Ceiling)</span>
+<span>Critical Quality Degradation</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Operational Intelligence, Matching Engine & Regulatory Write-Off (4 Cols) -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Card 1: AI Match & Routing Proximity -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">hub</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">AI Recipient Matching</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-data-mono-sm text-[10px] font-bold">99.4% FIT</span>
+</div>
+<!-- Top NGO Match Profile -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">St. Jude Regional Food Bank</span>
+<span class="font-data-mono-sm text-data-mono-sm text-primary font-semibold">3.8 KM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              High priority match: Verified shortage of chilled proteins &amp; fresh dairy. Active facility dinner serving at 18:00 today.
+            </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-data-mono-sm text-[10px] font-semibold">450 MEALS DEFICIT</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-data-mono-sm text-[10px]">WALK-IN CHILLER VERIFIED</span>
+</div>
+</div>
+<!-- Secondary NGO Option -->
+<div class="p-space-md rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Hope Harbor Community Center</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant">6.4 km away • Alternate fallback</span>
+</div>
+<button class="font-label-md text-label-md text-primary font-medium hover:underline" type="button">Route Alternate</button>
+</div>
+<!-- Courier Availability Telemetry -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-data-mono-sm text-data-mono-sm uppercase text-on-surface-variant">Active Courier Swarm</span>
+<div class="flex items-center gap-1 text-tertiary font-data-mono-sm text-data-mono-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span>8 FLEET UNITS</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">3 Reefer Vans</span>
+<span class="font-data-mono-sm text-[11px] text-on-surface-variant">Available within 3.5 km</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-headline-md text-headline-md font-bold text-primary">~18 Min</span>
+<span class="font-data-mono-sm text-[11px] text-on-surface-variant">Est. Pickup Latency</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Regulatory Tax Deduction & Compliance Engine -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">receipt_long</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">IRS § 170(e)(3) Pre-Estimate</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-data-mono-sm text-[10px]">US-TAX ELIGIBLE</span>
+</div>
+<!-- Tax Deduction Financial Breakdown -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Fair Market Value (FMV):</span>
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">$1,840.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Inventory Cost Basis:</span>
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">$920.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Enhanced Markup Allowance (+50%):</span>
+<span class="font-data-mono-md text-data-mono-md font-semibold text-on-surface">+$460.00</span>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Est. Deductible Value:</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary">$1,380.00</span>
+</div>
+</div>
+<!-- Bill Emerson Good Samaritan Act Shield -->
+<div class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Good Samaritan Protection Active</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant leading-snug">
+                Covered under 42 U.S.C. § 1791. Pre-certified wholesome standards shield your enterprise from civil and criminal liability.
+              </span>
+</div>
+</div>
+</div>
+<!-- Card 3: Environmental Impact Projection -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container">eco</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Projected ESG Impact</h3>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">info</span>
+</div>
+<!-- Environmental Metric Triad -->
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-data-mono-lg text-data-mono-lg font-bold text-primary">580</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase mt-0.5">KG CO₂e Avoided</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-data-mono-lg text-data-mono-lg font-bold text-primary">232</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase mt-0.5">KG Diversion</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-data-mono-lg text-data-mono-lg font-bold text-primary">386</span>
+<span class="font-data-mono-sm text-[10px] text-on-surface-variant uppercase mt-0.5">Meals Saved</span>
+</div>
+</div>
+<!-- Micro Visual Representation (CO2 Bar Progress) -->
+<div class="flex flex-col gap-1 mt-1">
+<div class="flex items-center justify-between font-data-mono-sm text-[11px] text-on-surface-variant">
+<span>Pacific Grocers Hub Monthly ESG Target</span>
+<span class="font-semibold text-on-surface">84.2%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-fixed-dim h-full rounded-full" style="width: 84.2%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Wizard Sticky Global Action Footer -->
+<div class="sticky bottom-0 z-30 bg-surface/95 backdrop-blur-md px-space-margin-desktop py-space-md shadow-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md max-w-full">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors shadow-sm" type="button">
+          Save Draft to Manifest Ledger
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Previous: Cargo Classification</span>
+</button>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="hidden md:inline font-data-mono-sm text-[11px] text-on-surface-variant max-w-xs text-right">
+          Manifest will immediately broadcast to verified cold-chain volunteer couriers upon step 5 authorization.
+        </span>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-md flex items-center gap-2" type="button">
+<span>Next: Cold-Chain Telemetry &amp; Final Handoff</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

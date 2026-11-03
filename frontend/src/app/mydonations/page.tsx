@@ -1,224 +1,175 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import { donationsApi } from "@/lib/api-client";
+import Link from "next/link";
+import { useState } from "react";
+import { Package } from "lucide-react";
 
-interface Donation {
-  id: string;
-  title: string;
-  food_category: string;
-  quantity: number;
-  unit: string;
-  prepared_at?: string | null;
-  expires_at: string;
-  pickup_deadline: string;
-  status: string;
-  pickup_address: string;
-  area?: string | null;
-  state?: string | null;
-  pincode?: string | null;
-  description?: string | null;
-  created_at: string;
-  updated_at: string;
+import AppShell from "@/components/shell/AppShell";
+import DonationCard from "@/components/DonationCard";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { Field } from "@/components/ui/field";
+import { controlClass } from "@/components/ui/input";
+import { Pager } from "@/components/ui/pager";
+import { EmptyState, ErrorState, InlineAlert, ListSkeleton, PageHeader } from "@/components/ui/states";
+import { useToast } from "@/components/ui/toast";
+import { donationsApi } from "@/lib/api-client";
+import { formatDateTime, statusLabel } from "@/lib/format";
+import { useResource } from "@/lib/use-resource";
+import { DONATION_STATUSES, type Donation, type DonationStatus } from "@/lib/types";
+
+const PAGE_SIZE = 12;
+
+// Where each donation is, in the donor's words.
+const STATUS_NOTE: Record<DonationStatus, string> = {
+  AVAILABLE: "Waiting for a volunteer to claim it.",
+  ASSIGNED: "A volunteer has claimed it and will collect it.",
+  PICKED_UP: "Collected. On its way to an NGO.",
+  DELIVERED: "Delivered. Waiting for the NGO to confirm receipt.",
+  COMPLETED: "Receipt confirmed by the NGO. Thank you.",
+  CANCELLED: "You cancelled this donation.",
+  EXPIRED: "This listing expired before it was collected.",
+};
+
+export default function MyDonationsPage() {
+  return (
+    <AppShell roles={["Donor"]}>
+      <MyDonations />
+    </AppShell>
+  );
 }
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "AVAILABLE":
-      return "bg-gray-200 text-gray-700";
-    case "ASSIGNED":
-      return "bg-blue-500 text-white";
-    case "PICKED_UP":
-      return "bg-yellow-500 text-white";
-    case "DELIVERED":
-      return "bg-purple-500 text-white";
-    case "COMPLETED":
-      return "bg-green-800 text-white";
-    case "CANCELLED":
-      return "bg-red-500 text-white";
-    case "EXPIRED":
-      return "bg-orange-500 text-white";
-    default:
-      return "bg-gray-200 text-gray-700";
-  }
-};
-
-const getStatusLabel = (status: string) => status.replace("_", " ");
-
-const formatDate = (value?: string | null) => {
-  if (!value) return "—";
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "—" : date.toLocaleString();
-};
-
-export default function MyDonations() {
-  const [donations, setDonations] = useState<Donation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [cancelling, setCancelling] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const res = await donationsApi.getMine();
-        setDonations(res.data.donations);
-      } catch (err: any) {
-        setError(err.response?.data?.error?.message || "Error fetching donations");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDonations();
-  }, []);
-
-  const handleCancel = async (donation: Donation) => {
-    if (
-      !confirm(
-        `Cancel "${donation.title}"? This cannot be undone.`
-      )
-    ) {
-      return;
-    }
-
-    try {
-      setCancelling(donation.id);
-      const res = await donationsApi.cancel(donation.id);
-      const updated = res.data.donation;
-      setDonations((prev) =>
-        prev.map((item) =>
-          item.id === donation.id
-            ? { ...item, status: updated.status, updated_at: updated.updated_at }
-            : item
-        )
-      );
-    } catch (err: any) {
-      alert(err.response?.data?.error?.message || "Error cancelling donation");
-    } finally {
-      setCancelling(null);
-    }
-  };
+function MyDonations() {
+  const toast = useToast();
+  const [status, setStatus] = useState<"" | DonationStatus>("");
+  const [page, setPage] = useState(0);
+  const [target, setTarget] = useState<Donation | null>(null);
+  const list = useResource(
+    async () => (await donationsApi.getMine({ status: status || undefined, limit: PAGE_SIZE, offset: page * PAGE_SIZE })).data.donations,
+    `donor:mine:${status}|${page}`
+  );
+  const rows = list.data ?? [];
 
   return (
-    <main className="min-h-screen bg-green-50">
-      <Navbar />
+    <>
+      <PageHeader
+        title="My donations"
+        description="Everything you've listed, and where each donation is right now."
+        actions={
+          <Button asChild>
+            <Link href="/donate">Donate food</Link>
+          </Button>
+        }
+      />
 
-      <section className="py-16 px-6 text-center bg-green-100">
-        <h1 className="text-4xl font-bold text-green-800 mb-4">
-          My Donations 🍲
-        </h1>
-        <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-          Track all your donations, see their status, and manage active
-          listings.
-        </p>
-      </section>
-
-      <section className="py-8 px-6 max-w-4xl mx-auto space-y-6">
-        {loading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading your donations...</p>
-          </div>
-        )}
-
-        {error && (
-          <div className="text-center py-12 text-red-500">{error}</div>
-        )}
-
-        {!loading && !error && donations.length === 0 && (
-          <p className="text-gray-600 text-center py-12">
-            You have not donated any food yet.
-            <br />
-            <a
-              href="/donate"
-              className="text-green-600 font-semibold hover:underline mt-2 inline-block"
+      <div className="mb-4 max-w-xs rounded-lg border bg-card p-4 shadow-card">
+        <Field label="Show">
+          {(c) => (
+            <select
+              {...c}
+              className={controlClass}
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value as "" | DonationStatus);
+                setPage(0);
+              }}
             >
-              Create your first donation →
-            </a>
-          </p>
-        )}
+              <option value="">All donations</option>
+              {DONATION_STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {statusLabel(s)}
+                </option>
+              ))}
+            </select>
+          )}
+        </Field>
+      </div>
 
-        {!loading &&
-          !error &&
-          donations.map((donation) => (
-            <div
-              key={donation.id}
-              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"
-            >
-              <div className="flex justify-between items-center mb-3 gap-4">
-                <h2 className="text-xl font-semibold text-green-700">
-                  {donation.title}
-                </h2>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                    donation.status
-                  )}`}
-                >
-                  {getStatusLabel(donation.status)}
-                </span>
-              </div>
+      {list.error && list.data ? (
+        <InlineAlert tone="warning" className="mb-4">
+          <p>We couldn&apos;t refresh this list. You&apos;re seeing the last version we loaded.</p>
+        </InlineAlert>
+      ) : null}
 
-              {donation.description && (
-                <p className="text-gray-700 mb-2">{donation.description}</p>
-              )}
+      {list.loading && !list.data ? (
+        <ListSkeleton count={4} className="lg:grid-cols-2" />
+      ) : list.error && !list.data ? (
+        <ErrorState error={list.error} onRetry={() => list.reload()} />
+      ) : rows.length === 0 && page === 0 ? (
+        <EmptyState
+          icon={Package}
+          title={status ? `No ${statusLabel(status).toLowerCase()} donations` : "You haven't donated yet"}
+          action={
+            status ? (
+              <Button variant="outline" onClick={() => setStatus("")}>
+                Show all donations
+              </Button>
+            ) : (
+              <Button asChild>
+                <Link href="/donate">Donate food</Link>
+              </Button>
+            )
+          }
+        >
+          {status ? "Try another status." : "Your donations will be listed here, with their progress."}
+        </EmptyState>
+      ) : (
+        <div aria-busy={list.loading} className={list.loading ? "opacity-60" : undefined}>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {rows.map((d) => (
+              <li key={d.id}>
+                <DonationCard heading="h2" donation={d} showStatus showDeadlines={d.status === "AVAILABLE" || d.status === "ASSIGNED"}>
+                  <p className="text-sm text-ink-soft">{STATUS_NOTE[d.status]}</p>
+                  <p className="text-meta text-muted-foreground">Listed {formatDateTime(d.created_at)}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/acceptpage/${d.id}`}>
+                        View progress<span className="sr-only"> for {d.title}</span>
+                      </Link>
+                    </Button>
+                    {d.status === "AVAILABLE" || d.status === "ASSIGNED" ? (
+                      <Button variant="outline" size="sm" onClick={() => setTarget(d)}>
+                        Cancel donation<span className="sr-only"> {d.title}</span>
+                      </Button>
+                    ) : null}
+                  </div>
+                </DonationCard>
+              </li>
+            ))}
+          </ul>
+          <Pager label="My donations pages" page={page} pageSize={PAGE_SIZE} count={rows.length} loading={list.loading} onPage={setPage} />
+        </div>
+      )}
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <p className="text-gray-700">
-                  🥘 {donation.quantity} {donation.unit}
-                </p>
-                <p className="text-gray-700">
-                  🏷️ {donation.food_category}
-                </p>
-                <p className="text-gray-700">
-                  ⏰ Prepared: {formatDate(donation.prepared_at)}
-                </p>
-                <p className="text-gray-700">
-                  ⏳ Expires: {formatDate(donation.expires_at)}
-                </p>
-              </div>
-
-              <p className="text-gray-700">
-                📍 {donation.pickup_address}
-                {donation.area ? `, ${donation.area}` : ""}
-                {donation.state ? `, ${donation.state}` : ""}
-                {donation.pincode ? ` (${donation.pincode})` : ""}
-              </p>
-
-              <div className="mt-2 text-sm text-gray-500">
-                <p>Pickup by: {formatDate(donation.pickup_deadline)}</p>
-                <p>Created: {formatDate(donation.created_at)}</p>
-                <p>Last updated: {formatDate(donation.updated_at)}</p>
-              </div>
-
-              {["ASSIGNED", "PICKED_UP", "DELIVERED", "COMPLETED"].includes(
-                donation.status
-              ) && (
-                <div className="mt-3 bg-green-50 p-3 rounded border-l-4 border-green-700">
-                  <p className="text-gray-700 font-medium">
-                    Volunteer assigned
-                  </p>
-                  <p className="text-gray-700 text-sm">
-                    A volunteer is handling this donation. Status updates appear
-                    here.
-                  </p>
-                </div>
-              )}
-
-              {["AVAILABLE", "ASSIGNED"].includes(donation.status) && (
-                <button
-                  onClick={() => handleCancel(donation)}
-                  disabled={cancelling === donation.id}
-                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400 transition"
-                >
-                  {cancelling === donation.id
-                    ? "Cancelling..."
-                    : "Cancel Donation"}
-                </button>
-              )}
-            </div>
-          ))}
-      </section>
-    </main>
+      <ConfirmDialog
+        open={target !== null}
+        tone="destructive"
+        title="Cancel this donation?"
+        description={
+          target ? (
+            <p>
+              <strong>{target.title}</strong> will be removed.{" "}
+              {target.status === "ASSIGNED"
+                ? "A volunteer has already claimed it. Cancelling cancels their pickup, and they'll be notified in the app. "
+                : "Volunteers will no longer be able to claim it. "}
+              This can&apos;t be undone.
+            </p>
+          ) : undefined
+        }
+        confirmLabel="Cancel donation"
+        cancelLabel="Keep donation"
+        onConfirm={async () => {
+          if (!target) return;
+          await donationsApi.cancel(target.id);
+          toast.show(`“${target.title}” was cancelled.`);
+          await list.reload(true);
+        }}
+        // 403/404/409: it changed under us (e.g. already collected). Show the reason and refresh the list.
+        onError={(err) => {
+          if (err.status === 403 || err.status === 404 || err.status === 409) void list.reload(true);
+        }}
+        onClose={() => setTarget(null)}
+      />
+    </>
   );
 }

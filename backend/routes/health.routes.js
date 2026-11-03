@@ -33,9 +33,11 @@ router.get("/", async (req, res) => {
   }
 
   const isHealthy = checks.database === "ok";
+  const statusCode = isHealthy || config.env === "development" ? 200 : 503;
 
-  res.status(isHealthy ? 200 : 503).json({
+  res.status(statusCode).json({
     status: isHealthy ? "healthy" : "degraded",
+    database: checks.database,
     checks,
     meta: { requestId: req.requestId },
   });

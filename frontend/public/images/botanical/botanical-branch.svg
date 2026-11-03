@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Central curving stem -->
+  <path d="M40 200 C70 170, 110 130, 190 50" stroke="#16865B" stroke-width="2"/>
+  <!-- Leaf 1 -->
+  <path d="M80 160 C75 140, 85 125, 105 130 C105 150, 95 165, 80 160 Z" fill="#DDEBDD" fill-opacity="0.6" stroke="#123D2B"/>
+  <path d="M80 160 Q95 145 105 130" stroke="#16865B"/>
+  <!-- Leaf 2 -->
+  <path d="M100 140 C120 140, 135 125, 130 105 C110 105, 95 120, 100 140 Z" fill="#DDEBDD" fill-opacity="0.6" stroke="#123D2B"/>
+  <path d="M100 140 Q115 122 130 105" stroke="#16865B"/>
+  <!-- Leaf 3 -->
+  <path d="M130 110 C125 90, 135 75, 155 80 C155 100, 145 115, 130 110 Z" fill="#DDEBDD" fill-opacity="0.6" stroke="#123D2B"/>
+  <path d="M130 110 Q145 95 155 80" stroke="#16865B"/>
+  <!-- Leaf 4 -->
+  <path d="M150 90 C170 90, 185 75, 180 55 C160 55, 145 70, 150 90 Z" fill="#DDEBDD" fill-opacity="0.6" stroke="#123D2B"/>
+  <path d="M150 90 Q165 72 180 55" stroke="#16865B"/>
+  <!-- Tip bud -->
+  <path d="M190 50 C195 40, 205 40, 205 48 C205 56, 198 56, 190 50 Z" fill="#16865B" stroke="#123D2B"/>
+</svg>
+

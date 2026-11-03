@@ -1,325 +1,339 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import Navbar from "@/components/volunavbar";
-import { donationsApi, volunteerApi } from "@/lib/api-client";
+import { useEffect, useRef, useState } from "react";
+import { ClipboardList, ExternalLink } from "lucide-react";
 
-interface Donation {
-  id: string;
-  food_category: string;
-  quantity: number;
-  unit: string;
-  prepared_at?: string | null;
-  pincode?: string | null;
-  area?: string | null;
-  state?: string | null;
-  status: string;
-  title?: string;
-  description?: string;
-  expires_at?: string;
-  pickup_deadline?: string;
-}
+import AppShell from "@/components/shell/AppShell";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { Field } from "@/components/ui/field";
+import { controlClass } from "@/components/ui/input";
+import { Journey } from "@/components/ui/journey";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { EmptyState, ErrorState, InlineAlert, ListSkeleton, PageHeader, Skeleton } from "@/components/ui/states";
+import { useToast } from "@/components/ui/toast";
+import { donationsApi, ngoApi, volunteerApi } from "@/lib/api-client";
+import { deadlineInfo, formatDateTime, formatLocation, formatQuantity, formatWhen } from "@/lib/format";
+import { useNow } from "@/lib/use-now";
+import { useResource } from "@/lib/use-resource";
+import type { Donation, VolunteerTask } from "@/lib/types";
 
-interface VolunteerStats {
-  totalPickups: number;
-  totalQuantity: number;
-  activeAssignment: {
-    donationId: string;
-    pickedUp: boolean;
-    delivered: boolean;
-  } | null;
-}
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "AVAILABLE":
-      return "text-status-available";
-    case "ASSIGNED":
-    case "PICKED_UP":
-    case "DELIVERED":
-      return "text-status-assigned";
-    case "COMPLETED":
-      return "text-status-completed";
-    case "CANCELLED":
-    case "EXPIRED":
-      return "text-status-cancelled";
-    default:
-      return "text-muted-foreground";
-  }
-};
-
-const getStatusLabel = (status: string) => {
-  return status.replace("_", " ");
-};
+type TaskWithDonation = VolunteerTask & { donations: Donation };
 
 export default function VolunteerTasksPage() {
-  const [donations, setDonations] = useState<Donation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [stats, setStats] = useState<VolunteerStats | null>(null);
-  const [updating, setUpdating] = useState<string | null>(null);
+  return (
+    <AppShell roles={["Volunteer"]}>
+      <Tasks />
+    </AppShell>
+  );
+}
 
-  // Fetch available donations when page loads
-  useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const res = await donationsApi.getAvailable();
-        setDonations(res.data.donations);
-      } catch (err: any) {
-        setError(err.response?.data?.error?.message || "Error fetching donations");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDonations();
-  }, []);
-
-  // Fetch volunteer stats
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await volunteerApi.getDashboard();
-        setStats(res.data.stats);
-      } catch (err) {
-        console.error("Error fetching volunteer stats:", err);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  const handleClaim = async (donationId: string) => {
-    if (!donationId) {
-      alert("Invalid donation ID");
-      return;
-    }
-
-    try {
-      setUpdating(donationId);
-      await donationsApi.claim(donationId);
-
-      setDonations((prevDonations) =>
-        prevDonations.map((donation) =>
-          donation.id === donationId
-            ? { ...donation, status: "ASSIGNED" }
-            : donation
-        )
-      );
-
-      alert("Donation claimed successfully!");
-      window.location.reload();
-    } catch (err: any) {
-      console.error("Claim Error:", err.response?.data || err.message);
-      const errorMsg =
-        err.response?.data?.error?.message || "Error claiming donation";
-      alert(errorMsg);
-    } finally {
-      setUpdating(null);
-    }
-  };
+function Tasks() {
+  const tasks = useResource(async () => (await volunteerApi.getTasks()).data.tasks);
+  const rows = (tasks.data ?? []).filter((t): t is TaskWithDonation => t.donations !== null);
+  const active = rows.find((t) => t.assignment_status === "active") ?? null;
+  const history = rows.filter((t) => t !== active);
 
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
+    <>
+      <PageHeader
+        title="My tasks"
+        description="Your current pickup, what to do next, and everything you have collected before."
+      />
 
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-b from-[color-surface] to-[color-card] px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-brand-primary mb-4">
-            Be a Food Rescue Hero
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See nearby donations, claim pickups, and help reduce food waste.
-          </p>
-        </div>
-      </section>
+      {tasks.loading && !tasks.data ? (
+        <ListSkeleton count={2} />
+      ) : tasks.error && !tasks.data ? (
+        <ErrorState error={tasks.error} onRetry={() => tasks.reload()} />
+      ) : rows.length === 0 ? (
+        <EmptyState
+          icon={ClipboardList}
+          title="No tasks yet"
+          action={
+            <Button asChild>
+              <Link href="/volunteerdash">Find food to collect</Link>
+            </Button>
+          }
+        >
+          When you claim a pickup it shows up here, with the steps to collect and deliver it.
+        </EmptyState>
+      ) : (
+        <div className="flex flex-col gap-10">
+          {tasks.error ? (
+            <InlineAlert tone="warning">
+              <p>We couldn&apos;t refresh your tasks. You&apos;re seeing the last version we loaded.</p>
+            </InlineAlert>
+          ) : null}
 
-      {/* Donations Section */}
-      <section className="py-10 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-semibold text-foreground mb-6 text-center">
-            Nearby Food Donations 🍲
-          </h2>
-
-          {loading && (
-            <p className="text-center text-muted-foreground">Loading donations...</p>
+          {active ? (
+            <ActiveTask task={active} onChanged={() => tasks.reload(true)} />
+          ) : (
+            <InlineAlert tone="info" title="No task in progress">
+              <p>
+                <Link href="/volunteerdash" className="font-semibold text-primary underline underline-offset-2">
+                  Find food to collect
+                </Link>{" "}
+                when you are ready for the next one.
+              </p>
+            </InlineAlert>
           )}
 
-          {error && <p className="text-center text-error">{error}</p>}
-
-          {!loading && !error && donations.length === 0 && (
-            <div className="empty-state p-12 text-center">
-              <svg
-                className="mx-auto mb-4 w-16 h-16 text-muted-foreground/60"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 15m-2 0a2 2 0 100-4 2 2 0 100 4m-7-2a2 2 0 11-4 0 2 2 0 114m12 0a2 2 0 100-4 2 2 0 100 4"
-                />
-              </svg>
-              <h3 className="text-xl font-medium text-foreground mb-2">
-                No nearby donations available
-              </h3>
-              <p className="text-muted-foreground/60 mb-6">
-                There are no food donations available for pickup at the moment.
-              </p>
-              <Link href="/donate">
-                <button className="btn-primary">
-                  Donate Food Now
-                </button>
-              </Link>
-            </div>
-          )}
-
-          {!loading && !error && donations.length > 0 && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {donations.map((item) => (
-                <div
-                  key={item.id}
-                  className="card p-6 hover:shadow-lg transition-shadow"
-                >
-                  <h3 className="text-xl font-bold text-foreground mb-2">
-                    {item.title}
-                  </h3>
-                  {item.description && (
-                    <p className="text-muted-foreground/80 mb-3 line-clamp-2">
-                      {item.description}
-                    </p>
-                  )}
-                  <p className="text-muted-foreground/80 mb-3">
-                    📍{" "}{[item.area, item.state].filter(Boolean).join(", ")} ||
-                    "Location not specified"{item.pincode ? ` (${item.pincode})` : ""}
-                  </p>
-                  <p className="text-muted-foreground/80 mb-3">
-                    🏷️ {item.food_category}
-                  </p>
-                  <p className="text-muted-foreground/80 mb-3">
-                    ⏰ Prepared:{" "}{item.prepared_at
-                      ? new Date(item.prepared_at).toLocaleString()
-                      : "Not specified"}
-                  </p>
-                  <p className="text-muted-foreground/80 mb-3">
-                    📦 Quantity: {item.quantity} {item.unit}
-                  </p>
-                  {item.expires_at && (
-                    <p className="text-warning/80 mb-3">
-                      ⏳ Expires: {new Date(item.expires_at).toLocaleString()}
-                    </p>
-                  )}
-                  {item.pickup_deadline && (
-                    <p className="text-warning/80 mb-3">
-                      🕐 Pickup by: {new Date(item.pickup_deadline).toLocaleString()}
-                    </p>
-                  )}
-                  <p
-                    className={`mt-3 font-medium ${getStatusColor(item.status)}`}
-                  >
-                    Status: {getStatusLabel(item.status)}
-                  </p>
-
-                  {item.status === "AVAILABLE" && (
-                    <button
-                      onClick={() => handleClaim(item.id)}
-                      disabled={updating === item.id}
-                      className="mt-4 w-full px-6 py-3 btn-primary rounded-xl font-medium transition-all disabled:bg-brand-subtle disabled:pointer-events-none"
-                    >
-                      {updating === item.id ? "Claiming..." : "Claim This Donation"}
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+          {history.length > 0 ? (
+            <section aria-labelledby="task-history">
+              <h2 id="task-history" className="mb-3 text-heading font-semibold">
+                Task history
+              </h2>
+              <ul data-ui="task-history" className="divide-y rounded-lg border bg-card shadow-card">
+                {history.map((t) => (
+                  <li key={t.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
+                    <div className="min-w-0">
+                      <p className="break-words font-semibold">{t.donations.title}</p>
+                      <p className="text-sm text-ink-soft">
+                        {formatQuantity(t.donations.quantity, t.donations.unit)} · claimed {formatDateTime(t.assigned_at)}
+                      </p>
+                      {t.delivered_at ? <p className="text-meta text-muted-foreground">Delivered {formatDateTime(t.delivered_at)}</p> : null}
+                    </div>
+                    <StatusBadge status={t.donations.status} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </div>
-      </section>
-
-      {/* Impact Section */}
-      <section className="py-16 bg-[color-surface] px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold text-brand-primary mb-8">
-            Your Impact 💪
-          </h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-2xl mx-auto">
-            <div className="card p-6 text-center hover:shadow-lg transition-shadow">
-              <p className="text-3xl font-bold text-status-completed">
-                {stats?.totalPickups || 0}
-              </p>
-              <p className="text-muted-foreground/80 mt-1">Completed Pickups</p>
-            </div>
-            <div className="card p-6 text-center hover:shadow-lg transition-shadow">
-              <p className="text-3xl font-bold text-brand-primary">
-                {stats?.totalQuantity || 0}
-              </p>
-              <p className="text-muted-foreground/80 mt-1">Total Quantity Delivered</p>
-            </div>
-            <div className="card p-6 text-center hover:shadow-lg transition-shadow">
-              <p className="text-3xl font-bold text-foreground">
-                {stats?.activeAssignment ? "Active" : "Available"}
-              </p>
-              <p className="text-muted-foreground/80 mt-1">Current Status</p>
-            </div>
-            <div className="card p-6 text-center hover:shadow-lg transition-shadow">
-              <p className="text-3xl font-bold text-warning/80">
-                {stats?.activeAssignment?.donationId
-                  ? stats.activeAssignment.donationId.slice(0, 8) + "..."
-                  : "—"}
-              </p>
-              <p className="text-muted-foreground/80 mt-1">Current Assignment</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Active Assignment */}
-      {stats?.activeAssignment && (
-        <section className="py-10 px-6">
-          <div className="max-w-md mx-auto card p-8">
-            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
-              Active Assignment 📋
-            </h2>
-
-            <p className="text-muted-foreground mb-2">
-              <strong>Donation ID:</strong> {stats.activeAssignment.donationId.slice(0, 8)}...
-            </p>
-            <p className="text-muted-foreground mb-2">
-              <strong>Picked Up:</strong> {" "}{stats.activeAssignment.pickedUp ? (
-                <span className="text-status-completed">Yes ✅</span>
-              ) : (
-                <span className="text-status-assigned">No</span>
-              )}
-            </p>
-            <p className="text-muted-foreground mb-4">
-              <strong>Delivered:</strong> {" "}{stats.activeAssignment.delivered ? (
-                <span className="text-status-completed">Yes ✅</span>
-              ) : (
-                <span className="text-status-assigned">No</span>
-              )}
-            </p>
-
-            <Link href="/volunteer/tasks">
-              <button className="btn-primary w-full px-6 py-3 rounded-xl font-medium transition-all">
-                View Task Details
-              </button>
-            </Link>
-          </div>
-        </section>
       )}
+    </>
+  );
+}
 
-      {/* My Tasks Link */}
-      <section className="py-10 px-6 text-center">
-        <Link href="/volunteer/tasks">
-          <button className="btn-primary px-6 py-3 rounded-xl font-medium transition-all hover:scale-105">
-            View My Tasks
-          </button>
-        </Link>
-      </section>
-    </main>
+function ActiveTask({ task, onChanged }: { task: TaskWithDonation; onChanged: () => Promise<void> }) {
+  const d = task.donations;
+  const now = useNow();
+  const pickup = deadlineInfo(d.pickup_deadline, now);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const lastStatus = useRef(d.status);
+  // Lives here, not in the action panels: after a stale-action error the panel is replaced by the refreshed
+  // state, and this is what still explains to the volunteer what happened.
+  const [notice, setNotice] = useState<string | null>(null);
+  const done = async () => {
+    setNotice(null);
+    await onChanged();
+  };
+  // Explain first, then refresh: `done` would clear the notice we are about to show.
+  const stale = async (message: string) => {
+    setNotice(`${message} We've refreshed this task.`);
+    await onChanged();
+  };
+
+  // After a step succeeds the action panel changes; move focus to the task title so keyboard and
+  // screen-reader users land somewhere stable instead of on a button that no longer exists.
+  useEffect(() => {
+    if (lastStatus.current !== d.status) {
+      lastStatus.current = d.status;
+      headingRef.current?.focus();
+    }
+  }, [d.status]);
+
+  const mapQuery = d.latitude !== null && d.longitude !== null ? `${d.latitude},${d.longitude}` : formatLocation(d);
+  const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+
+  return (
+    <section aria-labelledby="current-task" className="rounded-lg border-2 border-primary bg-card shadow-raised">
+      <div className="flex flex-col gap-6 p-5 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-meta font-semibold text-primary">Current task</p>
+            <h2 id="current-task" ref={headingRef} tabIndex={-1} className="break-words text-heading font-semibold">
+              {d.title}
+            </h2>
+            <p className="mt-1 text-sm font-medium text-ink-soft">
+              {formatQuantity(d.quantity, d.unit)} · {d.food_category}
+            </p>
+          </div>
+          <StatusBadge status={d.status} />
+        </div>
+
+        <Journey
+          status={d.status}
+          times={{
+            AVAILABLE: d.created_at,
+            ASSIGNED: task.assigned_at,
+            PICKED_UP: task.picked_up_at,
+            DELIVERED: task.delivered_at,
+          }}
+        />
+
+        <dl className="grid gap-4 border-t-2 border-dashed border-border pt-5 text-sm sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <dt className="font-semibold">Pickup address</dt>
+            <dd className="mt-1 flex flex-wrap items-start justify-between gap-2">
+              <span className="min-w-0 break-words">{formatLocation(d)}</span>
+              <a
+                href={mapHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-2"
+              >
+                Open in Maps
+                <ExternalLink aria-hidden className="size-4" />
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold">Pick up by</dt>
+            <dd className="mt-1">
+              {formatWhen(d.pickup_deadline, now)}
+              {pickup ? <span className="text-ink-soft"> · {pickup.label}</span> : null}
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold">Food expires</dt>
+            <dd className="mt-1">{formatWhen(d.expires_at, now)}</dd>
+          </div>
+          {d.description ? (
+            <div className="sm:col-span-2">
+              <dt className="font-semibold">Notes from the donor</dt>
+              <dd className="mt-1 whitespace-pre-line break-words text-ink-soft">{d.description}</dd>
+            </div>
+          ) : null}
+        </dl>
+
+        <div className="flex flex-col gap-3 border-t-2 border-dashed border-border pt-5">
+          {notice ? (
+            <InlineAlert tone="warning" role="alert" title="This task changed" onDismiss={() => setNotice(null)}>
+              <p>{notice}</p>
+            </InlineAlert>
+          ) : null}
+          {d.status === "ASSIGNED" ? <PickupAction donation={d} onChanged={done} onStale={stale} /> : null}
+          {d.status === "PICKED_UP" ? <DeliveryAction donation={d} onChanged={done} onStale={stale} /> : null}
+          {d.status === "DELIVERED" ? <AwaitingReceipt donation={d} /> : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PickupAction({ donation, onChanged, onStale }: { donation: Donation; onChanged: () => Promise<void>; onStale: (message: string) => Promise<void> }) {
+  const toast = useToast();
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <p className="text-sm text-ink-soft">Next step: collect the food from the donor, then confirm here.</p>
+      <div>
+        <Button onClick={() => setOpen(true)}>Mark as picked up</Button>
+      </div>
+      <ConfirmDialog
+        open={open}
+        title="Confirm pickup"
+        description={
+          <p>
+            Confirm you have collected <strong>{donation.title}</strong> ({formatQuantity(donation.quantity, donation.unit)}) from the
+            donor. The donor will be notified in the app.
+          </p>
+        }
+        confirmLabel="Yes, I picked it up"
+        onConfirm={async () => {
+          await donationsApi.pickup(donation.id);
+          toast.show("Pickup recorded. Next, deliver it to an NGO.");
+          await onChanged();
+        }}
+        // 403/404/409 mean the task changed under us: explain why, and bring the page back in sync.
+        onError={(err) => {
+          if (err.status === 403 || err.status === 404 || err.status === 409) void onStale(err.message);
+        }}
+        onClose={() => setOpen(false)}
+      />
+    </>
+  );
+}
+
+function DeliveryAction({ donation, onChanged, onStale }: { donation: Donation; onChanged: () => Promise<void>; onStale: (message: string) => Promise<void> }) {
+  const toast = useToast();
+  const ngos = useResource(async () => (await ngoApi.getApprovedNGOs()).data.ngos);
+  const [ngoUserId, setNgoUserId] = useState("");
+  const [open, setOpen] = useState(false);
+  // The API expects the NGO's *user* id here, not the ngo_profiles id.
+  const selected = ngos.data?.find((n) => n.user_id === ngoUserId) ?? null;
+
+  return (
+    <>
+      <p className="text-sm text-ink-soft">Next step: take it to an approved NGO, then confirm the hand-over.</p>
+      {ngos.loading && !ngos.data ? (
+        <Skeleton className="h-11 w-full max-w-md" />
+      ) : ngos.error && !ngos.data ? (
+        <ErrorState error={ngos.error} onRetry={() => ngos.reload()} title="We couldn't load the NGO list" />
+      ) : ngos.data && ngos.data.length === 0 ? (
+        <InlineAlert tone="warning" title="No approved NGOs yet">
+          <p>An admin has to approve an NGO before you can deliver. Ask them to review pending NGO verifications.</p>
+        </InlineAlert>
+      ) : (
+        <>
+          <Field label="Deliver to" required className="max-w-md">
+            {(control) => (
+              <select {...control} className={controlClass} value={ngoUserId} onChange={(e) => setNgoUserId(e.target.value)}>
+                <option value="">Choose an NGO…</option>
+                {ngos.data?.map((n) => (
+                  <option key={n.user_id} value={n.user_id}>
+                    {n.organization_name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </Field>
+          {selected ? (
+            <dl className="max-w-md rounded-md bg-muted p-3 text-sm">
+              <dt className="font-semibold">Address</dt>
+              <dd className="break-words text-ink-soft">{selected.address}</dd>
+              <dt className="mt-2 font-semibold">Contact</dt>
+              <dd className="text-ink-soft">
+                {selected.contact_person} ·{" "}
+                <a href={`tel:${selected.contact_phone}`} className="font-semibold text-primary underline underline-offset-2">
+                  {selected.contact_phone}
+                </a>
+              </dd>
+            </dl>
+          ) : null}
+          <div>
+            <Button disabled={!selected} onClick={() => setOpen(true)}>
+              Mark as delivered
+            </Button>
+          </div>
+        </>
+      )}
+      <ConfirmDialog
+        open={open}
+        title="Confirm delivery"
+        description={
+          <p>
+            Confirm you handed <strong>{donation.title}</strong> to <strong>{selected?.organization_name}</strong>. They will be asked to
+            confirm receipt, and your next pickup unlocks once they do.
+          </p>
+        }
+        confirmLabel="Yes, I delivered it"
+        onConfirm={async () => {
+          await donationsApi.deliver(donation.id, ngoUserId);
+          toast.show("Delivery recorded. Waiting for the NGO to confirm.");
+          await onChanged();
+        }}
+        onError={(err) => {
+          if (err.status === 403 || err.status === 404 || err.status === 409) void onStale(err.message);
+        }}
+        onClose={() => setOpen(false)}
+      />
+    </>
+  );
+}
+
+function AwaitingReceipt({ donation }: { donation: Donation }) {
+  const ngos = useResource(async () => (await ngoApi.getApprovedNGOs()).data.ngos);
+  const ngo = ngos.data?.find((n) => n.user_id === donation.recipient_ngo_id);
+  return (
+    <InlineAlert tone="info" title="Delivered. Waiting for the NGO to confirm receipt">
+      <p>
+        {ngo ? ngo.organization_name : "The receiving NGO"} has to confirm before this task closes. You can claim another pickup as soon as
+        they do.
+      </p>
+    </InlineAlert>
   );
 }

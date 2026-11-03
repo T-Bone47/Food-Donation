@@ -1,163 +1,184 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { notificationsApi } from "@/lib/api-client";
+import Link from "next/link";
+import { useState } from "react";
+import { Ban, Bell, CircleCheck, PackageCheck, PackageOpen, PackagePlus, ShieldCheck, TimerOff, UserCheck, type LucideIcon } from "lucide-react";
 
-interface Notification {
-  id: string;
-  event_type: string;
-  title: string;
-  message: string;
-  data: Record<string, any>;
-  channels: string[];
-  delivery_status: string;
-  read: boolean;
-  read_at?: string;
-  created_at: string;
+import AppShell from "@/components/shell/AppShell";
+import { Button } from "@/components/ui/button";
+import { EmptyState, ErrorState, InlineAlert, ListSkeleton, PageHeader } from "@/components/ui/states";
+import { useToast } from "@/components/ui/toast";
+import { notificationsApi } from "@/lib/api-client";
+import { errorMessages, getApiError, type ApiError } from "@/lib/api-envelope";
+import { formatAgo, formatDateTime } from "@/lib/format";
+import { normalizeRole, useCurrentUser } from "@/lib/session";
+import { useNow } from "@/lib/use-now";
+import { useResource } from "@/lib/use-resource";
+import type { AppNotification, UserRole } from "@/lib/types";
+import { cn } from "@/lib/utils";
+
+// Event names are the ones backend/services/notification.service.js emits.
+const EVENT_ICON: Record<string, LucideIcon> = {
+  "donation.created": PackagePlus,
+  "donation.claimed": UserCheck,
+  "donation.pickup_recorded": PackageCheck,
+  "donation.delivered": PackageOpen,
+  "donation.completed": CircleCheck,
+  "donation.cancelled": Ban,
+  "donation.expired": TimerOff,
+  "ngo.verification_submitted": ShieldCheck,
+  "ngo.verification_decided": ShieldCheck,
+};
+
+/** Where a notification should take this person. Every target is a route their role can open. */
+function destination(n: AppNotification, role: UserRole | null): { href: string; label: string } | null {
+  if (n.event_type === "ngo.verification_decided") return { href: "/ngodash", label: "View verification" };
+  if (n.event_type === "ngo.verification_submitted") return { href: "/adminpage", label: "Open the console" };
+  if (!n.event_type.startsWith("donation.")) return null;
+  const id = n.data?.donationId;
+  switch (role) {
+    case "Donor":
+      return id ? { href: `/acceptpage/${id}`, label: "View progress" } : { href: "/mydonations", label: "My donations" };
+    case "Volunteer":
+      return { href: "/volunteer/tasks", label: "Open My tasks" };
+    case "NGO":
+      return { href: "/ngodash", label: "Review deliveries" };
+    case "Admin":
+      return { href: "/adminpage", label: "Open the console" };
+    default:
+      return null;
+  }
 }
 
-export default function Notifications() {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function NotificationsPage() {
+  return (
+    <AppShell>
+      <Notifications />
+    </AppShell>
+  );
+}
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const res = await notificationsApi.getAll({ limit: 50 });
-        setNotifications(res.data.notifications);
-      } catch (err: any) {
-        setError(err.response?.data?.error?.message || "Error fetching notifications");
-      } finally {
-        setLoading(false);
-      }
-    };
+function Notifications() {
+  const toast = useToast();
+  const now = useNow();
+  const { user } = useCurrentUser();
+  const role = normalizeRole(user?.role);
+  const [unreadOnly, setUnreadOnly] = useState(false);
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [markingAll, setMarkingAll] = useState(false);
+  const [actionError, setActionError] = useState<ApiError | null>(null);
+  const list = useResource(
+    async () => (await notificationsApi.getAll({ limit: 50, unreadOnly: unreadOnly ? "true" : undefined })).data.notifications,
+    `notifications:list:${unreadOnly}`
+  );
+  const items = list.data ?? [];
+  const unreadCount = items.filter((n) => !n.read).length;
 
-    fetchNotifications();
-  }, []);
-
-  const handleDismiss = async (id: string) => {
+  async function markRead(id: string) {
+    setBusyId(id);
+    setActionError(null);
     try {
       await notificationsApi.markRead(id);
-      setNotifications((prev) => prev.filter((item) => item.id !== id));
-    } catch (err) {
-      console.error("Error marking notification as read:", err);
+      await list.reload(true);
+    } catch (e) {
+      setActionError(getApiError(e));
+    } finally {
+      setBusyId(null);
     }
-  };
+  }
 
-  const handleMarkAllRead = async () => {
+  async function markAll() {
+    setMarkingAll(true);
+    setActionError(null);
     try {
       await notificationsApi.markAllRead();
-      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-    } catch (err) {
-      console.error("Error marking all notifications as read:", err);
+      toast.show("All notifications marked as read.");
+      await list.reload(true);
+    } catch (e) {
+      setActionError(getApiError(e));
+    } finally {
+      setMarkingAll(false);
     }
-  };
-
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
-
-    if (diffMins < 1) return "Just now";
-    if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? "s" : ""} ago`;
-    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-    return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-  };
-
-  const getEventIcon = (eventType: string) => {
-    if (eventType.includes("donation.created")) return "🆕";
-    if (eventType.includes("donation.claimed")) return "✅";
-    if (eventType.includes("pickup")) return "📦";
-    if (eventType.includes("delivered")) return "🚚";
-    if (eventType.includes("completed")) return "🎉";
-    if (eventType.includes("cancelled")) return "❌";
-    if (eventType.includes("expired")) return "⏰";
-    if (eventType.includes("ngo.verification")) return "🏢";
-    return "🔔";
-  };
+  }
 
   return (
-    <main className="min-h-screen bg-green-50">
-      <Navbar />
+    <>
+      <PageHeader
+        title="Notifications"
+        description="Updates about your donations, pickups and deliveries."
+        actions={
+          <Button variant="outline" onClick={markAll} loading={markingAll} disabled={unreadCount === 0}>
+            Mark all as read
+          </Button>
+        }
+      />
 
-      <section className="py-8 px-6 text-center bg-green-100">
-        <h1 className="text-3xl font-bold text-green-800 mb-4">Notifications</h1>
-        <p className="text-gray-700">Stay updated about your donations in real-time.</p>
-      </section>
+      <label className="mb-4 flex min-h-11 w-fit cursor-pointer items-center gap-3 text-sm font-medium">
+        <input type="checkbox" checked={unreadOnly} onChange={(e) => setUnreadOnly(e.target.checked)} className="size-5 accent-primary" />
+        Show unread only
+      </label>
 
-      <section className="py-8 px-6 flex flex-col items-center gap-4 max-w-3xl mx-auto">
-        {loading && (
-          <div className="w-full max-w-xl text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading notifications...</p>
-          </div>
-        )}
+      {actionError ? (
+        <InlineAlert tone="error" title="That didn't work" onDismiss={() => setActionError(null)} className="mb-4">
+          {errorMessages(actionError).map((m) => (
+            <p key={m}>{m}</p>
+          ))}
+        </InlineAlert>
+      ) : null}
 
-        {error && (
-          <div className="w-full max-w-xl text-center py-12 text-red-500">
-            {error}
-          </div>
-        )}
-
-        {!loading && !error && notifications.length === 0 && (
-          <div className="w-full max-w-xl text-center py-12">
-            <p className="text-gray-600 mt-6">No new notifications</p>
-          </div>
-        )}
-
-        {!loading && !error && notifications.length > 0 && (
-          <>
-            <div className="w-full max-w-xl flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-700">
-                {notifications.filter((n) => !n.read).length} unread
-              </h2>
-              {notifications.some((n) => !n.read) && (
-                <Button variant="outline" size="sm" onClick={handleMarkAllRead}>
-                  Mark all as read
-                </Button>
-              )}
-            </div>
-            <div className="w-full max-w-xl space-y-3">
-              {notifications.map((n) => (
-                <Card
-                  key={n.id}
-                  className={`w-full bg-white shadow-md hover:shadow-lg transition-all rounded-xl ${n.read ? "opacity-70" : ""}`}
-                >
-                  <CardContent className="p-4 flex justify-between items-start">
-                    <div className="flex-1 pr-4">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xl">{getEventIcon(n.event_type)}</span>
-                        <p className={`text-lg font-medium text-green-800 ${!n.read ? "font-bold" : ""}`}>
-                          {n.title}
-                        </p>
+      {list.loading && !list.data ? (
+        <ListSkeleton count={3} className="sm:grid-cols-1 lg:grid-cols-1" />
+      ) : list.error && !list.data ? (
+        <ErrorState error={list.error} onRetry={() => list.reload()} />
+      ) : items.length === 0 ? (
+        <EmptyState icon={Bell} title={unreadOnly ? "No unread notifications" : "You're all caught up"}>
+          {unreadOnly ? "Everything has been read." : "Updates about your donations will appear here."}
+        </EmptyState>
+      ) : (
+        <>
+          <ul aria-busy={list.loading} data-ui="notification-list" className={cn("divide-y overflow-hidden rounded-lg border bg-card shadow-card", list.loading && "opacity-60")}>
+            {items.map((n) => {
+              const Icon = EVENT_ICON[n.event_type] ?? Bell;
+              const dest = destination(n, role);
+              return (
+                <li key={n.id} className={cn("flex gap-3 p-4", !n.read && "bg-primary-soft")}>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-full border bg-card text-primary">
+                    <Icon aria-hidden className="size-5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="break-words">
+                      <span className={n.read ? "font-medium" : "font-semibold"}>{n.title}</span>
+                      {!n.read ? <span className="sr-only"> (unread)</span> : null}
+                    </p>
+                    <p className="break-words text-sm text-ink-soft">{n.message}</p>
+                    <p className="mt-1 text-meta text-muted-foreground">
+                      <time dateTime={n.created_at} title={formatDateTime(n.created_at)}>
+                        {formatAgo(n.created_at, now)}
+                      </time>
+                    </p>
+                    {dest || !n.read ? (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {dest ? (
+                          <Button asChild size="sm" variant="outline">
+                            <Link href={dest.href}>{dest.label}</Link>
+                          </Button>
+                        ) : null}
+                        {!n.read ? (
+                          <Button size="sm" variant="ghost" loading={busyId === n.id} onClick={() => markRead(n.id)}>
+                            Mark as read<span className="sr-only">: {n.title}</span>
+                          </Button>
+                        ) : null}
                       </div>
-                      <p className="text-gray-700">{n.message}</p>
-                      <p className="text-sm text-gray-500 mt-1">{formatTime(n.created_at)}</p>
-                    </div>
-                    {!n.read && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-green-600 hover:text-green-800"
-                        onClick={() => handleDismiss(n.id)}
-                      >
-                        Dismiss
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </>
-        )}
-      </section>
-    </main>
+                    ) : null}
+                  </div>
+                  {!n.read ? <span aria-hidden className="mt-2 size-2.5 shrink-0 rounded-full bg-primary" /> : null}
+                </li>
+              );
+            })}
+          </ul>
+          {items.length >= 50 ? <p className="mt-2 text-meta text-muted-foreground">Showing your 50 most recent notifications.</p> : null}
+        </>
+      )}
+    </>
   );
 }

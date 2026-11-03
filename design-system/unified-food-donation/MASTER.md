@@ -20,47 +20,53 @@ A premium design language for a food waste reduction platform. Combines warm neu
 
 ### Color System (Semantic Tokens)
 
-| Token | Description | Usage |
-|-------|-------------|-------|
-| `color-brand-primary` | Primary brand color | Primary buttons, links, interactive elements |
-| `color-brand-primary-hover` | Hover state | Hover states on interactive elements |
-| `color-brand-foreground` | Text on primary | White text on primary buttons |
-| `color-brand-subtle` | Subtle primary accent | Disabled states, inactive elements |
-| `color-surface` | Page background | Body background |
-| `color-card` | Card backgrounds | Donation cards, modals, panels |
-| `color-card-foreground` | Text on cards | Primary text within cards |
-| `color-muted` | Muted elements | Placeholder text, secondary labels |
-| `color-muted-foreground` | Muted text foreground | Secondary text, helper text |
-| `color-border` | Border elements | Input borders, table separators, dividers |
-| `color-border-focus` | Focus ring border | Focus states on interactive elements |
-| `color-success` | Success state | Completed donations, positive confirmation |
-| `color-warning` | Warning state | Expiry warnings, overdue actions |
-| `color-error` | Error state | Form validation errors, critical alerts |
-| `color-info` | Informational state | Status labels, informative text |
-| `color-action-primary` | Primary action buttons | Donate, Claim, Submit buttons |
-| `color-action-secondary` | Secondary actions | Outline buttons, less prominent actions |
-| `color-status-available` | AVAILABLE status | Donation cards, lists |
-| `color-status-assigned` | ASSIGNED status | Assigned donations, volunteer tasks |
-| `color-status-picked-up` | PICKED_UP status | Pickup confirmed |
-| `color-status-delivered` | DELIVERED status | Delivery confirmation |
-| `color-status-completed` | COMPLETED status | Finalized donations |
-| `color-status-cancelled` | CANCELLED status | Cancelled donations |
-| `color-status-expired` | EXPIRED status | Expired donations |
+| Token | Description | Hex / Variable Reference | Usage |
+|-------|-------------|-------------------------|-------|
+| `--color-primary` | Primary brand leaf green | `#1d5c3a` (`--leaf-700`) | Primary buttons, active tabs, brand focus ring |
+| `--color-primary-hover` | Hover state leaf green | `#154a2e` (`--leaf-800`) | Hover state on primary interactive elements |
+| `--color-primary-active` | Active leaf green | `#0f3822` (`--leaf-900`) | Pressed/active state on primary controls |
+| `--color-primary-foreground` | White text on primary | `#ffffff` (`--surface`) | Button text on primary buttons |
+| `--color-primary-soft` | Subtle leaf background | `#e4f0e7` (`--leaf-50`) | Soft primary badge/panel background |
+| `--color-background` | Warm paper page background | `#f3f4ee` (`--paper`) | Main canvas body background |
+| `--color-card` | Pure white card surface | `#ffffff` (`--surface`) | Donation cards, modals, form panels |
+| `--color-foreground` | Deep charcoal-green ink | `#1b2520` (`--ink`) | High-contrast body and title typography |
+| `--color-muted-foreground` | Muted ink text | `#56625a` (`--ink-muted`) | Secondary helper labels, metadata |
+| `--color-border` | Subtle line border | `#d9dbcf` (`--line`) | Input borders, separators, card outlines |
+| `--color-destructive` | Chili red | `#a8321c` (`--chili-700`) | Form validation errors, destructive actions |
+| `--color-accent` | Warm turmeric | `#fbefd0` (`--turmeric-100`) | Attention accents, highlight blocks |
+| `--color-status-available-bg` | AVAILABLE status bg | `#e4f0e7` (`--leaf-50`) | Active donation listing chip background |
+| `--color-status-assigned-bg` | ASSIGNED status bg | `#e5edf6` (`--slate-50`) | Claimed volunteer assignment chip background |
+| `--color-status-picked-up-bg` | PICKED_UP status bg | `#fbefd0` (`--turmeric-100`) | Food transit chip background |
+| `--color-status-delivered-bg` | DELIVERED status bg | `#ddf0ef` (`--teal-50`) | Arrived at NGO chip background |
+| `--color-status-completed-bg` | COMPLETED status bg | `#1d5c3a` (`--leaf-700`) | Finalized successful delivery chip background |
+| `--color-status-cancelled-bg` | CANCELLED status bg | `#ecece7` (`--stone-100`) | Cancelled donation chip background |
+| `--color-status-expired-bg` | EXPIRED status bg | `#f8e3dd` (`--chili-50`) | Time-elapsed donation chip background |
 
-### Typography System
+### Typography System (See TYPOGRAPHY.md for Full Spec)
 
 | Token | Font | Size | Line Height | Weight | Usage |
 |-------|------|------|-------------|--------|-------|
-| `font-display` | Inter | 36-48px | 1.1 | 700 | Page headings, major section titles |
-| `font-heading` | Inter | 20-28px | 1.3 | 600 | Section headings, card titles |
-| `font-body` | Inter | 14-16px | 1.5 | 400/500 | Body text, paragraph text |
-| `font-sm` | Inter | 12-13px | 1.4 | 500 | Helper text, captions, small labels |
-| `font-xs` | Inter | 11-12px | 1.4 | 500 | Muted text, inline indicators |
-| `font-mono` | JetBrains Mono | 12-14px | 1.4 | 400 | Numeric data, timestamps, IDs |
-| `font-weight-light` | Inter | — | — | 300 | Secondary text, subtle labels |
-| `font-weight-medium` | Inter | — | — | 500 | Form labels, interactive text |
-| `font-weight-semibold` | Inter | — | — | 600 | Headings, emphasized text |
-| `font-weight-bold` | Inter | — | — | 700 | Page headings, critical labels |
+| `font-display` | Outfit | 30-40px | 1.15 | 600-800 | Page titles, hero statements, major headers |
+| `font-heading` | Outfit | 20-28px | 1.25 | 600 | Section headings, card titles, modal titles |
+| `font-body` | Work Sans | 14-16px | 1.5 | 400/500 | Body text, paragraph text, form labels |
+| `font-sm` | Work Sans | 13-14px | 1.4 | 500 | Helper text, captions, action labels |
+| `font-meta` | Work Sans | 12-13px | 1.4 | 500 | Muted text, timestamps, inline indicators |
+| `font-mono` | ui-monospace | 12-14px | 1.4 | 400 | Numeric data, timestamps, IDs in `<code>` tags |
+| `font-weight-light` | Work Sans | — | — | 300 | Secondary text, subtle labels |
+| `font-weight-medium` | Work Sans | — | — | 500 | Form labels, interactive text |
+| `font-weight-semibold` | Outfit / Work Sans | — | — | 600 | Headings, emphasized text |
+| `font-weight-bold` | Outfit | — | — | 700 | Critical labels, page headings |
+
+### Design System Suite Structure
+
+This Master specification is accompanied by specialized system documents:
+- `TOKENS.md`: Complete CSS variables, color scale, elevation and radii tokens.
+- `TYPOGRAPHY.md`: Detailed typography pairing, measure, and tabular numeral guidelines.
+- `COMPONENTS.md`: Comprehensive API and state specifications for UI components.
+- `LAYOUTS.md`: 1920×1080 desktop-first grid matrix and shell blueprints.
+- `INTERACTIONS.md`: Micro-interactions, transitions, and reduced-motion rules.
+- `ACCESSIBILITY.md`: WCAG 2.2 AA compliance standards and verification methods.
+- `PAGE_PATTERNS.md`: Standard page patterns and role workflows.
 
 ### Spacing Scale
 
@@ -315,46 +321,113 @@ A premium design language for a food waste reduction platform. Combines warm neu
 
 ---
 
-## Quick Reference: Design Token Mapping (Tailwind)
+## Quick Reference: Implemented Design Token Mapping (Tailwind CSS v4)
 
 ```css
-/* Colors */
---color-brand-primary: #4F46E5; /* Purple adjusted for food context */
---color-brand-primary-hover: #4F46E5;
---color-brand-foreground: #FFFFFF;
---color-brand-subtle: #E4E6F1;
---color-surface: #F8FAFC;
---color-card: #FFFFFF;
---color-card-foreground: #1E293B;
---color-muted: #94A3B8;
---color-muted-foreground: #64748B;
---color-border: #E2E8F0;
---color-border-focus: #4F46E5;
---color-success: #10B981;
---color-warning: #F59E0B;
---color-error: #EF4444;
---color-info: #6366F1;
---color-action-primary: #4F46E5;
---color-action-secondary: #6B7280;
+/* Primitives (Palette: Rice paper, Leaf green, Turmeric, Chili, Slate, Teal, Stone) */
+--paper: #f3f4ee;
+--paper-deep: #e8eae0;
+--surface: #ffffff;
+--ink: #1b2520;
+--ink-soft: #3f4b44;
+--ink-muted: #56625a;
+--line: #d9dbcf;
+--line-strong: #7d8479;
+
+--leaf-50: #e4f0e7;
+--leaf-100: #cfe3d5;
+--leaf-700: #1d5c3a;
+--leaf-800: #154a2e;
+--leaf-900: #0f3822;
+
+--turmeric-100: #fbefd0;
+--turmeric-300: #e9cf8e;
+--turmeric-500: #e7a91b;
+--turmeric-800: #6b4600;
+
+--chili-50: #f8e3dd;
+--chili-200: #e5b3a8;
+--chili-700: #a8321c;
+--chili-800: #8a2713;
+
+--slate-50: #e5edf6;
+--slate-200: #b7cadf;
+--slate-700: #244b73;
+
+--teal-50: #ddf0ef;
+--teal-200: #a6d2d0;
+--teal-800: #0b5555;
+
+--stone-100: #ecece7;
+--stone-200: #cfcfc8;
+--stone-700: #4a4f4c;
+
+/* Semantic Tokens */
+--color-background: var(--paper);
+--color-foreground: var(--ink);
+--color-card: var(--surface);
+--color-card-foreground: var(--ink);
+
+--color-primary: var(--leaf-700);
+--color-primary-hover: var(--leaf-800);
+--color-primary-active: var(--leaf-900);
+--color-primary-foreground: var(--surface);
+--color-primary-soft: var(--leaf-50);
+--color-primary-soft-foreground: var(--leaf-800);
+
+--color-secondary: var(--paper-deep);
+--color-secondary-foreground: var(--ink);
+--color-muted: var(--paper-deep);
+--color-muted-foreground: var(--ink-muted);
+--color-accent: var(--turmeric-100);
+--color-accent-foreground: var(--turmeric-800);
+
+--color-destructive: var(--chili-700);
+--color-destructive-hover: var(--chili-800);
+--color-destructive-foreground: var(--surface);
+--color-destructive-soft: var(--chili-50);
+
+--color-border: var(--line);
+--color-line-strong: var(--line-strong);
+--color-input: var(--line-strong);
+--color-ring: var(--leaf-700);
+
+/* Donation Lifecycle Tokens (Icon + Text + Color - WCAG 2.2 Compliant) */
+--color-status-available-bg: var(--leaf-50);
+--color-status-available-fg: var(--leaf-800);
+--color-status-available-border: var(--leaf-100);
+
+--color-status-assigned-bg: var(--slate-50);
+--color-status-assigned-fg: var(--slate-700);
+--color-status-assigned-border: var(--slate-200);
+
+--color-status-picked-up-bg: var(--turmeric-100);
+--color-status-picked-up-fg: var(--turmeric-800);
+--color-status-picked-up-border: var(--turmeric-300);
+
+--color-status-delivered-bg: var(--teal-50);
+--color-status-delivered-fg: var(--teal-800);
+--color-status-delivered-border: var(--teal-200);
+
+--color-status-completed-bg: var(--leaf-700);
+--color-status-completed-fg: var(--surface);
+--color-status-completed-border: var(--leaf-700);
+
+--color-status-cancelled-bg: var(--stone-100);
+--color-status-cancelled-fg: var(--stone-700);
+--color-status-cancelled-border: var(--stone-200);
+
+--color-status-expired-bg: var(--chili-50);
+--color-status-expired-fg: var(--chili-800);
+--color-status-expired-border: var(--chili-200);
 
 /* Typography */
---font-display: 'Inter', sans-serif;
---font-heading: 'Inter', sans-serif;
---font-body: 'Inter', sans-serif;
---font-mono: 'JetBrains Mono', monospace;
+--font-sans: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+--font-display: var(--font-display-face, var(--font-inter, "Inter")), ui-sans-serif, system-ui, sans-serif;
+--font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-/* Spacing */
---space-1: 0.25rem; /* 4px */
---space-2: 0.5rem; /* 8px */
---space-3: 0.75rem; /* 12px */
---space-4: 1rem; /* 16px */
---space-5: 1.25rem; /* 20px */
---space-6: 1.5rem; /* 24px */
-
-/* Breakpoints */
-@media (min-width: 640px) { /* sm */ }
-@media (min-width: 768px) { /* md */ }
-@media (min-width: 1024px) { /* lg */ }
-@media (min-width: 1280px) { /* xl */ }
-@media (min-width: 1536px) { /* 2xl */ }
+/* Layout & Focus Dimensions */
+--header-h: 3.5rem;
+--bottomnav-h: 3.75rem;
+--float-bottom: 1rem;
 ```

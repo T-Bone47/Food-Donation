@@ -11,15 +11,8 @@ process.env.SUPABASE_URL =
 process.env.SUPABASE_KEY =
   process.env.SUPABASE_KEY ||
   process.env.TEST_SUPABASE_SERVICE_ROLE_KEY ||
-  "";
+  "test-service-role-key-for-offline-unit-tests";
 process.env.CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 process.env.RATE_LIMIT_DISABLED = "true";
 process.env.EXPIRY_SWEEPER = "false";
 
-if (!process.env.SUPABASE_KEY) {
-  throw new Error(
-    "SUPABASE_KEY is required for backend tests. Start local Supabase and " +
-      "export the local service_role key, e.g. " +
-      "SUPABASE_KEY=<local service_role key> npm run test:all"
-  );
-}

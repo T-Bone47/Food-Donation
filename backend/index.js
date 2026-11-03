@@ -18,7 +18,7 @@ async function sweepExpiredDonations() {
   }
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
   console.log(`Environment: ${config.env}`);
   console.log(`Health check: http://localhost:${PORT}/api/v1/health`);
@@ -34,3 +34,21 @@ app.listen(PORT, () => {
     setTimeout(sweepExpiredDonations, 5_000).unref?.();
   }
 });
+
+// Graceful container shutdown on SIGTERM / SIGINT
+function handleShutdown(signal) {
+  console.log(`[SHUTDOWN] Received ${signal}. Draining active HTTP connections...`);
+  server.close(() => {
+    console.log("[SHUTDOWN] Server closed cleanly. Process exiting.");
+    process.exit(0);
+  });
+
+  // Force exit after 10s if sockets remain hanging
+  setTimeout(() => {
+    console.error("[SHUTDOWN] Forcing exit after timeout.");
+    process.exit(1);
+  }, 10000).unref();
+}
+
+process.on("SIGTERM", () => handleShutdown("SIGTERM"));
+process.on("SIGINT", () => handleShutdown("SIGINT"));

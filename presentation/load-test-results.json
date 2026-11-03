@@ -1,0 +1,47 @@
+[
+  {
+    "concurrency": 10,
+    "totalRequests": 200,
+    "successCount": 200,
+    "failureCount": 0,
+    "errorRate": "0.00%",
+    "wallClockSec": "0.36",
+    "throughputRps": "557.2",
+    "p50": "12.84",
+    "p90": "23.88",
+    "p95": "46.69",
+    "p99": "85.89",
+    "max": "124.14",
+    "mean": "17.37"
+  },
+  {
+    "concurrency": 25,
+    "totalRequests": 500,
+    "successCount": 500,
+    "failureCount": 0,
+    "errorRate": "0.00%",
+    "wallClockSec": "0.63",
+    "throughputRps": "790.6",
+    "p50": "20.90",
+    "p90": "33.51",
+    "p95": "124.83",
+    "p99": "200.36",
+    "max": "215.05",
+    "mean": "29.57"
+  },
+  {
+    "concurrency": 50,
+    "totalRequests": 750,
+    "successCount": 750,
+    "failureCount": 0,
+    "errorRate": "0.00%",
+    "wallClockSec": "0.74",
+    "throughputRps": "1015.0",
+    "p50": "32.70",
+    "p90": "72.90",
+    "p95": "139.19",
+    "p99": "201.09",
+    "max": "212.94",
+    "mean": "43.12"
+  }
+]

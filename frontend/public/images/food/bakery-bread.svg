@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bakeryBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D2214"/>
+      <stop offset="100%" stop-color="#19130B"/>
+    </linearGradient>
+    <linearGradient id="crustGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#DDAA48"/>
+      <stop offset="40%" stop-color="#C07E2F"/>
+      <stop offset="100%" stop-color="#734213"/>
+    </linearGradient>
+    <linearGradient id="breadFlour" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="100%" stop-color="#F2E6D0"/>
+    </linearGradient>
+    <linearGradient id="baguette" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#E2AE55"/>
+      <stop offset="100%" stop-color="#9C5919"/>
+    </linearGradient>
+    <filter id="breadShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="260" rx="16" fill="url(#bakeryBg)"/>
+
+  <!-- Wheat Ear Botanical Silhouette -->
+  <g opacity="0.08" stroke="#DDAA48" stroke-width="2" fill="none">
+    <path d="M 40,230 Q 70,120 120,40" />
+    <ellipse cx="115" cy="50" rx="6" ry="12" fill="#DDAA48" transform="rotate(30 115 50)"/>
+    <ellipse cx="100" cy="70" rx="6" ry="12" fill="#DDAA48" transform="rotate(-30 100 70)"/>
+    <ellipse cx="105" cy="85" rx="6" ry="12" fill="#DDAA48" transform="rotate(30 105 85)"/>
+    <ellipse cx="90" cy="105" rx="6" ry="12" fill="#DDAA48" transform="rotate(-30 90 105)"/>
+  </g>
+
+  <!-- Linen Baker's Cloth & Shadow -->
+  <ellipse cx="200" cy="188" rx="145" ry="32" fill="#000000" opacity="0.45"/>
+  <ellipse cx="200" cy="180" rx="138" ry="28" fill="#ECE5D8"/>
+  <ellipse cx="200" cy="178" rx="130" ry="25" fill="#FAF6EE"/>
+
+  <!-- Crusty French Baguette (Tilted Left) -->
+  <g transform="rotate(-32 150 145)" filter="url(#breadShadow)">
+    <rect x="70" y="135" width="160" height="26" rx="13" fill="url(#baguette)"/>
+    <!-- Diagonal scoring slashes -->
+    <path d="M 95,137 Q 105,148 112,159" stroke="#FFF5E0" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 125,137 Q 135,148 142,159" stroke="#FFF5E0" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 155,137 Q 165,148 172,159" stroke="#FFF5E0" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 185,137 Q 195,148 202,159" stroke="#FFF5E0" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Hero Artisanal Sourdough Boule -->
+  <g filter="url(#breadShadow)">
+    <ellipse cx="230" cy="155" rx="72" ry="46" fill="url(#crustGold)"/>
+    <!-- Boule Top Crown -->
+    <ellipse cx="230" cy="144" rx="66" ry="38" fill="#C68636"/>
+    
+    <!-- Rustic Flour Dusting -->
+    <ellipse cx="230" cy="138" rx="48" ry="24" fill="url(#breadFlour)" opacity="0.28"/>
+    
+    <!-- Hand-Scored Ear Pattern -->
+    <path d="M 180,146 Q 225,122 280,148" stroke="#FFE9BE" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M 190,136 Q 230,126 265,138" stroke="#FFE9BE" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <path d="M 198,154 Q 230,142 262,156" stroke="#FFE9BE" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <!-- Crackly Sourdough Blisters -->
+    <circle cx="210" cy="132" r="2.5" fill="#FFE0A0"/>
+    <circle cx="245" cy="134" r="2" fill="#FFE0A0"/>
+    <circle cx="258" cy="142" r="3" fill="#FFE0A0"/>
+    <circle cx="202" cy="142" r="2.2" fill="#FFE0A0"/>
+  </g>
+
+  <!-- Golden Croissant in Foreground -->
+  <g transform="translate(115, 156)" filter="url(#breadShadow)">
+    <!-- Crescent layers -->
+    <ellipse cx="25" cy="18" rx="28" ry="14" fill="#C47E29" transform="rotate(-12 25 18)"/>
+    <ellipse cx="25" cy="16" rx="24" ry="11" fill="#E2A648" transform="rotate(-12 25 16)"/>
+    <ellipse cx="25" cy="14" rx="18" ry="8" fill="#FAD179" transform="rotate(-12 25 14)"/>
+    <!-- Tips -->
+    <path d="M 0,26 Q 5,16 12,20" stroke="#9C5919" stroke-width="3" fill="none"/>
+    <path d="M 50,22 Q 45,14 38,18" stroke="#9C5919" stroke-width="3" fill="none"/>
+  </g>
+
+  <!-- Category Tag Pill -->
+  <g transform="translate(24, 24)">
+    <rect width="138" height="26" rx="13" fill="#DDAA48" fill-opacity="0.9" stroke="#FDE68A" stroke-width="1"/>
+    <circle cx="13" cy="13" r="4" fill="#202B25"/>
+    <text x="24" y="17" fill="#202B25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="0.5">BAKERY &amp; GRAINS</text>
+  </g>
+
+  <!-- Freshness Stamp -->
+  <g transform="translate(282, 24)">
+    <rect width="94" height="26" rx="13" fill="#202B25" fill-opacity="0.8" stroke="#DDAA48" stroke-width="0.8"/>
+    <text x="47" y="17" fill="#DDAA48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">BAKED TODAY</text>
+  </g>
+</svg>
+

@@ -3,6 +3,8 @@ import { authMiddleware } from "../middleware/authenticate.js";
 import { requireRole, requireDonationOwnership, requireAssignmentOwnership, requireApprovedNGO } from "../middleware/authorize.js";
 import { supabase } from "../supabase.js";
 import * as donationService from "../services/donation.service.js";
+import * as demoService from "../services/demo.service.js";
+import { broadcastRealtimeEvent } from "../services/realtime.service.js";
 import {
   notifySafely,
   NOTIFICATION_EVENTS,
@@ -21,6 +23,19 @@ router.post(
   requireRole("Donor"),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donation = demoService.createDemoDonation(req.auth.userId, req.body);
+        broadcastRealtimeEvent("donation.created", donation, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.status(201).json({
+          data: { donation },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const donation = await donationService.createDonation(
         req.auth.userId,
         req.body
@@ -28,6 +43,12 @@ router.post(
 
       // Best-effort broadcast to active volunteers in the pickup pincode.
       await donationService.notifyVolunteersAboutDonation(donation);
+
+      broadcastRealtimeEvent("donation.created", donation, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
+      });
 
       res.status(201).json({
         data: { donation },
@@ -46,15 +67,34 @@ router.post(
 router.get("/mine", authMiddleware, requireRole("Donor"), async (req, res, next) => {
   try {
     const { status, limit = 50, offset = 0 } = req.query;
-    const donations = await donationService.getDonationsByDonor(req.auth.userId, {
-      status,
-      limit: parseInt(limit, 10),
-      offset: parseInt(offset, 10),
-    });
-    res.json({
-      data: { donations },
-      meta: { requestId: req.requestId },
-    });
+
+    if (req.auth?.isDemo) {
+      const donations = demoService.getDemoDonations({
+        donorId: req.auth.userId,
+        status: status ? String(status).toUpperCase() : undefined,
+      });
+      return res.json({
+        data: { donations },
+        meta: { requestId: req.requestId },
+      });
+    }
+
+    try {
+      const donations = await donationService.getDonationsByDonor(req.auth.userId, {
+        status,
+        limit: parseInt(limit, 10),
+        offset: parseInt(offset, 10),
+      });
+      res.json({
+        data: { donations },
+        meta: { requestId: req.requestId },
+      });
+    } catch (dbErr) {
+      return res.json({
+        data: { donations: [] },
+        meta: { requestId: req.requestId, degraded: true },
+      });
+    }
   } catch (err) {
     next(err);
   }
@@ -70,6 +110,14 @@ router.get(
   requireRole("Volunteer"),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donations = demoService.getDemoDonations({ status: "AVAILABLE" });
+        return res.json({
+          data: { donations },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       // Get user's location for filtering
       const { data: user } = await supabase
         .from("users")
@@ -94,6 +142,15 @@ router.get(
  */
 router.get("/:id", authMiddleware, async (req, res, next) => {
   try {
+    if (req.auth?.isDemo) {
+      const donation = demoService.getDemoDonationById(req.params.id);
+      if (!donation) throw new NotFoundError("Donation not found");
+      return res.json({
+        data: { donation },
+        meta: { requestId: req.requestId },
+      });
+    }
+
     const donation = await donationService.getDonationById(req.params.id, req.auth.userId, req.auth.role);
     res.json({
       data: { donation },
@@ -135,11 +192,34 @@ router.post(
   requireDonationOwnership(supabase),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donation = demoService.cancelDemoDonation(
+          req.params.id,
+          req.auth.userId,
+          req.auth.role
+        );
+        broadcastRealtimeEvent("donation.cancelled", donation, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.json({
+          data: { donation },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const donation = await donationService.cancelDonation(
         req.params.id,
         req.auth.userId,
         req.auth.role
       );
+
+      broadcastRealtimeEvent("donation.cancelled", donation, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
+      });
 
       res.json({
         data: { donation },
@@ -161,6 +241,22 @@ router.post(
   requireRole("Volunteer"),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const { donation, assignment } = demoService.claimDemoDonation(
+          req.params.id,
+          req.auth.userId
+        );
+        broadcastRealtimeEvent("donation.assigned", { donation, assignment }, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.status(201).json({
+          data: { donation, assignment },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const { donation, assignment } = await donationService.claimDonation(
         req.params.id,
         req.auth.userId
@@ -173,6 +269,12 @@ router.post(
         message: `Your donation "${donation.title}" has been claimed by a volunteer.`,
         data: { donationId: donation.id, assignmentId: assignment.id },
         channels: ["in_app"],
+      });
+
+      broadcastRealtimeEvent("donation.assigned", { donation, assignment }, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
       });
 
       res.status(201).json({
@@ -196,6 +298,22 @@ router.post(
   requireAssignmentOwnership(supabase),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donation = demoService.pickupDemoDonation(
+          req.params.id,
+          req.auth.userId
+        );
+        broadcastRealtimeEvent("donation.pickup_confirmed", donation, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.json({
+          data: { donation },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const donation = await donationService.recordPickup(
         req.params.id,
         req.auth.userId
@@ -208,6 +326,12 @@ router.post(
         message: `Your donation "${donation.title}" has been picked up by the volunteer.`,
         data: { donationId: donation.id },
         channels: ["in_app"],
+      });
+
+      broadcastRealtimeEvent("donation.pickup_confirmed", donation, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
       });
 
       res.json({
@@ -231,6 +355,23 @@ router.post(
   requireAssignmentOwnership(supabase),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donation = demoService.deliverDemoDonation(
+          req.params.id,
+          req.auth.userId,
+          req.body?.ngo_id
+        );
+        broadcastRealtimeEvent("donation.delivery_confirmed", donation, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.json({
+          data: { donation },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const donation = await donationService.recordDelivery(
         req.params.id,
         req.auth.userId,
@@ -256,6 +397,12 @@ router.post(
         }),
       ]);
 
+      broadcastRealtimeEvent("donation.delivery_confirmed", donation, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
+      });
+
       res.json({
         data: { donation },
         meta: { requestId: req.requestId },
@@ -277,6 +424,22 @@ router.post(
   requireApprovedNGO(supabase),
   async (req, res, next) => {
     try {
+      if (req.auth?.isDemo) {
+        const donation = demoService.confirmDemoReceipt(
+          req.params.id,
+          req.auth.userId
+        );
+        broadcastRealtimeEvent("donation.receipt_confirmed", donation, {
+          isDemo: true,
+          actorId: req.auth.userId,
+          entityId: donation.id,
+        });
+        return res.json({
+          data: { donation },
+          meta: { requestId: req.requestId },
+        });
+      }
+
       const donation = await donationService.confirmReceipt(
         req.params.id,
         req.auth.userId
@@ -309,6 +472,12 @@ router.post(
             })
           : Promise.resolve(null),
       ]);
+
+      broadcastRealtimeEvent("donation.receipt_confirmed", donation, {
+        isDemo: false,
+        actorId: req.auth.userId,
+        entityId: donation.id,
+      });
 
       res.json({
         data: { donation },

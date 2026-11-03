@@ -10,6 +10,8 @@ import {
   isNonEmptyText,
   isWithinLength,
   parseCoordinates,
+  isValidPhone,
+  isValidPincode,
   LIMITS,
 } from "../../lib/validators.js";
 
@@ -84,4 +86,25 @@ test("coordinates require a complete, in-range pair", () => {
   assert.equal(parseCoordinates(91, 77.5).valid, false);
   assert.equal(parseCoordinates(12.9, 181).valid, false);
   assert.equal(parseCoordinates("abc", 77.5).valid, false);
+});
+
+test("phone validation enforces valid formats and length limits", () => {
+  assert.equal(isValidPhone(null), true);
+  assert.equal(isValidPhone(""), true);
+  assert.equal(isValidPhone("+91 9876543210"), true);
+  assert.equal(isValidPhone("98765-43210"), true);
+  assert.equal(isValidPhone("(123) 456-7890"), true);
+  assert.equal(isValidPhone("123"), false); // too short
+  assert.equal(isValidPhone("phone-number!"), false);
+  assert.equal(isValidPhone("1".repeat(35)), false); // exceeds LIMITS.phone
+});
+
+test("pincode validation enforces alphanumeric codes and limits", () => {
+  assert.equal(isValidPincode(null), true);
+  assert.equal(isValidPincode(""), true);
+  assert.equal(isValidPincode("560001"), true);
+  assert.equal(isValidPincode("SW1A 1AA"), true);
+  assert.equal(isValidPincode("12"), false); // too short
+  assert.equal(isValidPincode("!@#$%"), false);
+  assert.equal(isValidPincode("1".repeat(25)), false); // exceeds LIMITS.pincode
 });

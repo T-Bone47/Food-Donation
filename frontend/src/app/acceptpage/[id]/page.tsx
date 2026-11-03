@@ -1,212 +1,144 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import Navbar from "@/components/volunavbar";
+import { useParams } from "next/navigation";
+import { ExternalLink } from "lucide-react";
+
+import AppShell from "@/components/shell/AppShell";
+import { Button } from "@/components/ui/button";
+import { Journey } from "@/components/ui/journey";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { ErrorState, ListSkeleton, PageHeader } from "@/components/ui/states";
 import { donationsApi } from "@/lib/api-client";
+import { formatDateTime, formatLocation, formatQuantity } from "@/lib/format";
+import { normalizeRole, useCurrentUser } from "@/lib/session";
+import { useResource } from "@/lib/use-resource";
+import type { Donation, UserRole } from "@/lib/types";
 
-interface Donation {
-  id: string;
-  title: string;
-  food_category: string;
-  quantity: number;
-  unit: string;
-  prepared_at?: string | null;
-  expires_at: string;
-  pickup_deadline: string;
-  pickup_address: string;
-  area?: string | null;
-  state?: string | null;
-  pincode?: string | null;
-  description?: string | null;
-  latitude?: number | null;
-  longitude?: number | null;
-  status: string;
-  recipient_ngo_id?: string | null;
-}
-
-const formatDate = (value?: string | null) => {
-  if (!value) return "—";
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "—" : date.toLocaleString();
+// The route keeps its original name; it is now the read-only detail page for any donation the signed-in user may see.
+const BACK: Record<UserRole, { href: string; label: string }> = {
+  Donor: { href: "/mydonations", label: "Back to my donations" },
+  Volunteer: { href: "/volunteer/tasks", label: "Back to my tasks" },
+  NGO: { href: "/ngodash", label: "Back to deliveries" },
+  Admin: { href: "/adminpage", label: "Back to the console" },
 };
 
-const STEPS = ["ASSIGNED", "PICKED_UP", "DELIVERED", "COMPLETED"];
-
-export default function AcceptPage() {
-  const params = useParams();
-  const router = useRouter();
-  const donationId = params.id as string;
-
-  const [donation, setDonation] = useState<Donation | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchDonation = async () => {
-      try {
-        const res = await donationsApi.getById(donationId);
-        setDonation(res.data.donation);
-      } catch (err: any) {
-        setError(err.response?.data?.error?.message || "Error fetching donation");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (donationId) fetchDonation();
-  }, [donationId]);
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-green-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading donation details...</p>
-        </div>
-      </main>
-    );
-  }
-
-  if (error || !donation) {
-    return (
-      <main className="min-h-screen bg-green-50">
-        <Navbar />
-        <div className="text-center py-20 px-6">
-          <p className="text-red-500">{error || "Donation not found"}</p>
-          <button
-            onClick={() => router.push("/volunteer/tasks")}
-            className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
-            Back to My Tasks
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  const currentIndex = STEPS.indexOf(donation.status);
-  const isTerminal = ["COMPLETED", "CANCELLED", "EXPIRED"].includes(
-    donation.status
+export default function DonationDetailPage() {
+  return (
+    <AppShell>
+      <DonationDetail />
+    </AppShell>
   );
+}
+
+function DonationDetail() {
+  const params = useParams();
+  const id = String(params?.id ?? "");
+  const { user } = useCurrentUser();
+  const role = normalizeRole(user?.role);
+  const back = role ? BACK[role] : null;
+  const detail = useResource(async () => (await donationsApi.getById(id)).data.donation, `donation:detail:${id}`);
+  const d = detail.data;
+
+  const backLink = back ? (
+    <Button asChild variant="outline">
+      <Link href={back.href}>{back.label}</Link>
+    </Button>
+  ) : undefined;
+
+  if (detail.loading && !d) return <ListSkeleton count={1} className="sm:grid-cols-1 lg:grid-cols-1" />;
+  if (detail.error && !d) {
+    return (
+      <>
+        <PageHeader title="Donation details" actions={backLink} />
+        <ErrorState error={detail.error} onRetry={() => detail.reload()} title="We couldn't open this donation" />
+      </>
+    );
+  }
+  if (!d) return null;
 
   return (
-    <main className="min-h-screen bg-green-50 p-6">
-      <Navbar />
-
-      <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-6 gap-4">
-          <h1 className="text-2xl font-bold text-green-800">
-            Pickup Tracking 🚴‍♂️
-          </h1>
-          <Link
-            href="/volunteer/tasks"
-            className="text-sm text-green-700 hover:underline"
-          >
-            ← Back to tasks
-          </Link>
-        </div>
-
-        <div className="bg-white shadow-md p-6 rounded-lg mb-6 space-y-2">
-          <div className="flex justify-between items-start gap-4">
-            <h2 className="text-xl font-bold text-green-700">
-              {donation.title}
+    <>
+      <PageHeader title={d.title} description={`${formatQuantity(d.quantity, d.unit)} · ${d.food_category}`} actions={backLink} />
+      <div className="flex flex-col gap-8">
+        <section aria-labelledby="progress" className="rounded-lg border bg-card p-5 shadow-card sm:p-6">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <h2 id="progress" className="text-heading font-semibold">
+              Progress
             </h2>
-            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-              {donation.status.replace("_", " ")}
-            </span>
+            <StatusBadge status={d.status} />
           </div>
-          {donation.description && (
-            <p className="text-gray-700">{donation.description}</p>
-          )}
-          <p className="text-gray-700">
-            📍 {donation.pickup_address}
-            {donation.area ? `, ${donation.area}` : ""}
-            {donation.state ? `, ${donation.state}` : ""}
-            {donation.pincode ? ` (${donation.pincode})` : ""}
+          <Journey status={d.status} times={timesFor(d)} />
+          <p className="mt-5 text-meta text-muted-foreground">
+            This page records when the donation was listed and when it reached its current step. Volunteers see every step&apos;s time in My tasks; admins see them in the console.
           </p>
-          <p className="text-gray-700">🏷️ {donation.food_category}</p>
-          <p className="text-gray-700">
-            🥘 {donation.quantity} {donation.unit}
-          </p>
-          <p className="text-gray-700">
-            ⏰ Prepared: {formatDate(donation.prepared_at)}
-          </p>
-          <p className="text-gray-700">
-            ⏳ Expires: {formatDate(donation.expires_at)}
-          </p>
-          <p className="text-gray-700">
-            🕐 Pickup by: {formatDate(donation.pickup_deadline)}
-          </p>
-        </div>
+        </section>
 
-        <div className="bg-green-100 p-6 rounded-lg mb-6">
-          <h3 className="text-lg font-semibold text-green-800 mb-4">
-            Delivery Progress
-          </h3>
-          <div className="flex gap-2 mb-4">
-            {STEPS.map((step, index) => (
-              <div
-                key={step}
-                className={`flex-1 p-2 rounded-md text-center text-xs md:text-sm font-medium ${
-                  currentIndex >= index
-                    ? "bg-green-600 text-white"
-                    : "bg-white border text-gray-600"
-                }`}
-              >
-                {step.replace("_", " ")}
-              </div>
-            ))}
-          </div>
-
-          {isTerminal ? (
-            <p className="text-green-900 font-medium text-center py-2">
-              {donation.status === "COMPLETED"
-                ? "✅ Completed — receipt confirmed by the NGO"
-                : `Donation ${donation.status.toLowerCase()}`}
-            </p>
-          ) : (
-            <p className="text-sm text-gray-700 text-center">
-              Update pickup and delivery from{" "}
-              <Link href="/volunteer/tasks" className="text-green-700 underline">
-                My Tasks
-              </Link>
-              .
-            </p>
-          )}
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-green-800 mb-3">
-            Pickup Location
-          </h3>
-          {donation.latitude != null && donation.longitude != null ? (
-            <>
-              <iframe
-                src={`https://www.google.com/maps?q=${donation.latitude},${donation.longitude}&z=15&output=embed`}
-                width="100%"
-                height="300"
-                loading="lazy"
-                className="w-full rounded-lg"
-                title="Pickup location map"
-              ></iframe>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${donation.latitude},${donation.longitude}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-3 text-sm text-green-700 hover:underline"
-              >
-                Open in Google Maps →
-              </a>
-            </>
-          ) : (
-            <div className="w-full h-40 bg-green-200 rounded-lg flex items-center justify-center text-green-900">
-              <p>Location coordinates not available</p>
+        <section aria-labelledby="facts" className="rounded-lg border bg-card p-5 shadow-card sm:p-6">
+          <h2 id="facts" className="mb-4 text-heading font-semibold">
+            Details
+          </h2>
+          <dl className="grid gap-x-6 gap-y-4 text-sm sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <dt className="font-semibold">Pickup address</dt>
+              <dd className="mt-1 flex flex-wrap items-start justify-between gap-2">
+                <span className="min-w-0 break-words text-ink-soft">{formatLocation(d)}</span>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formatLocation(d))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-2"
+                >
+                  Search in Maps
+                  <ExternalLink aria-hidden className="size-4" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </dd>
             </div>
-          )}
-        </div>
+            <div>
+              <dt className="font-semibold">Collect by</dt>
+              <dd className="mt-1 text-ink-soft">{formatDateTime(d.pickup_deadline)}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Safe to eat until</dt>
+              <dd className="mt-1 text-ink-soft">{formatDateTime(d.expires_at)}</dd>
+            </div>
+            {d.prepared_at ? (
+              <div>
+                <dt className="font-semibold">Prepared</dt>
+                <dd className="mt-1 text-ink-soft">{formatDateTime(d.prepared_at)}</dd>
+              </div>
+            ) : null}
+            <div>
+              <dt className="font-semibold">Listed</dt>
+              <dd className="mt-1 text-ink-soft">{formatDateTime(d.created_at)}</dd>
+            </div>
+            {d.description ? (
+              <div className="sm:col-span-2">
+                <dt className="font-semibold">Description</dt>
+                <dd className="mt-1 whitespace-pre-line break-words text-ink-soft">{d.description}</dd>
+              </div>
+            ) : null}
+          </dl>
+          {role === "Volunteer" && ["ASSIGNED", "PICKED_UP", "DELIVERED"].includes(d.status) ? (
+            <p className="mt-5 border-t-2 border-dashed border-border pt-4 text-sm">
+              <Link href="/volunteer/tasks" className="font-semibold text-primary underline underline-offset-2">
+                Manage this pickup in My tasks
+              </Link>
+            </p>
+          ) : null}
+        </section>
       </div>
-    </main>
+    </>
   );
+}
+
+/**
+ * GET /donations/:id carries no per-step timestamps. What it does know: when the donation was listed, and (because every
+ * transition updates `updated_at`) when it entered its current state. Earlier steps are shown without a time, never invented.
+ */
+function timesFor(d: Donation) {
+  return d.status === "AVAILABLE"
+    ? { AVAILABLE: d.created_at }
+    : { AVAILABLE: d.created_at, [d.status]: d.updated_at };
 }

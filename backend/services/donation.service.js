@@ -22,7 +22,11 @@ import {
   ConflictError,
   ForbiddenError,
 } from "../middleware/errorHandler.js";
-import { notifySafely, NOTIFICATION_EVENTS } from "./notification.service.js";
+import {
+  notifySafely,
+  NOTIFICATION_EVENTS,
+  createAuditLog,
+} from "./notification.service.js";
 
 function isValidTimestamp(value) {
   if (typeof value !== "string" || !value.trim()) return false;
@@ -194,6 +198,20 @@ export async function createDonation(donorId, input) {
   if (error) {
     throw new ValidationError(error.message);
   }
+
+  await createAuditLog({
+    actorId: donorId,
+    action: "donation.created",
+    resourceType: "donation",
+    resourceId: donation.id,
+    metadata: {
+      title: donation.title,
+      food_category: donation.food_category,
+      quantity: donation.quantity,
+      unit: donation.unit,
+      pincode: donation.pincode,
+    },
+  });
 
   return donation;
 }
@@ -435,6 +453,16 @@ export async function claimDonation(donationId, volunteerId) {
     throw new Error("Assignment could not be loaded after claim");
   }
 
+  await createAuditLog({
+    actorId: volunteerId,
+    action: "donation.claimed",
+    resourceType: "donation",
+    resourceId: donationId,
+    metadata: {
+      assignmentId: result.assignment_id,
+    },
+  });
+
   return { donation, assignment };
 }
 
@@ -489,6 +517,17 @@ export async function recordPickup(donationId, volunteerId) {
   if (assignmentError) {
     throw new ValidationError(assignmentError.message);
   }
+
+  await createAuditLog({
+    actorId: volunteerId,
+    action: "donation.picked_up",
+    resourceType: "donation",
+    resourceId: donationId,
+    metadata: {
+      assignmentId: assignment.id,
+      pickedUpAt,
+    },
+  });
 
   return donation;
 }
@@ -582,6 +621,18 @@ export async function recordDelivery(donationId, volunteerId, ngoId) {
     throw new ValidationError(assignmentError.message);
   }
 
+  await createAuditLog({
+    actorId: volunteerId,
+    action: "donation.delivered",
+    resourceType: "donation",
+    resourceId: donationId,
+    metadata: {
+      assignmentId: assignment.id,
+      recipientNgoId: ngoId,
+      deliveredAt,
+    },
+  });
+
   return donation;
 }
 
@@ -640,6 +691,16 @@ export async function confirmReceipt(donationId, ngoId) {
   if (fetchError || !donation) {
     throw new NotFoundError("Donation not found after confirmation");
   }
+
+  await createAuditLog({
+    actorId: ngoId,
+    action: "donation.completed",
+    resourceType: "donation",
+    resourceId: donationId,
+    metadata: {
+      confirmedByNgoId: ngoId,
+    },
+  });
 
   return donation;
 }
@@ -723,6 +784,18 @@ export async function cancelDonation(donationId, userId, userRole) {
         })
       : Promise.resolve(null),
   ]);
+
+  await createAuditLog({
+    actorId: userId,
+    action: "donation.cancelled",
+    resourceType: "donation",
+    resourceId: donationId,
+    reason: userRole === "Admin" ? "Cancelled by administrator" : "Cancelled by donor",
+    metadata: {
+      userRole,
+      previousStatus: donation.status,
+    },
+  });
 
   return updatedDonation;
 }
@@ -1023,6 +1096,19 @@ export async function processExpiredDonations() {
         message: `Your donation "${donation.title}" expired before it could be delivered.`,
         data: { donationId: donation.id },
         channels: ["in_app"],
+      })
+    )
+  );
+
+  await Promise.all(
+    processedDonations.map((donation) =>
+      createAuditLog({
+        actorId: null,
+        action: "donation.expired",
+        resourceType: "donation",
+        resourceId: donation.id,
+        reason: "Automated background expiry sweep",
+        metadata: { title: donation.title },
       })
     )
   );

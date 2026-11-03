@@ -101,15 +101,65 @@ router.get("/me", authMiddleware, async (req, res, next) => {
 router.patch("/me", authMiddleware, async (req, res, next) => {
   try {
     const allowedFields = ["name", "organization", "phonenumber", "area", "pincode", "state", "country"];
+    
+    // Explicitly reject prohibited security fields
+    if (req.body.email !== undefined) {
+      throw new ValidationError("Email address cannot be changed via profile update");
+    }
+    if (
+      req.body.role !== undefined ||
+      req.body.id !== undefined ||
+      req.body.account_status !== undefined ||
+      req.body.password !== undefined ||
+      req.body.password_hash !== undefined
+    ) {
+      throw new ValidationError("System and authentication fields cannot be modified via profile update");
+    }
+
+    // Check for unexpected extra properties
+    const extraKeys = Object.keys(req.body).filter((k) => !allowedFields.includes(k));
+    if (extraKeys.length > 0) {
+      throw new ValidationError(`Unexpected property: '${extraKeys[0]}'`);
+    }
+
     const updates = {};
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
-        updates[field] = req.body[field];
+        const val = req.body[field];
+        if (val !== null && typeof val !== "string") {
+          throw new ValidationError(`Field '${field}' must be a string or null`);
+        }
+        updates[field] = val;
       }
     }
 
     if (Object.keys(updates).length === 0) {
       throw new ValidationError("No valid fields to update");
+    }
+
+    if (updates.name !== undefined && !validators.isNonEmptyText(updates.name, validators.LIMITS.name)) {
+      throw new ValidationError(
+        `Name is required and must be between 1 and ${validators.LIMITS.name} characters`
+      );
+    }
+
+    if (updates.phonenumber && !validators.isValidPhone(updates.phonenumber)) {
+      throw new ValidationError("Invalid phone number format");
+    }
+
+    if (updates.pincode && !validators.isValidPincode(updates.pincode)) {
+      throw new ValidationError("Invalid pincode format");
+    }
+
+    for (const [field, max] of [
+      ["organization", validators.LIMITS.organization],
+      ["area", validators.LIMITS.area],
+      ["state", validators.LIMITS.state],
+      ["country", validators.LIMITS.country],
+    ]) {
+      if (updates[field] && !validators.isWithinLength(updates[field], max)) {
+        throw new ValidationError(`${field} must be at most ${max} characters`);
+      }
     }
 
     const user = await authService.updateUserProfile(req.auth.userId, updates);
