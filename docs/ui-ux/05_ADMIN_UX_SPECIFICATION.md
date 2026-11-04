@@ -62,4 +62,3 @@ In strict adherence to product rules:
 - All telemetry numbers represent real database records or pristine demo seed records. Zero hardcoded mock numbers.
 - Tables support offset-based pagination (`Pager.tsx`) with clear boundary indicators.
 - Empty states provide actionable instructions rather than dead space.
-

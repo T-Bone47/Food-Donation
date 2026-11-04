@@ -34,4 +34,3 @@ Every interactive component on FoodShare adheres to physical causality principle
 ### 4. Chatbot Assistant (`Chatbot.tsx`)
 - Launcher floating action button with 150ms hover scale (`hover:scale-105`).
 - Typing indicator utilizes calm sequential pulse (`animate-pulse motion-reduce:animate-none`), completely eliminating distracting bounce loops.
-

@@ -67,4 +67,3 @@ When multiple UI components (e.g., Header notification bell + Sidebar status pil
 
 ### 4.4 Admin User Search & Filter Resolution
 - Fixed `admin.routes.js` to respect `role`, `status`, and `search` query parameters in demo mode, matching live Supabase SQL parity.
-

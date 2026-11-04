@@ -70,4 +70,3 @@
 - Top: Platform overview tiles + Needs Attention alert card.
 - Middle: Tabbed navigation strip (Overview, Donations, Verifications, Users, Activity).
 - Tables: Full-width responsive tabular view with sticky headers, right-aligned metrics, and inline action menus.
-

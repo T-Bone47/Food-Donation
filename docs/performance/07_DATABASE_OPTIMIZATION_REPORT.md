@@ -88,4 +88,3 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 This guarantees that two volunteers clicking "Claim" at the exact same millisecond can never both be assigned the same donation.
-

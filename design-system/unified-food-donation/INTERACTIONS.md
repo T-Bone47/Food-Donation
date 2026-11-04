@@ -49,4 +49,3 @@
 | `Escape` | Modals / Drawers / Menus | Immediately closes open dialog, drawer, or dropdown and restores focus to triggering control. |
 | `Enter` / `Space` | Buttons / Accordions / Tabs | Activates trigger or toggles selection. |
 | `Arrow Keys` | Tab Strips / Menus | Moves focus between adjacent tabs or menu items. |
-

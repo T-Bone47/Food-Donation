@@ -92,3 +92,4 @@ This document establishes the exhaustive technical, visual, structural, and comp
   - Navbar: Fixed-height top navigation (`px-6 py-4`) with centered tab list and right-aligned user dropdown.
   - Page Structure: Centered column or multi-column grid with generous vertical padding (`py-12`, `py-16`).
   - Motion: Gentle spring entrance animations via `framer-motion` (`initial={{ opacity: 0, y: 30 }}`, `whileHover={{ scale: 1.05 }}`).
+

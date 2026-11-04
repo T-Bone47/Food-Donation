@@ -127,4 +127,3 @@ Each platform user role receives a unique, tailored layout model suited to its w
 - [ ] **Zero Typography Stragglers:** Impeccable detect reports 0 anti-patterns.
 - [ ] **Accessibility:** All clickable elements have minimum 44×44px touch targets and visible focus indicators.
 - [ ] **Contract Preservation:** All existing API response envelopes, authentication endpoints, and demo tenant flows continue functioning with zero regressions.
-

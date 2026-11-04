@@ -42,4 +42,3 @@ FoodShare has been audited against the W3C Web Content Accessibility Guidelines 
 - **Dialogs & Modals:** Native `<dialog>` elements carry explicit `role="dialog"` and `aria-modal="true"`. Focus is trapped within modal actions.
 - **Tab Lists:** Admin tabs carry `role="tablist"` with `role="tab"` and `aria-selected="true/false"`.
 - **Form Controls:** All `<input>`, `<select>`, and `<textarea>` elements are programmatically associated with visible `<label>` tags via `htmlFor`/`id` bindings. Field errors carry `aria-invalid="true"`.
-

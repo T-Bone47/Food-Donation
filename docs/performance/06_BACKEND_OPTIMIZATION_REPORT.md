@@ -44,4 +44,3 @@ The donation state machine strictly enforces valid state transitions:
 `AVAILABLE` &rarr; `CLAIMED` &rarr; `PICKED_UP` &rarr; `DELIVERED` &rarr; `COMPLETED` (or `EXPIRED` / `CANCELLED`).
 - Claim contention is guarded via atomic database RPC `claim_donation` using Postgres row-level locking (`FOR UPDATE`), preventing double-claiming by simultaneous volunteers.
 - Tested across 30 unit tests with 100% pass rate.
-

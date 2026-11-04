@@ -77,4 +77,3 @@ The platform coordinates food rescue operations across four authenticated roles 
 - **Batch D:** Backend query optimization, composite PostgreSQL indexes, and demo filter fixes.
 - **Batch E:** Chatbot latency hardening and rate limit adjustments.
 - **Batch F:** Multi-user load testing (10, 25, 50 concurrent users) and final verification.
-

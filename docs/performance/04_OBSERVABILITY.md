@@ -74,4 +74,3 @@ All backend log lines conform to structured output:
 [2026-11-02T13:41:24.861Z] INFO in express: POST /api/v1/donations/mine status=200 latency=1.95ms requestId=89aa014a-8e4d-4326-9394-a8fb46049291
 ```
 This enables zero-configuration ingestion by CloudWatch, Datadog, or Grafana Loki.
-

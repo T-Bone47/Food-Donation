@@ -57,4 +57,3 @@ All quality gates have been executed and passed:
 - **Frontend Web Application (Port 3000):** [http://localhost:3000](http://localhost:3000)
 - **Backend API Gateway (Port 5000):** [http://localhost:5000](http://localhost:5000)
 - **Chatbot AI Microservice (Port 5002):** [http://localhost:5002](http://localhost:5002)
-

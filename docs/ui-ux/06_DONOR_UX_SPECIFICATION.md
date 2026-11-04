@@ -42,4 +42,3 @@ The Donor experience answers three immediate questions upon login:
 - **5-Step Milestone Stepper:**
   - `Listed` -> `Assigned to Volunteer` -> `Picked Up` -> `Delivered to NGO` -> `Completed & Confirmed`.
 - Visual progress bar with status chips, volunteer contact details, and receiving NGO credentials.
-

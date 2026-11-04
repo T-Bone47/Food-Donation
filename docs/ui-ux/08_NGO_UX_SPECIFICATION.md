@@ -38,4 +38,3 @@ Their interface must clearly distinguish between:
 ### 3. Community Distribution Ledger (`#completed`)
 - Historical distribution archive detailing recipient counts, dates received, and cumulative impact.
 - Per-unit totals formatted accurately without aggregating non-interchangeable units (servings, kilograms, liters).
-

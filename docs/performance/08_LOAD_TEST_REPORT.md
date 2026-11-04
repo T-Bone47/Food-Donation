@@ -46,4 +46,3 @@ Every virtual user in the test harness was authenticated with an isolated demo t
 1. **Sub-35ms Median Latency:** Even at 50 concurrent authenticated users, the median (p50) latency remained at 32.70ms.
 2. **Zero Degradation or Memory Leaks:** Across all 3 test tiers, the process heap remained stable within 42MB RSS.
 3. **Reproducibility:** The load test can be repeated at any time via `node presentation/load-test-runner.js`.
-

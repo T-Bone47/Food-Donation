@@ -40,4 +40,3 @@ Visual quality assurance was conducted across all 4 platform roles (Donor, Volun
 - **Tool:** `node Food-Donation-main/presentation/run-e2e-suite.js`
 - **Result:** **20 / 20 Assertions Passed (100%)**.
 - **Coverage:** Verified full food rescue lifecycle: Donation listed -> Volunteer claimed -> Physical pickup confirmed -> NGO intake verified -> Admin audit trail updated.
-

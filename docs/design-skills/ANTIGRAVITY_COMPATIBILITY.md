@@ -102,4 +102,3 @@ During the audit, a legacy nesting defect was detected at `.agents\skills\SKILL.
 If running within the AntiGravity IDE or a persistent CLI session:
 1. **IDE Customization Reload:** Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and run `Developer: Reload Window`, or simply send a new prompt in chat. AntiGravity automatically rescans `.agents/` and `.agent/rules/` on each conversational turn.
 2. **CLI Session:** No restart required for background commands. All scripts (`search.py`, `draw.mjs`, `impeccable.exe`) execute standalone via Node.js and Python.
-

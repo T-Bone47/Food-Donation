@@ -138,4 +138,3 @@
 - `rounded-xl`: 12px — Primary cards, modal dialogs, drawer panels.
 - `rounded-full`: 9999px — User avatar chips, role pills, circular icon triggers.
 *(Constraint: `rounded-3xl` and oversized pill containers are strictly prohibited on operational screens).*
-

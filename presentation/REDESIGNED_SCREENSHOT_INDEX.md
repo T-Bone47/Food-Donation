@@ -111,4 +111,3 @@ presentation/screenshots/redesigned/
 | 38 | `mobile` | `05_mobile_ngo_dashboard.png` | 390×844 | Mobile intake manifest with single-tap digital receipt confirmation button | NGO |
 | 39 | `mobile` | `06_mobile_admin_console.png` | 390×844 | Horizontally scrolling governance tab strip and mobile metric cards | Admin |
 | 40 | `mobile` | `07_mobile_chatbot.png` | 390×844 | Full-height mobile assistant drawer with touch suggestion chips | Cross-Role |
-

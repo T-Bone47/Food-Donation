@@ -1,32 +1,50 @@
-# FoodShare Component Inventory & Standards
+# FoodShare Component Inventory & Migration Matrix
 
-**Catalog Version:** 2.0.0  
-**Framework:** Next.js 15 / React 19 / Tailwind CSS v4 / Radix UI Primitives  
+**Design System:** Premium Sustainable Logistics  
+**Source:** Google Stitch Redesign Platform Exports  
+**Target Architecture:** Next.js 15 / React 19 UI Library  
 
 ---
 
-## 1. Core Component Directory
+## 1. Atomic & Utility UI Components
 
-### Shell & Navigation
-- `AppShell` (`components/shell/AppShell.tsx`): Top-level responsive wrapper enforcing role authorization, desktop/mobile drawer layout, and demo modal triggers.
-- `AppSidebar` (`components/shell/AppSidebar.tsx`): Persistent desktop navigation sidebar (18rem / 288px) in Deep Forest Emerald (`#0F5132`) with active route pills, section groupings, role switcher, and user session badge.
-- `AppHeader` (`components/shell/AppHeader.tsx`): Responsive top header with dynamic breadcrumbs, global search bar (`⌘K`), network liveness badge, AI Assistant drawer trigger, notification bell, and user avatar.
+| Component | File Path | Status | Key Features |
+|:---|:---|:---:|:---|
+| `StatusBadge` | `src/components/ui/status-badge.tsx` | Enhanced | Monospace uppercase tag, 6px semantic pulse dot, 7 lifecycle states |
+| `Button` | `src/components/ui/button.tsx` | Reusable | Primary Forest Emerald (`#0F5132`), Secondary, Destructive, Compact 32px |
+| `Card` | `src/components/ui/card.tsx` | Reusable | Layer 1 flat white, 1px `#E2E8F0` border, 8px radius |
+| `MetricCard` | `src/components/ui/metric-card.tsx` | Integrated | Tabular numbers, comparative delta pills (`+18.4%`), domain vector icons |
+| `ConfirmDialog` | `src/components/ui/confirm-dialog.tsx` | Reusable | Radix-based accessible modal, backdrop blur, focus trap |
+| `Tabs` | `src/components/ui/tabs.tsx` | Reusable | Segmented pill container, active state indicator |
+| `Input` / `Field` | `src/components/ui/field.tsx` | Reusable | 36px base height, `#0F172A` text, 2px focus ring in `#10B981` |
+| `Toast` | `src/components/ui/toast.tsx` | Reusable | Non-intrusive feedback notifications |
 
-### Form & Input Controls
-- `Input` (`components/ui/input.tsx`): Standard `h-11` text input with rounded-lg border, focus ring (`ring-leaf-700`), and accessible placeholder styling.
-- `Textarea` (`components/ui/input.tsx`): Multi-line expandable text area with consistent border and padding.
-- `Field` (`components/ui/field.tsx`): Integrated form label, required asterisk, inline validation error message, and helper hint container.
-- `Button` (`components/ui/button.tsx`): CVA-styled button supporting `default`, `outline`, `ghost`, and `destructive` variants across `sm`, `md`, and `lg` sizes.
-- `PasswordInput` (`components/ui/password-input.tsx`): Secure password field with reveal/hide toggle and keyboard accessibility.
+---
 
-### Feedback & Status Displays
-- `StatusBadge` (`components/ui/status-badge.tsx`): Semantic lifecycle indicator mapping `AVAILABLE`, `ASSIGNED`, `PICKED_UP`, `DELIVERED`, `COMPLETED`, `CANCELLED`, and `EXPIRED` to approved color tokens with subtle status dots.
-- `InlineAlert` (`components/ui/states.tsx`): Contextual message banner with `error`, `warning`, `info`, and `success` tones.
-- `Skeleton` (`components/ui/states.tsx`): Layout-preserving pulsing skeleton loaders matching card and table geometries.
-- `ErrorState` (`components/ui/states.tsx`): Resilient error display with retry callback and friendly user guidance.
-- `Journey` (`components/ui/journey.tsx`): Horizontal stepper tracking the 5-stage donation custody timeline from creation to NGO receipt.
+## 2. Shared Application Shell Components
 
-### Modals, Drawers & Overlays
-- `DemoRoleSelectorModal` (`components/demo/DemoRoleSelectorModal.tsx`): Quick role switcher modal for live testing as Donor, Volunteer, NGO, or Admin without logging out.
-- `Chatbot` (`components/Chatbot.tsx`): Slide-over drawer connecting to the Gemini 2.5 Flash chatbot microservice on port 5002.
-- `Toast` (`components/ui/toast.tsx`): Non-intrusive feedback toasts for copy actions, confirmation receipts, and status changes.
+| Component | File Path | Role | Stitch Reference |
+|:---|:---|:---:|:---|
+| `AppSidebar` | `src/components/shell/AppSidebar.tsx` | Global Shell | 280px left command sidebar, role-specific nav groups, context role badge |
+| `AppHeader` | `src/components/shell/AppHeader.tsx` | Global Shell | Breadcrumbs, ⌘K search bar, system uptime status, AI drawer toggle, profile |
+| `AppShell` | `src/components/shell/AppShell.tsx` | Layout Engine | Decoupled grid layout `grid-cols-[280px_1fr]`, zero layout shift |
+| `AppNav` | `src/components/shell/AppNav.tsx` | Mobile Navigation | Bottom navigation bar on viewports < 768px |
+| `Chatbot` | `src/components/Chatbot.tsx` | Logistics AI | Slide-over assistant drawer, role-aware suggestions, grounded citations |
+
+---
+
+## 3. Operational Domain Modules
+
+| Domain Module | Path | Target Roles | Integration Source |
+|:---|:---|:---:|:---|
+| `OverviewPanel` | `src/components/admin/OverviewPanel.tsx` | Admin | `admin_operations_command_center` |
+| `UsersPanel` | `src/components/admin/UsersPanel.tsx` | Admin | `user_organization_administration` |
+| `DonationsPanel` | `src/components/admin/DonationsPanel.tsx` | Admin | `admin_operations_command_center` |
+| `VerificationsPanel` | `src/components/admin/VerificationsPanel.tsx` | Admin | `admin_operations_command_center` |
+| `ActivityPanel` | `src/components/admin/ActivityPanel.tsx` | Admin | `admin_operations_command_center` |
+| `DonorDashboard` | `src/app/donordash/page.tsx` | Donor | `donor_operational_dashboard` |
+| `DonationWizard` | `src/app/donate/page.tsx` | Donor | `donor_donation_creation_wizard_schema_aligned` |
+| `VolunteerDiscovery` | `src/app/volunteerdash/page.tsx` | Volunteer | `volunteer_fleet_discovery_dashboard` |
+| `NgoInspection` | `src/app/ngodash/page.tsx` | NGO | `ngo_operations_receipt_inspection_dashboard` |
+| `LandingPage` | `src/app/page.tsx` | Public | `foodshare_public_landing_page` |
+

@@ -52,4 +52,3 @@
 - **Platform Overview:** High-level KPI tiles + urgent alerts (e.g. pending NGO verifications waiting for review).
 - **Tabbed Governance Tables:** Full-width multi-column tables for Donations, Users, Verifications, and Audit Activity.
 - **Table Features:** Instant status filtering, text search, pagination, right-aligned numbers, and detail inspection modals.
-

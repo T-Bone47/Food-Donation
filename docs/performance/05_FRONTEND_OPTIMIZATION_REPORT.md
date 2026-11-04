@@ -43,4 +43,3 @@ All 6 viewports tested and verified with zero horizontal overflow (`scrollWidth 
 - `1024×768`: Tablet Landscape
 - `390×844`: Modern Mobile Standard (iPhone)
 - `375×812`: Compact Mobile
-

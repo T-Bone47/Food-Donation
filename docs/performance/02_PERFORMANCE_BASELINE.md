@@ -42,4 +42,3 @@ The following metrics represent empirical measurements taken prior to optimizati
    - Simultaneous dashboard widgets on `/donordash` and `/volunteerdash` fire multiple parallel GET requests without in-flight deduplication.
 4. **Missing Abort Signal Propagation:**
    - Navigating quickly between views does not cancel stale requests.
-

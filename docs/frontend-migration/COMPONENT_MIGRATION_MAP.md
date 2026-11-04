@@ -55,3 +55,4 @@ This document specifies the exact component mapping, UI reconstruction, and stru
 - Card Surfaces: Clean crisp white with subtle border (`bg-white border-green-100 shadow-sm`)
 - Typography: Inter font family (`--font-inter`) with clear optical hierarchy
 - Hero Imagery: `signupbg.png` faithfully placed on authentication and landing screens
+

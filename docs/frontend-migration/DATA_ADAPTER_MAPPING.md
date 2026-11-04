@@ -67,3 +67,4 @@ To achieve flawless visual parity while ensuring full production functionality, 
 | Feature / Component | Method & Route | Adapter Function | Notes |
 | :--- | :--- | :--- | :--- |
 | Circular Floating Widget | `POST http://localhost:5002/chat` | `fetch('/chat')` with port 5002 proxy fallback | Connects to Python Flask backend using Gemini API. Includes immediate local heuristics for common food safety, shelf life, and donation queries when offline. |
+

@@ -54,4 +54,3 @@
 1. **Native Dialog Elements:** Modal dialogs use `<dialog role="dialog" aria-labelledby="..." aria-describedby="...">`.
 2. **Inert Background:** While a modal is open, the background canvas is set to `inert` or covered by a non-interactive backdrop.
 3. **Focus Restoration:** Upon modal closure, focus is programmatically returned to the button that triggered the dialog.
-

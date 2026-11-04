@@ -122,4 +122,3 @@ node .agents/skills/design-taste-frontend/scripts/inspect.mjs --url http://local
 & ".agents/skills/impeccable/scripts/bin/windows-x64/impeccable.exe" detect http://localhost:3000
 & ".agents/skills/impeccable/scripts/bin/windows-x64/impeccable.exe" help
 ```
-

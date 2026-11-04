@@ -84,4 +84,3 @@ The page heading collision bug has been permanently resolved through physical la
 - The header is rendered outside the `<main>` container in its own sticky row.
 - The `<main>` landmark receives top padding (`py-6 sm:py-8 lg:py-8`) and left padding on desktop (`lg:pl-64`).
 - Scroll anchoring targets `<main id="main-content">` directly, guaranteeing page titles render with generous vertical breathing room below the header line.
-

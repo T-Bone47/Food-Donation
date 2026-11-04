@@ -35,4 +35,3 @@ Volunteer field responders require an interface optimized for rapid triage, turn
     - Step 1: "Mark as picked up" button triggers modal: "Confirm physical handover from donor".
     - Step 2: "Deliver to NGO" dropdown selector listing only verified, approved NGOs (`/api/v1/ngos/approved`).
 - **Completed History Ledger:** Archival ledger of past successful rescues with recipient NGO acknowledgments.
-

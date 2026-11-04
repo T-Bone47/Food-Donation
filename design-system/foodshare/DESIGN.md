@@ -1,53 +1,61 @@
-# FoodShare Design System & Architectural Principles
-**System:** FoodShare Sustainable Logistics Design System  
-**Version:** 2.0.0  
-**Design Authority:** Google Stitch References + Taste Skill Anti-Slop Principles  
+# FoodShare Design System: Premium Sustainable Logistics
+
+**Document:** Canonical Design System Specification  
+**Architecture:** Next.js 15, Tailwind CSS v4, React 19  
+**Source Reference:** Google Stitch FoodShare Export Suite (`premium_sustainable_logistics/DESIGN.md`)  
 
 ---
 
-## 1. Brand Essence: Sustainable Technology with Human Dignity
+## 1. Brand Ethos & Aesthetic
 
-FoodShare operates at the intersection of logistical rigor and compassionate humanitarian relief. The visual system is rooted in:
-1. **Calm, High-Contrast Surfaces:** 60% quiet neutral backgrounds (`#F8F9FF`), 30% structural white card surfaces (`#FFFFFF`), and 10% intentional action accents (`#0F5132`).
-2. **Restrained Precision:** No gratuitous neon gradients, no glowing blobs, no floating cards inside cards, and zero decorative emojis.
-3. **Typographic Integrity:** Standardized on **Geist Sans** for supreme readability across high-density data tables and mobile forms. Monospace (**Geist Mono**) is strictly contained to technical IDs and numeric audit values.
+The FoodShare design system embodies the operational precision of an enterprise logistics orchestration platform fused with the grounded ethos of systemic environmental stewardship. It moves intentionally away from naive pastoral charity aesthetics, projecting instead an institutional-grade, highly dependable technological foundation.
 
----
-
-## 2. Color Palette & Functional Contrast
-
-- **Deep Forest Emerald (`#0F5132`):** Primary brand trigger, active navigation, submit buttons. Minimum contrast ratio against white is 7.4:1 (exceeds WCAG AAA).
-- **Ink Primary (`#0B1C30`):** Ultra-dark slate for all primary headings and numbers.
-- **Ink Soft (`#404942`) & Muted (`#707971`):** Helper text, secondary descriptions, table headers. (All $\ge 4.5:1$ against surface).
-- **Lifecycle Semantic Tokens:**
-  - `AVAILABLE`: Soft Mint (`#ECFDF5`, text `#065F46`)
-  - `ASSIGNED`: Civic Indigo (`#EEF2FF`, text `#3730A3`)
-  - `PICKED_UP`: Harvest Amber (`#FEF3C7`, text `#92400E`)
-  - `DELIVERED`: Cyan Staging (`#E0F2FE`, text `#0369A1`)
-  - `COMPLETED`: Teal Ledger (`#CCFBF1`, text `#115E59`)
-  - `CANCELLED`: Chili Red (`#FFE4E6`, text `#9F1239`)
-  - `EXPIRED`: Slate Neutral (`#F1F5F9`, text `#334155`)
+- **Primary Brand Expression:** Forest Emerald (`#0F5132`) and Deep Forest Pine (`#003820`).
+- **Data & Structure:** Clean high-density neutral backgrounds (`#F8F9FF`), crisp slate inks (`#0B1C30`, `#404942`), and subtle structural borders (`#CBD5E1` / `#C0C9C0`).
+- **Typography Pairing:** Geist for UI & Headings paired with JetBrains Mono for dispatch numbers, cargo weights, and immutable audit timestamps.
 
 ---
 
-## 3. Typography Scale & Hierarchy
+## 2. Color System & Semantic Tokens
 
-| Role | Font Family | Size | Weight | Line Height | Usage |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Display** | Geist Sans | `2.5rem` (`40px`) | Bold (700) | 1.15 | Public landing page hero title |
-| **H1** | Geist Sans | `2.0rem` (`32px`) | Bold (700) | 1.20 | Main page operational headings |
-| **H2** | Geist Sans | `1.5rem` (`24px`) | Semibold (600) | 1.25 | Section headers, modal titles |
-| **H3** | Geist Sans | `1.125rem` (`18px`)| Semibold (600) | 1.35 | Card titles, subsections |
-| **Body** | Geist Sans | `1.0rem` (`16px`) | Regular (400) | 1.50 | Default paragraphs, instructions |
-| **Body Small**| Geist Sans | `0.875rem` (`14px`)| Regular (400) | 1.40 | Form labels, helper hints |
-| **Caption** | Geist Sans | `0.75rem` (`12px`) | Medium (500) | 1.40 | Timestamps, status badges |
-| **Code / ID**| Geist Mono | `0.8125rem` (`13px`)| Medium (500) | 1.40 | Batch IDs (`#d1111111`), codes |
+```mermaid
+flowchart LR
+    A["Surface Canvas #F8F9FF"] --> B["Container Low #EFF4FF"]
+    B --> C["White Card Surface #FFFFFF"]
+    C --> D["Forest Emerald Primary #0F5132"]
+    D --> E["Bioluminescent Accent #68FCBF"]
+```
+
+### Lifecycle Semantics
+Every state in the food recovery pipeline enforces high-contrast, distinguishable tokens:
+
+| Lifecycle State | Dot / Indicator | Background Tint | Text Ink Token | Semantic Meaning |
+|:---|:---:|:---:|:---:|:---|
+| **AVAILABLE** | `#10B981` | `#ECFDF5` | `#065F46` | Live listing staged, awaiting volunteer pickup |
+| **ASSIGNED** | `#6366F1` | `#EEF2FF` | `#3730A3` | Volunteer dispatch en route to donor facility |
+| **PICKED_UP** | `#F59E0B` | `#FEF3C7` | `#92400E` | Cargo onboard, cold-chain in-transit to NGO |
+| **DELIVERED** | `#0EA5E9` | `#E0F2FE` | `#0369A1` | Staged at NGO receiving dock, awaiting dual sign-off |
+| **COMPLETED** | `#0D9488` | `#CCFBF1` | `#115E59` | Verified received, receipt vaulted, impact booked |
+| **CANCELLED** | `#F43F5E` | `#FFE4E6` | `#9F1239` | Revoked before pickup |
+| **EXPIRED** | `#64748B` | `#F1F5F9` | `#334155` | Exceeded safe shelf-life window |
 
 ---
 
-## 4. Anti-Slop Quality Floor
+## 3. Typography & Numerical Formatting
 
-1. **No Eyebrow Kickers:** Headlines stand on their own without tiny uppercase labels floating above them.
-2. **Elevation Once:** Cards declare either a clean 1px border (`border-line`) or a soft shadow, never thick borders over dark offset halos.
-3. **Legitimate Data Only:** Zero invented carbon calculators, fake tax valuations, or mock system uptimes. All metrics compute from real state.
-4. **Natural Human Language:** Technical jargon ("Stage Surplus Consignment", "Deterministic Rescue Infrastructure", "Unit #FLT-V92") is strictly replaced with dignified, clear food rescue language.
+1. **Headings & Page Titles:** Geist SemiBold / Bold with tightened letter-spacing (`-0.025em` to `-0.03em`).
+2. **Body & Microcopy:** Geist Regular/Medium (`13px` to `15px`), balanced measure (45–75 characters).
+3. **Data & Telemetry:** JetBrains Mono with tabular figures (`font-variant-numeric: tabular-nums`). Used strictly for:
+   - Cargo weights (`240.0 kg`, `42,850 kg`)
+   - Dispatch batch IDs (`#DON-4892`, `#RSC-8924`)
+   - GPS telemetry (`LAT 37.7749° N / LON 122.4194° W`)
+   - Real-time ETAs (`14 mins`, `14:28 EST`)
+
+---
+
+## 4. Layout & Responsive Geometry
+
+- **Desktop (≥ 1280px):** 280px fixed left command sidebar (`AppSidebar`), 64px glass header bar (`AppHeader`), 24px inner gutters, max container width `1680px`.
+- **Tablet (768px – 1279px):** Collapsible 64px compact icon rail or accessible drawer, responsive 8-column layout.
+- **Mobile (< 768px):** Sticky top bar with hamburger drawer trigger, bottom navigation dock, single-column full-width cards, zero horizontal overflow.
+

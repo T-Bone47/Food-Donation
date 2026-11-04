@@ -56,4 +56,3 @@ All color pairings are mathematically verified to exceed WCAG 2.1 AA standards:
    - Monospace timestamps and right-aligned numeric data.
 4. **Modals & Dialogs (`ConfirmDialog.tsx`):**
    - Built on native HTML `<dialog role="dialog">` with focus trapping and backdrop dismissal.
-

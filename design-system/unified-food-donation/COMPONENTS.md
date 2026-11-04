@@ -76,4 +76,3 @@
 - Built on native HTML5 `<dialog role="dialog">`.
 - Traps keyboard focus, listens for Escape key, and restores focus to triggering button.
 - Asynchronous confirmation action with built-in loading spinner and error boundary.
-

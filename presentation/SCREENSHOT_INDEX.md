@@ -141,4 +141,3 @@ Every screenshot listed in this index has been verified for:
 2. **Visual Integrity:** No clipped navigation, no raw unrendered template code, no open devtools overlays, and clean typographic contrast.
 3. **Security Compliance:** Zero hardcoded API keys, bearer tokens, or sensitive user passwords visible on screen.
 4. **Resolution Standards:** Full standard HD (1920 × 1080) for desktop captures and standard Retina (390 × 844 @ 2x) for mobile captures.
-

@@ -103,4 +103,3 @@ The typography balances high-character editorial presence with clinical data leg
    - ❌ **Zero Over-Rounded Corners:** Strictly `rounded-lg` (8px) or `rounded-xl` (12px) for cards; no `rounded-3xl` pill blobs on operational screens.
    - ❌ **Zero Unanchored Shadows:** No floating blurred drop-shadows. Shadows are razor-sharp 1px border frames (`border border-slate-200`) with subtle ambient depth (`shadow-sm`).
    - ❌ **Zero Emojis for Icons:** Exclusively unified SVG vector icons from the Lucide icon family with consistent 1.5px/2px stroke weights.
-

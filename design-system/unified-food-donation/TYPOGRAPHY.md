@@ -45,4 +45,3 @@
 1. **Right-Alignment in Tables:** All numeric quantities (servings, kg, litres, user counts) must be right-aligned in tabular layouts for instant column scanning.
 2. **Tabular Numerals (`font-variant-numeric: tabular-nums`):** Applied to counters, countdown timers, and financial/meal sums to eliminate horizontal jitter when numbers update.
 3. **Per-Unit Precision:** Quantities must always include explicit units (`50 portions`, `25.5 kg`, `10 L`). Never sum values across different measurement units.
-

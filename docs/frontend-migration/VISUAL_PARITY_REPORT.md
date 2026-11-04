@@ -88,3 +88,4 @@ Visual parity target: **100% Faithful Reconstruction** of the reference emerald/
 | **Border Tone** | `rgb(220, 252, 231)` (`#dcfce7`) | `border-green-100` / `border-gray-200` | Match |
 | **Primary Typography** | `Inter, sans-serif` | `Inter, sans-serif` (`--font-inter`) | Match |
 | **Authentication Backdrop** | `signupbg.png` | `public/images/signupbg.png` | Exact Asset Copied |
+

@@ -43,6 +43,60 @@ An interaction latency audit was performed on the FoodShare full-stack platform 
 
 ---
 
+### Interaction 2: Local Navigation (`/donordash` <-> `/mydonations` <-> `/notification` <-> `/profile`)
+- **Component & Route:** `AppShell.tsx`, `AppSidebar.tsx`, `use-resource.ts`, `session.ts`
+- **Navigation Mechanism:** Next.js `<Link>`
+- **API Calls Triggered:** `GET /api/v1/donations/mine`, `GET /api/v1/notifications`, `GET /api/v1/auth/me`
+- **Root Causes:**
+  1. **1-Tick AppShell Delay (`session.ts`):** `useCurrentUser()` initialized `ready: false`. On client route transitions, `AppShell` evaluated `!ready`, temporarily mounting a `<Skeleton />` before rendering children.
+  2. **Lack of In-Memory SWR (`use-resource.ts`):** `useResource()` always initialized with `{ data: null, error: null, loading: true }`. When navigating away and returning, existing data was wiped from memory, causing a visible layout jump.
+  3. **Axios Short TTL (2.5s):** The client cache was strictly 2.5s and keyed by exact query parameters, causing unnecessary cache misses between limit variations (e.g. limit 10 on dashboard vs limit 12 on mydonations).
+- **Proposed Correction:**
+  - Maintain an in-memory session reference (`cachedUser`) so `useCurrentUser()` initializes with `ready: true` on subsequent client route navigations.
+  - Implement an in-memory SWR cache in `useResource` keyed by resource name/params. If cached data is present, initialize with `data: cachedData, loading: false` and revalidate silently in the background.
+
+---
+
+### Interaction 3: Role Switching (Demo Role Selector)
+- **Component:** `DemoRoleSelectorModal.tsx`
+- **Event Handler:** `handleSelectRole(role)`
+- **API Calls Triggered:** `POST /api/v1/demo/session`
+- **Root Causes:**
+  1. **Restricted Hit Target:** Only the nested `<Button>` inside each card handled clicks. Clicking the outer card produced zero response, feeling sluggish or broken.
+  2. **Uncached Route Navigation:** After obtaining the demo token, `router.push(destination)` navigated to the new role dashboard without prior prefetching, forcing the browser to fetch the bundle and 3 role-specific APIs sequentially.
+  3. **No Active Transition State:** The user received no visual indication that the role switch was progressing other than a small spinner on the button.
+- **Proposed Correction:**
+  - Make the entire role card clickable with `active:scale-[0.98]` tactile depression feedback.
+  - Prefetch the destination route upon card hover or focus.
+  - Add an immediate banner/progress state in the modal confirming the role transition.
+
+---
+
+### Interaction 4: Create Donation Submission
+- **Component & Route:** `frontend/src/app/donate/page.tsx`
+- **Event Handler:** `submit(e: FormEvent)`
+- **API Calls Triggered:** `POST /api/v1/donations`
+- **Root Causes:**
+  1. **Button Active State:** The button changed text to `"Publishing donation…"` but lacked an explicit progress/loading bar and did not disable navigation links during the in-flight mutation.
+  2. **Cache Invalidation:** After creating a donation, `clearApiCache()` ran, but the donor dashboard was not pre-warmed with the newly created item.
+- **Proposed Correction:**
+  - Add an inline indeterminate progress meter on the form during submission.
+  - Guard against double-clicks with an active submission ref.
+  - Optimistically seed the donor donation cache with the new donation response upon success.
+
+---
+
+### Interaction 5: Real-Time SSE Stream Fanout
+- **Component:** `realtime.ts`, `donordash/page.tsx`, `volunteerdash/page.tsx`, `ngodash/page.tsx`
+- **Root Causes:**
+  1. `clearApiCache()` was called unconditionally on every SSE message.
+  2. Subscribed dashboards triggered 3 parallel `.reload(true)` requests on every broadcast, even for events unrelated to their scope.
+- **Proposed Correction:**
+  - Add a 150ms debounced revalidation queue so multiple rapid lifecycle events (e.g., claimed + assigned) trigger only a single consolidated revalidation.
+  - Selectively invalidate cache entries rather than wiping the entire cache.
+
+---
+
 ## 3. Implementation Plan & Priority
 
 1. **Step 1:** Enhance `session.ts` and `use-resource.ts` with in-memory SWR caching to eliminate navigation skeleton flickers.

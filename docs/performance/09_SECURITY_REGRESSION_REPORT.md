@@ -40,4 +40,3 @@ A comprehensive security audit was conducted to confirm that performance optimiz
 ### 2.5 Chatbot Microservice Security
 - Strict prompt injection filters block system instruction overrides.
 - Model timeouts (20s) and token output caps (450 tokens) prevent resource exhaustion attacks.
-
