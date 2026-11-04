@@ -156,29 +156,38 @@ export default function DonatePage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
+    <main className="min-h-screen bg-[#EEF4EC] text-[#111827]">
       <Navbar />
 
       <div className="py-8 px-6 max-w-2xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-            Create Food Donation
+        {/* Deep Forest Pine Command Banner */}
+        <div className="bg-[#0B331E] border border-[#184F31] rounded-lg p-6 text-white shadow-xs">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+              DISPATCH DESK
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+              REALTIME INTAKE ACTIVE
+            </span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-white">
+            Create Food Donation Dispatch
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">
-            Log surplus inventory for rapid volunteer courier pickup and community distribution
+          <p className="text-xs text-emerald-100/75 mt-1">
+            Log surplus inventory for rapid volunteer courier pickup and certified community distribution
           </p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="manifest-docket p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Number of Food Types */}
             <div>
-              <h2 className="text-sm font-semibold text-gray-900 mb-3 pb-1 border-b border-gray-100">
-                Food Batch Details
+              <h2 className="text-sm font-bold text-[#0B331E] mb-3 pb-2 border-b border-[#CBDBC7]">
+                Food Batch Logistics
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-semibold text-gray-800 mb-1">
                     Number of Different Food Items
                   </label>
                   <input
@@ -188,7 +197,7 @@ export default function DonatePage() {
                     name="numFoods"
                     value={numFoods}
                     onChange={handleNumFoodsChange}
-                    className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                    className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                     required
                   />
                 </div>
@@ -196,13 +205,13 @@ export default function DonatePage() {
                 {/* Dropdowns for each food */}
                 {Array.from({ length: numFoods }).map((_, index) => (
                   <div key={index}>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                    <label className="block text-xs font-semibold text-gray-800 mb-1">
                       Food Item #{index + 1}
                     </label>
                     <select
                       value={selectedFoods[index] || ""}
                       onChange={(e) => handleFoodSelection(index, e.target.value)}
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500 bg-white"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900 cursor-pointer"
                       required
                     >
                       <option value="">Select Food Item</option>
@@ -217,7 +226,7 @@ export default function DonatePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                    <label className="block text-xs font-semibold text-gray-800 mb-1">
                       Servings / Quantity
                     </label>
                     <input
@@ -227,13 +236,13 @@ export default function DonatePage() {
                       value={foodData.quantity}
                       onChange={(e) => setFoodData({ ...foodData, quantity: e.target.value })}
                       placeholder="e.g. 25"
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                    <label className="block text-xs font-semibold text-gray-800 mb-1">
                       Prepared Time (HH:MM)
                     </label>
                     <input
@@ -242,7 +251,7 @@ export default function DonatePage() {
                       value={foodData.preparedTime}
                       onChange={(e) => setFoodData({ ...foodData, preparedTime: e.target.value })}
                       placeholder="e.g. 12:30 PM"
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                       required
                     />
                   </div>
@@ -252,16 +261,16 @@ export default function DonatePage() {
 
             {/* Location Section */}
             <div>
-              <div className="flex items-center justify-between mb-3 pb-1 border-b border-gray-100">
-                <h2 className="text-sm font-semibold text-gray-900">
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#CBDBC7]">
+                <h2 className="text-sm font-bold text-[#0B331E]">
                   Facility Pickup Address
                 </h2>
                 <button
                   type="button"
                   onClick={getLocation}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold bg-[#E2ECE0] hover:bg-[#D5E4D2] text-[#135936] border border-[#CBDBC7] rounded transition cursor-pointer"
                 >
-                  <MapPin className="size-3 text-gray-500" />
+                  <MapPin className="size-3 text-[#165E39]" />
                   <span>Auto-Detect GPS</span>
                 </button>
               </div>
@@ -269,46 +278,46 @@ export default function DonatePage() {
               <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs text-gray-600 mb-1">Postal Code</label>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Postal Code</label>
                     <input
                       type="text"
                       name="pincode"
                       value={locationData.pincode}
                       onChange={handleLocationChange}
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900 font-mono"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-600 mb-1">Area / Street</label>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Area / Street</label>
                     <input
                       type="text"
                       name="area"
                       value={locationData.area}
                       onChange={handleLocationChange}
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs text-gray-600 mb-1">State / Province</label>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">State / Province</label>
                     <input
                       type="text"
                       name="state"
                       value={locationData.state}
                       onChange={handleLocationChange}
-                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-600 mb-1">Country</label>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Country</label>
                     <input
                       type="text"
                       name="country"
                       value={locationData.country}
                       readOnly
-                      className="w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500 cursor-not-allowed"
+                      className="w-full rounded-md border border-[#CBDBC7] bg-[#EBF2E9] p-2 text-sm text-gray-600 cursor-not-allowed font-medium"
                     />
                   </div>
                 </div>
@@ -317,7 +326,7 @@ export default function DonatePage() {
 
             {/* Map Reference */}
             <div>
-              <p className="text-xs font-medium text-gray-700 mb-2">
+              <p className="text-xs font-bold text-[#0B331E] mb-2">
                 Pickup Zone Reference
               </p>
               <iframe
@@ -326,7 +335,7 @@ export default function DonatePage() {
                 height="180"
                 allowFullScreen
                 loading="lazy"
-                className="rounded-md border border-gray-200"
+                className="rounded-md border border-[#CBDBC7]"
               ></iframe>
             </div>
 
@@ -334,7 +343,7 @@ export default function DonatePage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2"
+              className="w-full bg-[#135936] hover:bg-[#0D4026] text-white px-4 py-3 rounded-md text-sm font-bold transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2 shadow-xs"
             >
               {loading ? (
                 <span>Dispatching to Couriers...</span>

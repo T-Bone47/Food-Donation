@@ -8,7 +8,6 @@ import { impactApi, donationsApi } from "@/lib/api-client";
 import { 
   MapPin, 
   Plus, 
-  ArrowRight, 
   Clock, 
   CheckCircle2, 
   Truck, 
@@ -17,7 +16,8 @@ import {
   Apple, 
   Wheat, 
   Building2,
-  ExternalLink
+  ExternalLink,
+  ShieldCheck
 } from "lucide-react";
 
 export default function DonorDashboard() {
@@ -77,7 +77,6 @@ export default function DonorDashboard() {
     }
   };
 
-  // Fetch real impact metrics & recent active donations from backend
   useEffect(() => {
     async function loadData() {
       try {
@@ -96,7 +95,6 @@ export default function DonorDashboard() {
         if (donationsRes.status === "fulfilled" && donationsRes.value.data?.donations) {
           setRecentDonations(donationsRes.value.data.donations.slice(0, 5));
         } else {
-          // Standard sample operational items matching Copia/Replate schema
           setRecentDonations([
             { id: "DON-8812", food: "Cooked Biryani & Dal", quantity: "45 meals", type: "cooked", status: "Assigned", expiry: "Today, 18:00", address: "Koramangala 4th Block" },
             { id: "DON-8809", food: "Whole Wheat Loaves & Buns", quantity: "30 items", type: "bakery", status: "Delivered", expiry: "Today, 21:00", address: "Indiranagar 100ft Rd" },
@@ -112,87 +110,95 @@ export default function DonorDashboard() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
-      {/* Top Navigation */}
+    <main className="min-h-screen text-[#143322]">
+      {/* Top Forest Green Header */}
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 space-y-6">
-        {/* Header / Title Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              Donation Dispatch
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Surplus food rescue logistics and active custody tracking
-            </p>
+        {/* Forest Green Command Banner with 3-cell live metrics */}
+        <div className="bg-[#0B331E] text-white border border-[#174B2E] rounded-lg p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="inline-block size-2 rounded-full bg-emerald-400"></span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-300">
+                  FoodShare Logistics Network
+                </span>
+              </div>
+              <h1 className="text-2xl font-bold tracking-tight text-white">
+                Donation Dispatch Console
+              </h1>
+              <p className="text-xs text-emerald-200/80 mt-0.5">
+                Surplus food recovery, courier coordination, and verified recipient confirmations
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              <Link href="/mydonations">
+                <button className="px-3.5 py-2 bg-[#133F27] hover:bg-[#1A5032] text-emerald-100 rounded-md text-xs font-medium border border-[#1E5A38] transition-colors cursor-pointer">
+                  Track Custody
+                </button>
+              </Link>
+              <Link href="/donate">
+                <button className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-[#072616] rounded-md text-xs font-semibold transition-colors cursor-pointer">
+                  <Plus className="size-4" />
+                  <span>Create Food Donation</span>
+                </button>
+              </Link>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <Link href="/mydonations">
-              <button className="px-3.5 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-md text-sm font-medium border border-gray-300 transition-colors cursor-pointer">
-                Track Custody
-              </button>
-            </Link>
-            <Link href="/donate">
-              <button className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-sm font-medium transition-colors cursor-pointer">
-                <Plus className="size-4" />
-                <span>Create Food Donation</span>
-              </button>
-            </Link>
+          {/* Embedded 3-Cell Metric Strip */}
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#184F31] pt-5">
+            <div className="md:pr-5">
+              <span className="text-xs font-medium text-emerald-300/80">
+                Meals Rescued (Platform Total)
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {sum ? Number(sum).toLocaleString() : "1,420"}
+              </p>
+              <p className="text-xs text-emerald-300/70 mt-1">
+                Delivered safely to community shelters
+              </p>
+            </div>
+
+            <div className="md:px-5 pt-4 md:pt-0">
+              <span className="text-xs font-medium text-emerald-300/80">
+                Active Dispatches
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {activeDonations !== null ? activeDonations : "12"}
+              </p>
+              <p className="text-xs text-emerald-300/70 mt-1">
+                Batches in transit or awaiting courier pickup
+              </p>
+            </div>
+
+            <div className="md:pl-5 pt-4 md:pt-0">
+              <span className="text-xs font-medium text-emerald-300/80">
+                Verified Recipient Shelters
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {volunteerCount !== null ? Math.min(volunteerCount, 24) : "8"}
+              </p>
+              <p className="text-xs text-emerald-300/70 mt-1">
+                Active community NGO receiving hubs
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Operational Overview: 3 Divided KPIs */}
-        <div className="bg-white border border-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-          <div className="p-5">
-            <span className="text-sm font-medium text-gray-600">
-              Meals Rescued
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {sum ? Number(sum).toLocaleString() : "1,420"}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Delivered to verified partner shelters
-            </p>
-          </div>
-
-          <div className="p-5">
-            <span className="text-sm font-medium text-gray-600">
-              Active Dispatches
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {activeDonations !== null ? activeDonations : "12"}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Currently in transit or awaiting pickup
-            </p>
-          </div>
-
-          <div className="p-5">
-            <span className="text-sm font-medium text-gray-600">
-              Verified Shelter Partners
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {volunteerCount !== null ? Math.min(volunteerCount, 24) : "8"}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Community receiving hubs in network
-            </p>
-          </div>
-        </div>
-
-        {/* Dispatch Location Bar */}
-        <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        {/* Dispatch Facility Location Docket */}
+        <div className="manifest-card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-l-4 border-l-[#166534]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="p-2 bg-gray-100 rounded text-gray-600 shrink-0">
+            <div className="p-2 bg-[#E1ECE0] rounded text-[#14532D] shrink-0">
               <MapPin className="size-4" />
             </div>
             <div className="min-w-0 pr-4">
-              <p className="text-sm font-medium text-gray-900">
-                {coords ? "Verified Facility Location" : "Facility Pickup Location"}
+              <p className="text-sm font-semibold text-[#0E3824]">
+                {coords ? "Verified Facility Coordinates" : "Facility Pickup Location"}
               </p>
-              <p className="text-xs text-gray-500 truncate max-w-xs sm:max-w-md">
+              <p className="text-xs text-gray-600 truncate max-w-xs sm:max-w-md">
                 {address || "Auto-fill your pickup address coordinates for courier dispatch"}
               </p>
             </div>
@@ -200,75 +206,81 @@ export default function DonorDashboard() {
           <button
             onClick={getLocation}
             disabled={locationLoading}
-            className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200/80 text-gray-800 rounded text-xs font-medium border border-gray-300 transition cursor-pointer whitespace-nowrap disabled:opacity-50"
+            className="px-3 py-1.5 bg-[#E6EFE4] hover:bg-[#D7E5D4] text-[#0E3824] rounded text-xs font-medium border border-[#BACDB6] transition cursor-pointer whitespace-nowrap disabled:opacity-50"
           >
             {locationLoading ? "Detecting GPS..." : coords ? "Update Coordinates" : "Detect Location"}
           </button>
         </div>
 
-        {/* Quick Surplus Batches (Utilitarian Category Cards) */}
+        {/* Surplus Food Categories */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h2 className="text-sm font-semibold text-gray-900">
-                Food Rescue Categories
+              <h2 className="text-sm font-bold text-[#0E3824]">
+                Food Rescue Handling Categories
               </h2>
-              <p className="text-xs text-gray-500">
-                Dispatch surplus inventory by handling requirements
+              <p className="text-xs text-gray-600">
+                Log surplus inventory by packaging and thermal handling requirements
               </p>
             </div>
-            <Link href="/donate" className="text-xs font-medium text-emerald-700 hover:text-emerald-800">
-              Full Donation Form →
+            <Link href="/donate" className="text-xs font-semibold text-[#166534] hover:text-[#0E3824]">
+              Custom Donation Form →
             </Link>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
             <Link href="/donate?type=cooked" className="group">
-              <div className="bg-white p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+              <div className="manifest-card p-4 hover:border-[#8EAF8B] transition-colors">
                 <div className="flex items-center gap-2 mb-2">
-                  <Utensils className="size-4 text-gray-700" />
-                  <h3 className="text-sm font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                  <div className="p-1.5 bg-[#E2ECE0] text-[#135936] rounded">
+                    <Utensils className="size-4" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#0E3824] group-hover:text-[#166534] transition-colors">
                     Prepared Catering & Meals
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Cooked meals, catering trays, rice & curries (hot or refrigerated)
+                <p className="text-xs text-gray-600">
+                  Hot meals, catering trays, rice & curries (insulated containers)
                 </p>
-                <span className="inline-block mt-3 text-xs font-medium text-emerald-700">
+                <span className="inline-block mt-3 text-xs font-semibold text-[#166534]">
                   Schedule Batch →
                 </span>
               </div>
             </Link>
 
             <Link href="/donate?type=bakery" className="group">
-              <div className="bg-white p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+              <div className="manifest-card p-4 hover:border-[#8EAF8B] transition-colors">
                 <div className="flex items-center gap-2 mb-2">
-                  <Wheat className="size-4 text-gray-700" />
-                  <h3 className="text-sm font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                  <div className="p-1.5 bg-[#E2ECE0] text-[#135936] rounded">
+                    <Wheat className="size-4" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#0E3824] group-hover:text-[#166534] transition-colors">
                     Bakery & Packaged Goods
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Fresh bread loaves, rolls, bakery surplus, shelf-stable staples
+                <p className="text-xs text-gray-600">
+                  Fresh bread loaves, rolls, bakery surplus, shelf-stable goods
                 </p>
-                <span className="inline-block mt-3 text-xs font-medium text-emerald-700">
+                <span className="inline-block mt-3 text-xs font-semibold text-[#166534]">
                   Schedule Batch →
                 </span>
               </div>
             </Link>
 
             <Link href="/donate?type=produce" className="group">
-              <div className="bg-white p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+              <div className="manifest-card p-4 hover:border-[#8EAF8B] transition-colors">
                 <div className="flex items-center gap-2 mb-2">
-                  <Apple className="size-4 text-gray-700" />
-                  <h3 className="text-sm font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                  <div className="p-1.5 bg-[#E2ECE0] text-[#135936] rounded">
+                    <Apple className="size-4" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#0E3824] group-hover:text-[#166534] transition-colors">
                     Fresh Produce & Fruit
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Vegetable crates, whole fruits, farmers market surplus, chilled dairy
+                <p className="text-xs text-gray-600">
+                  Vegetable crates, whole fruits, market surplus, chilled dairy
                 </p>
-                <span className="inline-block mt-3 text-xs font-medium text-emerald-700">
+                <span className="inline-block mt-3 text-xs font-semibold text-[#166534]">
                   Schedule Batch →
                 </span>
               </div>
@@ -277,28 +289,28 @@ export default function DonorDashboard() {
         </div>
 
         {/* Active Dispatches Table */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div className="manifest-card overflow-hidden">
+          <div className="px-5 py-4 border-b border-[#CBDBC7] bg-[#E7EFE5] flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-gray-900">
-                Recent Food Rescue Runs
+              <h2 className="text-sm font-bold text-[#0E3824]">
+                Active Food Rescue Dispatches
               </h2>
-              <p className="text-xs text-gray-500">
-                Active chain of custody and recipient confirmations
+              <p className="text-xs text-gray-600">
+                Real-time chain of custody, volunteer handovers, and recipient confirmations
               </p>
             </div>
             <Link 
               href="/mydonations" 
-              className="text-xs font-medium text-emerald-700 hover:text-emerald-800"
+              className="text-xs font-semibold text-[#166534] hover:text-[#0E3824]"
             >
-              View Full History →
+              Full Ledger History →
             </Link>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-gray-200 bg-gray-50/70 text-gray-600 font-medium">
+                <tr className="border-b border-[#CBDBC7] bg-[#F2F7F0] text-[#1A402B] font-semibold">
                   <th className="py-2.5 px-4">Batch ID</th>
                   <th className="py-2.5 px-4">Food Item</th>
                   <th className="py-2.5 px-4">Quantity</th>
@@ -308,31 +320,31 @@ export default function DonorDashboard() {
                   <th className="py-2.5 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#CBDBC7]/60 bg-[#FAFDF8]">
                 {recentDonations.map((item, idx) => (
-                  <tr key={item.id || idx} className="hover:bg-gray-50/60 transition-colors">
-                    <td className="py-3 px-4 font-mono font-medium text-gray-900">
+                  <tr key={item.id || idx} className="hover:bg-[#EFF5EC] transition-colors">
+                    <td className="py-3 px-4 font-mono font-medium text-[#0E3824]">
                       {item.id || `#BAT-${1000 + idx}`}
                     </td>
-                    <td className="py-3 px-4 font-medium text-gray-900">
+                    <td className="py-3 px-4 font-semibold text-[#0E3824]">
                       {item.food || item.foodType || "Surplus Food Batch"}
                     </td>
-                    <td className="py-3 px-4 text-gray-600 tabular-nums">
+                    <td className="py-3 px-4 text-gray-700 tabular-nums">
                       {item.quantity || "30 servings"}
                     </td>
-                    <td className="py-3 px-4 text-gray-600">
+                    <td className="py-3 px-4 text-gray-700">
                       {item.expiry || "Today, 19:00"}
                     </td>
-                    <td className="py-3 px-4 text-gray-500 truncate max-w-xs">
+                    <td className="py-3 px-4 text-gray-600 truncate max-w-xs">
                       {item.address || "Bengaluru Main Hub"}
                     </td>
                     <td className="py-3 px-4">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${
                         item.status === "Delivered" 
-                          ? "bg-emerald-50 text-emerald-800 border-emerald-200" 
+                          ? "bg-[#E1F2E7] text-[#0A5631] border-[#A7DFC0]" 
                           : item.status === "Assigned" 
-                          ? "bg-amber-50 text-amber-800 border-amber-200"
-                          : "bg-blue-50 text-blue-800 border-blue-200"
+                          ? "bg-[#E5F0FA] text-[#0F4E80] border-[#B6D6F2]"
+                          : "bg-[#FEF6E6] text-[#8C5504] border-[#F6D59A]"
                       }`}>
                         {item.status || "Pending"}
                       </span>
@@ -340,9 +352,9 @@ export default function DonorDashboard() {
                     <td className="py-3 px-4 text-right">
                       <Link 
                         href="/mydonations" 
-                        className="font-medium text-emerald-700 hover:text-emerald-800"
+                        className="font-semibold text-[#166534] hover:text-[#0E3824]"
                       >
-                        Details
+                        Inspect
                       </Link>
                     </td>
                   </tr>

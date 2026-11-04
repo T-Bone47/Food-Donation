@@ -141,96 +141,106 @@ function NgoDashboard() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
+    <main className="min-h-screen bg-[#EEF4EC] text-[#111827]">
       <NgoNavbar />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 space-y-6">
-        {/* Title & Action Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              Receiving Dock & Quality Verification
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Verify inbound food rescue shipments, inspect safety controls, and log community distribution
-            </p>
+        {/* Deep Forest Pine Command Banner */}
+        <div className="bg-[#0B331E] border border-[#184F31] rounded-lg p-6 text-white shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                  FACILITY INTAKE DOCK
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                  BAY STATUS: ACTIVE
+                </span>
+              </div>
+              <h1 className="text-2xl font-bold tracking-tight text-white">
+                Receiving Dock & Quality Verification
+              </h1>
+              <p className="text-xs text-emerald-100/75 mt-1 max-w-2xl">
+                Verify inbound food rescue shipments, inspect safety controls, and log certified community distribution
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-emerald-200/80">Staging Bay:</span>
+              <span className="text-xs font-semibold font-mono text-emerald-200 bg-[#124227] border border-emerald-600/40 px-3 py-1 rounded">
+                74% Capacity Available
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">Staging Bay:</span>
-            <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
-              74% Capacity Available
-            </span>
-          </div>
-        </div>
+          {/* 3 Integrated KPIs */}
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#184F31] pt-5">
+            <div className="py-2 md:py-0 md:px-5 first:pl-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Incoming Shipments
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {incoming.length}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Currently in transit or awaiting intake
+              </p>
+            </div>
 
-        {/* 3 Divided KPIs */}
-        <div className="bg-white border border-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              Incoming Shipments
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {incoming.length}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Currently in transit or awaiting intake
-            </p>
-          </div>
+            <div className="py-2 md:py-0 md:px-5">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Verified Intakes (Past 30 Days)
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {history.length}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Certified for community consumption
+              </p>
+            </div>
 
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              Verified Intakes (Past 30 Days)
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {history.length}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Certified for community consumption
-            </p>
-          </div>
-
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              Safety Verification Rate
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              100%
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Zero safety discrepancies recorded
-            </p>
+            <div className="py-2 md:py-0 md:px-5 last:pr-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Safety Verification Rate
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                100%
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Zero safety discrepancies recorded
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center gap-2 border-b border-gray-200">
+        <div className="flex items-center gap-2 border-b border-[#CBDBC7]">
           <button
             onClick={() => setActiveTab("hub")}
-            className={`pb-2.5 px-3 text-xs font-medium transition cursor-pointer border-b-2 ${
+            className={`pb-2.5 px-4 text-xs font-medium transition cursor-pointer border-b-2 ${
               activeTab === "hub"
-                ? "border-emerald-700 text-gray-900 font-semibold"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-[#135936] text-[#0B331E] font-bold"
+                : "border-transparent text-gray-600 hover:text-gray-900"
             }`}
           >
             Receiving Hub
           </button>
           <button
             onClick={() => setActiveTab("incoming")}
-            className={`pb-2.5 px-3 text-xs font-medium transition cursor-pointer border-b-2 ${
+            className={`pb-2.5 px-4 text-xs font-medium transition cursor-pointer border-b-2 ${
               activeTab === "incoming"
-                ? "border-emerald-700 text-gray-900 font-semibold"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-[#135936] text-[#0B331E] font-bold"
+                : "border-transparent text-gray-600 hover:text-gray-900"
             }`}
           >
             Incoming Bay ({incoming.length})
           </button>
           <button
             onClick={() => setActiveTab("history")}
-            className={`pb-2.5 px-3 text-xs font-medium transition cursor-pointer border-b-2 ${
+            className={`pb-2.5 px-4 text-xs font-medium transition cursor-pointer border-b-2 ${
               activeTab === "history"
-                ? "border-emerald-700 text-gray-900 font-semibold"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-[#135936] text-[#0B331E] font-bold"
+                : "border-transparent text-gray-600 hover:text-gray-900"
             }`}
           >
             Intake History ({history.length})
@@ -241,43 +251,44 @@ function NgoDashboard() {
         {activeTab === "hub" && (
           <div className="space-y-6">
             {/* Safety Protocol Card */}
-            <div className="bg-white border border-gray-200 rounded-lg p-5 space-y-4">
+            <div className="manifest-docket p-5 space-y-4">
               <div>
-                <h2 className="text-sm font-semibold text-gray-900">
-                  Standardized 3-Point Food Safety Protocol
+                <h2 className="text-sm font-bold text-[#0B331E] flex items-center gap-2">
+                  <ShieldCheck className="size-4 text-[#165E39]" />
+                  <span>Standardized 3-Point Food Safety Protocol</span>
                 </h2>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-gray-600 mt-0.5">
                   Mandatory inspection criteria before distributing donated food to community residents
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-4 text-xs">
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-md">
-                  <div className="flex items-center gap-2 font-semibold text-gray-900 mb-1">
-                    <Thermometer className="size-4 text-gray-600" />
+                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+                  <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
+                    <Thermometer className="size-4 text-[#165E39]" />
                     <span>Thermal Integrity</span>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-700">
                     Hot food kept &gt;60°C or refrigerated &lt;4°C during courier transit
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-md">
-                  <div className="flex items-center gap-2 font-semibold text-gray-900 mb-1">
-                    <Package className="size-4 text-gray-600" />
+                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+                  <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
+                    <Package className="size-4 text-[#165E39]" />
                     <span>Sealed Packaging</span>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-700">
                     Food-grade containers intact with zero cross-contamination or breach
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-md">
-                  <div className="flex items-center gap-2 font-semibold text-gray-900 mb-1">
-                    <Clock className="size-4 text-gray-600" />
+                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+                  <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
+                    <Clock className="size-4 text-[#165E39]" />
                     <span>Prompt Handover</span>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-700">
                     Received within certified shelf-life window for same-day distribution
                   </p>
                 </div>
@@ -285,19 +296,19 @@ function NgoDashboard() {
             </div>
 
             {/* Inbound Preview Table */}
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="manifest-card overflow-hidden">
+              <div className="px-5 py-4 bg-[#E5EDE2] border-b border-[#CBDBC7] flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900">
+                  <h3 className="text-sm font-bold text-[#0B331E]">
                     Deliveries Awaiting Intake
                   </h3>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-600">
                     Shipments arriving at your bay
                   </p>
                 </div>
                 <button
                   onClick={() => setActiveTab("incoming")}
-                  className="text-xs font-medium text-emerald-700 hover:text-emerald-800 cursor-pointer"
+                  className="text-xs font-semibold text-[#135936] hover:text-[#0B331E] cursor-pointer"
                 >
                   View All Deliveries →
                 </button>
@@ -308,19 +319,19 @@ function NgoDashboard() {
                   No pending deliveries at the bay right now.
                 </div>
               ) : (
-                <div className="divide-y divide-gray-100">
+                <div className="divide-y divide-[#E2ECE0]">
                   {incoming.map((item) => (
-                    <div key={item.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-gray-50/50">
+                    <div key={item.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F2F7F0]">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-semibold text-gray-900">
+                          <span className="font-mono text-xs font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">
                             {item.id}
                           </span>
-                          <span className="font-medium text-xs text-gray-900">
+                          <span className="font-bold text-xs text-gray-900">
                             {item.title || item.food_category}
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-gray-600 mt-1">
                           {item.quantity} {item.unit || "servings"} • Origin: {item.donor?.name || "Donor"} • Courier: {item.assignment?.volunteer?.name || "Assigned Courier"}
                         </p>
                       </div>
@@ -330,7 +341,7 @@ function NgoDashboard() {
                           setInspectingItem(item);
                           setActiveTab("incoming");
                         }}
-                        className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-medium transition-colors cursor-pointer"
+                        className="px-3.5 py-1.5 bg-[#135936] hover:bg-[#0D4026] text-white rounded text-xs font-semibold transition-colors cursor-pointer shadow-xs"
                       >
                         Inspect & Accept
                       </button>
@@ -345,13 +356,13 @@ function NgoDashboard() {
         {/* Tab 2: Incoming Bay */}
         {activeTab === "incoming" && (
           <div className="space-y-4">
-            <h2 className="text-base font-semibold text-gray-900">
+            <h2 className="text-base font-bold text-[#0B331E]">
               Inbound Deliveries & Inspection Bay
             </h2>
 
             {incoming.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-                <p className="text-sm font-medium text-gray-900">
+              <div className="manifest-card p-12 text-center">
+                <p className="text-sm font-semibold text-gray-900">
                   The receiving dock is currently clear
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
@@ -361,32 +372,32 @@ function NgoDashboard() {
             ) : (
               <div className="space-y-3">
                 {incoming.map((item) => (
-                  <div key={item.id} className="bg-white border border-gray-200 rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div key={item.id} className="manifest-docket p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="space-y-1.5 text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-semibold text-gray-900">{item.id}</span>
-                        <h3 className="font-semibold text-sm text-gray-900">{item.title || item.food_category}</h3>
-                        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-800 border border-blue-200">
+                        <span className="font-mono font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">{item.id}</span>
+                        <h3 className="font-bold text-sm text-gray-900">{item.title || item.food_category}</h3>
+                        <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#E4F2E7] text-[#115E34] border border-[#A9D8B6]">
                           {item.status}
                         </span>
                       </div>
-                      <p className="text-gray-600">
-                        <span className="font-medium">Quantity:</span> {item.quantity} {item.unit || "servings"}
+                      <p className="text-gray-700">
+                        <span className="font-semibold text-gray-900">Quantity:</span> {item.quantity} {item.unit || "servings"}
                       </p>
-                      <p className="text-gray-600">
-                        <span className="font-medium">Source:</span> {item.pickup_address}
+                      <p className="text-gray-700">
+                        <span className="font-semibold text-gray-900">Source:</span> {item.pickup_address}
                       </p>
-                      <p className="text-gray-600">
-                        <span className="font-medium">Donor:</span> {item.donor?.name || "Partner Donor"} ({item.donor?.phonenumber || "—"})
+                      <p className="text-gray-700">
+                        <span className="font-semibold text-gray-900">Donor:</span> {item.donor?.name || "Partner Donor"} ({item.donor?.phonenumber || "—"})
                       </p>
-                      <p className="text-gray-600">
-                        <span className="font-medium">Courier:</span> {item.assignment?.volunteer?.name || "Field Courier"} ({item.assignment?.volunteer?.phonenumber || "—"})
+                      <p className="text-gray-700">
+                        <span className="font-semibold text-gray-900">Courier:</span> {item.assignment?.volunteer?.name || "Field Courier"} ({item.assignment?.volunteer?.phonenumber || "—"})
                       </p>
                     </div>
 
                     <button
                       onClick={() => setInspectingItem(item)}
-                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap"
+                      className="px-4 py-2 bg-[#135936] hover:bg-[#0D4026] text-white rounded-md text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap shadow-xs"
                     >
                       Conduct Inspection
                     </button>
@@ -400,19 +411,19 @@ function NgoDashboard() {
         {/* Tab 3: Intake History */}
         {activeTab === "history" && (
           <div className="space-y-4">
-            <h2 className="text-base font-semibold text-gray-900">
+            <h2 className="text-base font-bold text-[#0B331E]">
               Verified Intake History & Distribution Log
             </h2>
 
             {history.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-lg p-12 text-center text-xs text-gray-500">
+              <div className="manifest-card p-12 text-center text-xs text-gray-500">
                 No past verified intake records found.
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+              <div className="manifest-card overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-gray-200 bg-gray-50 text-gray-600 font-medium">
+                    <tr className="border-b border-[#CBDBC7] bg-[#E5EDE2] text-[#1E3E2B] font-bold">
                       <th className="py-2.5 px-4">Intake ID</th>
                       <th className="py-2.5 px-4">Food Item</th>
                       <th className="py-2.5 px-4">Quantity</th>
@@ -421,26 +432,26 @@ function NgoDashboard() {
                       <th className="py-2.5 px-4">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-[#E2ECE0]">
                     {history.map((record) => (
-                      <tr key={record.id} className="hover:bg-gray-50/50">
-                        <td className="py-3 px-4 font-mono font-medium text-gray-900">
+                      <tr key={record.id} className="hover:bg-[#F2F7F0]">
+                        <td className="py-3 px-4 font-mono font-bold text-[#0B331E]">
                           {record.id}
                         </td>
-                        <td className="py-3 px-4 font-medium text-gray-900">
+                        <td className="py-3 px-4 font-semibold text-gray-900">
                           {record.title || record.food_category || "Surplus Batch"}
                         </td>
-                        <td className="py-3 px-4 text-gray-600 tabular-nums">
+                        <td className="py-3 px-4 text-gray-700 tabular-nums font-medium">
                           {record.quantity} {record.unit || "servings"}
                         </td>
-                        <td className="py-3 px-4 text-gray-600">
+                        <td className="py-3 px-4 text-gray-700">
                           {record.donor_name || "Partner Donor"}
                         </td>
-                        <td className="py-3 px-4 text-gray-500 max-w-xs truncate">
+                        <td className="py-3 px-4 text-gray-600 max-w-xs truncate">
                           {record.notes || "Inspected & approved"}
                         </td>
                         <td className="py-3 px-4">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#E4F2E7] text-[#115E34] border border-[#A9D8B6]">
                             Verified
                           </span>
                         </td>
@@ -455,64 +466,65 @@ function NgoDashboard() {
 
         {/* Modal: Inspection Dialog */}
         {inspectingItem && (
-          <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-lg w-full p-6 space-y-4 border border-gray-200 shadow-lg">
-              <div className="flex items-center justify-between pb-2 border-b border-gray-100">
-                <h3 className="font-semibold text-sm text-gray-900">
-                  Intake Quality Inspection: {inspectingItem.id}
+          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+            <div className="manifest-card max-w-lg w-full p-6 space-y-4 shadow-xl border-[#CBDBC7]">
+              <div className="flex items-center justify-between pb-3 border-b border-[#CBDBC7]">
+                <h3 className="font-bold text-sm text-[#0B331E] flex items-center gap-2">
+                  <ClipboardCheck className="size-4 text-[#165E39]" />
+                  <span>Intake Quality Inspection: {inspectingItem.id}</span>
                 </h3>
                 <button
                   onClick={() => setInspectingItem(null)}
-                  className="text-gray-400 hover:text-gray-600 text-sm cursor-pointer"
+                  className="text-gray-400 hover:text-gray-700 text-sm cursor-pointer"
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="text-xs space-y-1">
-                <p className="text-gray-700">
-                  <span className="font-medium">Cargo:</span> {inspectingItem.title || inspectingItem.food_category} ({inspectingItem.quantity} {inspectingItem.unit || "servings"})
+              <div className="text-xs space-y-1 bg-[#F2F7F0] p-3 rounded border border-[#CBDBC7]">
+                <p className="text-gray-900">
+                  <span className="font-bold">Cargo:</span> {inspectingItem.title || inspectingItem.food_category} ({inspectingItem.quantity} {inspectingItem.unit || "servings"})
                 </p>
-                <p className="text-gray-500">
+                <p className="text-gray-600">
                   Delivered by: {inspectingItem.assignment?.volunteer?.name || "Assigned Courier"}
                 </p>
               </div>
 
               {/* 3-Point Checklist */}
-              <div className="space-y-2 pt-2 border-t border-gray-100 text-xs">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div className="space-y-2 pt-2 border-t border-[#CBDBC7] text-xs">
+                <label className="flex items-center gap-2.5 cursor-pointer text-gray-800">
                   <input
                     type="checkbox"
                     checked={tempChecked}
                     onChange={(e) => setTempChecked(e.target.checked)}
-                    className="rounded border-gray-300 text-emerald-700"
+                    className="rounded border-[#CBDBC7] text-[#135936] focus:ring-[#135936]"
                   />
                   <span>Thermal Integrity verified (hot &gt;60°C or cold &lt;4°C)</span>
                 </label>
 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-2.5 cursor-pointer text-gray-800">
                   <input
                     type="checkbox"
                     checked={packagingChecked}
                     onChange={(e) => setPackagingChecked(e.target.checked)}
-                    className="rounded border-gray-300 text-emerald-700"
+                    className="rounded border-[#CBDBC7] text-[#135936] focus:ring-[#135936]"
                   />
                   <span>Packaging seal and hygiene inspection intact</span>
                 </label>
 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-2.5 cursor-pointer text-gray-800">
                   <input
                     type="checkbox"
                     checked={smellChecked}
                     onChange={(e) => setSmellChecked(e.target.checked)}
-                    className="rounded border-gray-300 text-emerald-700"
+                    className="rounded border-[#CBDBC7] text-[#135936] focus:ring-[#135936]"
                   />
                   <span>Visual and freshness sensory check passed</span>
                 </label>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-[#0B331E] mb-1">
                   Intake Notes (Optional):
                 </label>
                 <input
@@ -520,21 +532,21 @@ function NgoDashboard() {
                   value={intakeNotes}
                   onChange={(e) => setIntakeNotes(e.target.value)}
                   placeholder="e.g. Stored in Walk-In Cooler Bay 2"
-                  className="w-full text-xs px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
+                  className="w-full text-xs px-3 py-2 bg-white border border-[#CBDBC7] rounded focus:outline-none focus:border-[#135936]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-gray-100">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#CBDBC7]">
                 <button
                   onClick={() => setInspectingItem(null)}
-                  className="px-3 py-1.5 text-xs text-gray-600 hover:text-gray-800 rounded cursor-pointer"
+                  className="px-3.5 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 rounded cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleConfirmReceipt}
                   disabled={submitting || !tempChecked || !packagingChecked || !smellChecked}
-                  className="px-4 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-medium transition-colors cursor-pointer disabled:bg-gray-300"
+                  className="px-4 py-2 bg-[#135936] hover:bg-[#0D4026] text-white rounded text-xs font-bold transition-colors cursor-pointer disabled:bg-gray-300 shadow-xs"
                 >
                   {submitting ? "Logging Intake..." : "Certify & Confirm Receipt"}
                 </button>

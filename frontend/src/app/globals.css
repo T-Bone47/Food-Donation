@@ -121,29 +121,52 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#F9FAFB] text-[#111827] antialiased;
+    @apply bg-[#EEF4EC] text-[#143322] antialiased;
+    background-color: #EEF4EC;
+    background-image: radial-gradient(#CBD8C7 1px, transparent 1px);
+    background-size: 24px 24px;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Utilitarian Operational Web Tokens (Copia / Stripe / Replate standard) */
+/* Botanical & Logistical Real-World Design Tokens */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
+/* Tactile Physical Manifest Card */
+.manifest-card {
+  background-color: #FAFDF8;
+  border: 1px solid #CBDBC7;
+  border-radius: 8px;
+}
+
+.manifest-docket {
+  background-color: #FAFDF8;
+  border: 1px solid #CBDBC7;
+  border-top: 3px solid #165E39;
+  border-radius: 8px;
+}
+
 .panel-flat {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: #FAFDF8;
+  border: 1px solid #CBDBC7;
   border-radius: 8px;
 }
 
 .control-flat {
-  border: 1px solid #d1d5db;
+  border: 1px solid #CBDBC7;
   border-radius: 6px;
+}
+
+/* Deep Forest Banner Texture */
+.forest-header-texture {
+  background-color: #0B331E;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.08) 100%);
 }
 
 /* Subtle flat skeleton without AI shimmer gradients */
 .skeleton-box {
-  background-color: #f3f4f6;
+  background-color: #E2ECE0;
   border-radius: 4px;
 }

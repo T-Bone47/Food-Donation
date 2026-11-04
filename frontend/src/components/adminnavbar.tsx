@@ -50,37 +50,37 @@ export default function AdminNavbar() {
     : "home";
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 lg:px-8 py-2.5 flex justify-between items-center sticky top-0 z-40">
-      <Logo href="/adminpage" roleBadge="Admin" size="md" />
+    <nav className="bg-[#0B331E] border-b border-[#1A4F32] px-6 lg:px-8 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-xs">
+      <Logo href="/adminpage" roleBadge="Admin" size="md" theme="dark" />
 
       <div className="w-[420px] max-w-full hidden md:block">
         <Tabs value={currentTab} className="w-full">
-          <TabsList className="w-full justify-center bg-gray-100/80 p-0.5 rounded-md border border-gray-200">
+          <TabsList className="w-full justify-center bg-[#072415] p-0.5 rounded-md border border-[#17482D]">
             <TabsTrigger
               value="home"
               onClick={() => handleTabClick("/adminpage")}
-              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+              className="rounded px-3 py-1 text-xs font-medium text-emerald-200/80 hover:text-white data-[state=active]:bg-[#185536] data-[state=active]:text-white data-[state=active]:shadow-none transition-none cursor-pointer"
             >
               Console
             </TabsTrigger>
             <TabsTrigger
               value="users"
               onClick={() => handleTabClick("/adminpage?tab=users")}
-              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+              className="rounded px-3 py-1 text-xs font-medium text-emerald-200/80 hover:text-white data-[state=active]:bg-[#185536] data-[state=active]:text-white data-[state=active]:shadow-none transition-none cursor-pointer"
             >
               Users & Audit
             </TabsTrigger>
             <TabsTrigger
               value="notification"
               onClick={() => handleTabClick("/notification")}
-              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+              className="rounded px-3 py-1 text-xs font-medium text-emerald-200/80 hover:text-white data-[state=active]:bg-[#185536] data-[state=active]:text-white data-[state=active]:shadow-none transition-none cursor-pointer"
             >
               Alerts
             </TabsTrigger>
             <TabsTrigger
               value="profile"
               onClick={() => handleTabClick("/profile")}
-              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+              className="rounded px-3 py-1 text-xs font-medium text-emerald-200/80 hover:text-white data-[state=active]:bg-[#185536] data-[state=active]:text-white data-[state=active]:shadow-none transition-none cursor-pointer"
             >
               Profile
             </TabsTrigger>
@@ -90,8 +90,8 @@ export default function AdminNavbar() {
 
       <div className="flex items-center gap-2.5">
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 px-2.5 py-1.5 rounded-md text-xs font-medium border border-gray-200 transition-colors cursor-pointer outline-none">
-            <span className="size-5 rounded bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-[10px]">
+          <DropdownMenuTrigger className="flex items-center gap-2 bg-[#133F27] hover:bg-[#1A5032] text-emerald-100 px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#1F5837] transition-colors cursor-pointer outline-none">
+            <span className="size-5 rounded bg-[#1C5E3A] text-emerald-100 flex items-center justify-center font-bold text-[10px]">
               {mounted && user?.name ? user.name[0].toUpperCase() : "A"}
             </span>
             <span>{mounted && user?.name ? user.name.split(" ")[0] : "Admin"}</span>

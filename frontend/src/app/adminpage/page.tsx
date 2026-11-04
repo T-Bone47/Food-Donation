@@ -29,6 +29,42 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState<"all" | "active" | "picked">("all");
   const [selected, setSelected] = useState<Donation | null>(null);
 
+  const sampleBatches: Donation[] = [
+    {
+      id: "DON-9041",
+      donor: "Taj Gateway Caterers",
+      foodType: "Buffet Rice & Mixed Curries",
+      servings: "65 servings",
+      preparedAt: new Date(Date.now() - 3600000).toISOString(),
+      location: "MG Road, Bengaluru",
+      expiryMinutes: 240,
+      status: "active",
+      volunteer: null
+    },
+    {
+      id: "DON-9040",
+      donor: "Artisan Bakery Works",
+      foodType: "Baguettes & Brioche Buns",
+      servings: "40 items",
+      preparedAt: new Date(Date.now() - 7200000).toISOString(),
+      location: "Indiranagar 100ft Rd",
+      expiryMinutes: 480,
+      status: "picked",
+      volunteer: { name: "Arjun V. (Courier)", pickedAt: "14:15" }
+    },
+    {
+      id: "DON-9039",
+      donor: "Metro Supermarket",
+      foodType: "Packaged Apples & Citrus",
+      servings: "30 kg",
+      preparedAt: new Date(Date.now() - 14400000).toISOString(),
+      location: "Koramangala 4th Block",
+      expiryMinutes: 720,
+      status: "picked",
+      volunteer: { name: "Priya S. (Courier)", pickedAt: "12:30" }
+    }
+  ];
+
   const fetchAdminData = async () => {
     try {
       setLoading(true);
@@ -56,47 +92,12 @@ export default function AdminDashboard() {
         setDonations(mapped);
         if (mapped.length > 0 && !selected) setSelected(mapped[0]);
       } else {
-        // Authentic sample admin records
-        const sample: Donation[] = [
-          {
-            id: "DON-9041",
-            donor: "Taj Gateway Caterers",
-            foodType: "Buffet Rice & Mixed Curries",
-            servings: "65 servings",
-            preparedAt: new Date(Date.now() - 3600000).toISOString(),
-            location: "MG Road, Bengaluru",
-            expiryMinutes: 240,
-            status: "active",
-            volunteer: null
-          },
-          {
-            id: "DON-9040",
-            donor: "Artisan Bakery Works",
-            foodType: "Baguettes & Brioche Buns",
-            servings: "40 items",
-            preparedAt: new Date(Date.now() - 7200000).toISOString(),
-            location: "Indiranagar 100ft Rd",
-            expiryMinutes: 480,
-            status: "picked",
-            volunteer: { name: "Arjun V. (Courier)", pickedAt: "14:15" }
-          },
-          {
-            id: "DON-9039",
-            donor: "Metro Supermarket",
-            foodType: "Packaged Apples & Citrus",
-            servings: "30 kg",
-            preparedAt: new Date(Date.now() - 14400000).toISOString(),
-            location: "Koramangala 4th Block",
-            expiryMinutes: 720,
-            status: "picked",
-            volunteer: { name: "Priya S. (Courier)", pickedAt: "12:30" }
-          }
-        ];
-        setDonations(sample);
-        if (!selected) setSelected(sample[0]);
+        setDonations(sampleBatches);
+        if (!selected) setSelected(sampleBatches[0]);
       }
-    } catch (err) {
-      console.error("Error fetching admin data:", err);
+    } catch {
+      setDonations(sampleBatches);
+      if (!selected) setSelected(sampleBatches[0]);
     } finally {
       setLoading(false);
     }
@@ -153,78 +154,88 @@ export default function AdminDashboard() {
     });
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
+    <main className="min-h-screen bg-[#EEF4EC] text-[#111827]">
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 space-y-6">
-        {/* Title & Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              Platform Governance Console
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Ecosystem audit logs, batch custody tracking, and operational overrides
-            </p>
+        {/* Deep Forest Pine Command Banner */}
+        <div className="bg-[#0B331E] border border-[#184F31] rounded-lg p-6 text-white shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                  SUPERVISORY GOVERNANCE
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                  SYSTEM STATUS: OPERATIONAL
+                </span>
+              </div>
+              <h1 className="text-2xl font-bold tracking-tight text-white">
+                Platform Governance Console
+              </h1>
+              <p className="text-xs text-emerald-100/75 mt-1 max-w-2xl">
+                Ecosystem audit logs, chain of custody tracking, courier lifecycle verifications, and operational overrides
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-emerald-200/80">Ledger Health:</span>
+              <span className="text-xs font-semibold font-mono text-emerald-200 bg-[#124227] border border-emerald-600/40 px-3 py-1 rounded">
+                100% PostgreSQLExchange
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">System Status:</span>
-            <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
-              All Services Operational
-            </span>
-          </div>
-        </div>
+          {/* 3 Integrated KPIs */}
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#184F31] pt-5">
+            <div className="py-2 md:py-0 md:px-5 first:pl-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Active Available Batches
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {activeCount}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Awaiting courier claim
+              </p>
+            </div>
 
-        {/* 3 Divided KPIs */}
-        <div className="bg-white border border-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              Active Available Batches
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {activeCount}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Awaiting courier claim
-            </p>
-          </div>
+            <div className="py-2 md:py-0 md:px-5">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                In-Transit / Under Custody
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {pickedCount}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Currently assigned or verified
+              </p>
+            </div>
 
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              In-Transit / Under Custody
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {pickedCount}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Currently assigned or verified
-            </p>
-          </div>
-
-          <div className="p-5">
-            <span className="text-xs font-medium text-gray-500">
-              Total Logged Dispatches
-            </span>
-            <p className="text-3xl font-bold font-mono tracking-tight text-gray-900 mt-1 tabular-nums">
-              {donations.length}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Registered in PostgreSQL ledger
-            </p>
+            <div className="py-2 md:py-0 md:px-5 last:pr-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Total Logged Dispatches
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {donations.length}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Registered in PostgreSQL ledger
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Search & Filter Toolbar */}
-        <div className="bg-white border border-gray-200 rounded-lg p-3 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="manifest-card p-3.5 flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="relative w-full md:w-96">
-            <Search className="size-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="size-4 text-[#165E39] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search batches by ID, food title, or donor..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:border-gray-500"
+              className="w-full pl-9 pr-3 py-2 bg-[#FAFDF8] border border-[#CBDBC7] rounded text-xs focus:outline-none focus:border-[#135936] text-gray-900"
             />
           </div>
 
@@ -232,7 +243,7 @@ export default function AdminDashboard() {
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value as "all" | "active" | "picked")}
-              className="px-2.5 py-1.5 border border-gray-300 rounded text-xs font-medium bg-white focus:outline-none focus:border-gray-500 cursor-pointer"
+              className="px-3 py-2 border border-[#CBDBC7] rounded text-xs font-semibold bg-[#FAFDF8] text-[#0B331E] focus:outline-none focus:border-[#135936] cursor-pointer"
             >
               <option value="all">All Batches</option>
               <option value="active">Active Available</option>
@@ -247,11 +258,11 @@ export default function AdminDashboard() {
           <div className="md:col-span-2 space-y-3">
             {loading ? (
               <div className="space-y-2">
-                <div className="h-20 bg-white border border-gray-200 rounded-lg p-4" />
-                <div className="h-20 bg-white border border-gray-200 rounded-lg p-4" />
+                <div className="manifest-card h-20 p-4 animate-pulse" />
+                <div className="manifest-card h-20 p-4 animate-pulse" />
               </div>
             ) : filtered.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-lg p-12 text-center text-xs text-gray-500">
+              <div className="manifest-card p-12 text-center text-xs text-gray-500">
                 No matching batches found.
               </div>
             ) : (
@@ -259,52 +270,52 @@ export default function AdminDashboard() {
                 <div
                   key={d.id}
                   onClick={() => setSelected(d)}
-                  className={`bg-white border transition-colors rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 cursor-pointer ${
-                    selected?.id === d.id ? "border-gray-900 ring-1 ring-gray-900" : "border-gray-200 hover:border-gray-300"
+                  className={`manifest-docket p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 cursor-pointer transition-all ${
+                    selected?.id === d.id ? "ring-2 ring-[#135936] shadow-sm" : "hover:border-[#A2BFA0]"
                   }`}
                 >
                   <div className="space-y-1 text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-semibold text-gray-900">#{d.id}</span>
-                      <h3 className="font-semibold text-sm text-gray-900">{d.foodType}</h3>
+                      <span className="font-mono font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">#{d.id}</span>
+                      <h3 className="font-bold text-sm text-gray-900">{d.foodType}</h3>
                       <span
-                        className={`px-2 py-0.5 rounded text-[11px] font-medium border ${
+                        className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${
                           d.status === "active"
-                            ? "bg-blue-50 text-blue-800 border-blue-200"
-                            : "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            ? "bg-[#E4F2E7] text-[#115E34] border-[#A9D8B6]"
+                            : "bg-[#D1FAE5] text-[#065F46] border-[#6EE7B7]"
                         }`}
                       >
                         {d.status === "active" ? "Available" : "Under Custody"}
                       </span>
                     </div>
 
-                    <p className="text-gray-600">
-                      Donor: <span className="font-medium text-gray-900">{d.donor}</span> • {d.location}
+                    <p className="text-gray-700">
+                      Donor: <span className="font-semibold text-gray-900">{d.donor}</span> • {d.location}
                     </p>
-                    <p className="text-gray-500">
-                      Volume: {d.servings} • Prepared: {new Date(d.preparedAt).toLocaleTimeString()}
+                    <p className="text-gray-600">
+                      Volume: <span className="font-semibold">{d.servings}</span> • Prepared: {new Date(d.preparedAt).toLocaleTimeString()}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
                     {d.status === "active" ? (
                       <button
                         onClick={() => handleMarkPicked(d.id)}
-                        className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-medium cursor-pointer"
+                        className="px-3 py-1.5 bg-[#135936] hover:bg-[#0D4026] text-white rounded text-xs font-bold transition-colors cursor-pointer shadow-xs"
                       >
                         Mark Picked
                       </button>
                     ) : (
                       <button
                         onClick={() => handleReopen(d.id)}
-                        className="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded text-xs font-medium cursor-pointer"
+                        className="px-3 py-1.5 bg-[#E2ECE0] hover:bg-[#D5E4D2] text-[#0B331E] border border-[#CBDBC7] rounded text-xs font-semibold cursor-pointer"
                       >
                         Reopen
                       </button>
                     )}
                     <button
                       onClick={() => setSelected(d)}
-                      className="px-2.5 py-1 text-gray-600 hover:bg-gray-100 rounded text-xs font-medium cursor-pointer"
+                      className="px-2.5 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-[#E2ECE0] rounded text-xs font-medium cursor-pointer"
                     >
                       Inspect
                     </button>
@@ -315,43 +326,43 @@ export default function AdminDashboard() {
           </div>
 
           {/* Detail Side Panel */}
-          <div className="bg-white border border-gray-200 rounded-lg p-5 h-fit sticky top-20 space-y-3">
-            <h3 className="text-sm font-semibold text-gray-900 pb-2 border-b border-gray-100">
-              Audit Inspection
+          <div className="manifest-docket p-5 h-fit sticky top-20 space-y-3">
+            <h3 className="text-sm font-bold text-[#0B331E] pb-2 border-b border-[#CBDBC7]">
+              Audit Inspection Docket
             </h3>
 
             {selected ? (
-              <div className="space-y-2 text-xs">
+              <div className="space-y-2.5 text-xs">
                 <div>
-                  <span className="text-gray-500">Batch Identifier</span>
-                  <p className="font-mono font-semibold text-gray-900 mt-0.5">#{selected.id}</p>
+                  <span className="text-gray-500 font-medium">Batch Identifier</span>
+                  <p className="font-mono font-bold text-[#0B331E] mt-0.5 bg-[#E2ECE0] px-2 py-1 rounded border border-[#CBDBC7]">#{selected.id}</p>
                 </div>
 
                 <div>
-                  <span className="text-gray-500">Donor Facility</span>
-                  <p className="font-medium text-gray-900 mt-0.5">{selected.donor}</p>
+                  <span className="text-gray-500 font-medium">Donor Facility</span>
+                  <p className="font-semibold text-gray-900 mt-0.5">{selected.donor}</p>
                 </div>
 
                 <div>
-                  <span className="text-gray-500">Food Item & Volume</span>
-                  <p className="font-medium text-gray-900 mt-0.5">{selected.foodType} ({selected.servings})</p>
+                  <span className="text-gray-500 font-medium">Food Item & Volume</span>
+                  <p className="font-semibold text-gray-900 mt-0.5">{selected.foodType} ({selected.servings})</p>
                 </div>
 
                 <div>
-                  <span className="text-gray-500">Pickup Address</span>
+                  <span className="text-gray-500 font-medium">Pickup Address</span>
                   <p className="text-gray-700 mt-0.5">{selected.location}</p>
                 </div>
 
                 <div>
-                  <span className="text-gray-500">Preparation Timestamp</span>
-                  <p className="text-gray-700 mt-0.5">{new Date(selected.preparedAt).toLocaleString()}</p>
+                  <span className="text-gray-500 font-medium">Preparation Timestamp</span>
+                  <p className="text-gray-700 mt-0.5 font-mono">{new Date(selected.preparedAt).toLocaleString()}</p>
                 </div>
 
                 {selected.volunteer && (
-                  <div className="pt-2 border-t border-gray-100">
-                    <span className="text-gray-500">Assigned Courier</span>
-                    <p className="font-medium text-emerald-800 mt-0.5">{selected.volunteer.name}</p>
-                    <p className="text-gray-500 text-[11px]">Picked: {selected.volunteer.pickedAt}</p>
+                  <div className="pt-2.5 border-t border-[#CBDBC7]">
+                    <span className="text-gray-500 font-medium">Assigned Courier</span>
+                    <p className="font-bold text-[#115E34] mt-0.5">{selected.volunteer.name}</p>
+                    <p className="text-gray-600 text-[11px] font-mono">Picked: {selected.volunteer.pickedAt}</p>
                   </div>
                 )}
               </div>

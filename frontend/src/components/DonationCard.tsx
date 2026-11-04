@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { volunteerApi } from "@/lib/api-client";
-import { MapPin, Package, Clock, CheckCircle2, ArrowRight } from "lucide-react";
+import { MapPin, Package, Clock, ArrowRight } from "lucide-react";
 
 // Reference shelf life in hours
 const shelfLifeHours: { [key: string]: number; _default: number } = {
@@ -40,11 +40,10 @@ export default function DonationCard({
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({
-    text: isInitiallyClaimed ? "Assigned" : "Fresh",
-    badge: isInitiallyClaimed ? "bg-amber-50 text-amber-800 border-amber-200" : "bg-emerald-50 text-emerald-800 border-emerald-200",
+    text: isInitiallyClaimed ? "Assigned" : "Fresh Batch",
+    badge: isInitiallyClaimed ? "bg-[#E5F0FA] text-[#0F4E80] border-[#B6D6F2]" : "bg-[#E1F2E7] text-[#0A5631] border-[#A7DFC0]",
   });
 
-  // Countdown timer calculation
   useEffect(() => {
     if (!isAccepted || !expiryTime) return;
 
@@ -58,7 +57,7 @@ export default function DonationCard({
       } else if (remainingSeconds < 3600) {
         setStatus({ text: "Expiring Soon", badge: "bg-amber-50 text-amber-800 border-amber-200" });
       } else {
-        setStatus({ text: "Fresh", badge: "bg-emerald-50 text-emerald-800 border-emerald-200" });
+        setStatus({ text: "Fresh Batch", badge: "bg-[#E1F2E7] text-[#0A5631] border-[#A7DFC0]" });
       }
     }, 1000);
 
@@ -95,38 +94,38 @@ export default function DonationCard({
   const quantity = donation.quantity ? `${donation.quantity} ${donation.unit || "servings"}` : "Standard batch";
 
   return (
-    <div className="bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg p-5 flex flex-col justify-between">
+    <div className="manifest-card hover:border-[#8EAF8B] transition-colors p-5 flex flex-col justify-between border-t-3 border-t-[#165E39]">
       <div>
         {/* Top Header Row */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-mono font-medium text-gray-500">
+        <div className="flex items-center justify-between mb-2 pb-2 border-b border-[#CBDBC7]/60">
+          <span className="text-xs font-mono font-semibold text-[#0E3824]">
             #{donation.id ? String(donation.id).slice(-6).toUpperCase() : "TASK-01"}
           </span>
-          <span className="text-xs text-gray-500 font-medium">
-            ~1.4 km away
+          <span className="text-xs text-[#166534] font-semibold bg-[#E2ECE0] px-2 py-0.5 rounded">
+            ~1.4 km radius
           </span>
         </div>
 
         {/* Title & Category */}
-        <h3 className="text-base font-semibold text-gray-900 tracking-tight">
+        <h3 className="text-base font-bold text-[#0E3824] tracking-tight">
           {foodTitle}
         </h3>
 
-        <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
-          <MapPin className="size-3.5 text-gray-400 shrink-0" />
+        <div className="flex items-center gap-1.5 text-xs text-gray-600 mt-1">
+          <MapPin className="size-3.5 text-[#166534] shrink-0" />
           <span className="truncate">{area}</span>
           {state && <span>• {state}</span>}
         </div>
 
         {/* Metadata */}
-        <div className="flex flex-wrap items-center gap-2 mt-3.5 pt-3 border-t border-gray-100 text-xs text-gray-600">
-          <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded">
-            <Package className="size-3 text-gray-400" />
+        <div className="flex flex-wrap items-center gap-2 mt-3.5 pt-3 border-t border-[#CBDBC7]/60 text-xs text-gray-700">
+          <span className="inline-flex items-center gap-1 bg-[#E8F2E6] border border-[#CBDBC7] px-2 py-0.5 rounded font-medium">
+            <Package className="size-3 text-[#166534]" />
             <span className="tabular-nums">{quantity}</span>
           </span>
           {prepTime && (
-            <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded">
-              <Clock className="size-3 text-gray-400" />
+            <span className="inline-flex items-center gap-1 bg-[#E8F2E6] border border-[#CBDBC7] px-2 py-0.5 rounded font-medium">
+              <Clock className="size-3 text-[#166534]" />
               <span>Prepared {new Date(prepTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </span>
           )}
@@ -134,12 +133,12 @@ export default function DonationCard({
       </div>
 
       {/* Action / Countdown Area */}
-      <div className="mt-4 pt-3 border-t border-gray-100">
+      <div className="mt-4 pt-3 border-t border-[#CBDBC7]/60">
         {!isAccepted ? (
           <button
             onClick={handleAccept}
             disabled={loading}
-            className="w-full py-2 px-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-xs font-medium transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-1.5"
+            className="w-full py-2 px-3 bg-[#135936] hover:bg-[#0E462A] text-white rounded-md text-xs font-semibold transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-1.5"
           >
             {loading ? (
               <span>Assigning Task...</span>
@@ -151,16 +150,16 @@ export default function DonationCard({
             )}
           </button>
         ) : (
-          <div className="p-3 rounded-md border border-gray-200 bg-gray-50/70">
+          <div className="p-3 rounded-md border border-[#CBDBC7] bg-[#E8F2E6]/60">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-medium text-gray-700">
+              <span className="font-semibold text-[#0E3824]">
                 Shelf-Life Window
               </span>
-              <span className={`px-2 py-0.5 text-[11px] font-medium rounded border ${status.badge}`}>
+              <span className={`px-2 py-0.5 text-[11px] font-semibold rounded border ${status.badge}`}>
                 {status.text}
               </span>
             </div>
-            <div className="mt-1.5 text-lg font-mono font-bold text-gray-900 tabular-nums">
+            <div className="mt-1.5 text-lg font-mono font-bold text-[#0E3824] tabular-nums">
               {timeRemaining !== null ? formatTime(timeRemaining) : "Active in transit"}
             </div>
           </div>

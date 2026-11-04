@@ -95,93 +95,93 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative z-10 bg-white shadow-md rounded-lg p-8 max-w-md w-full border border-gray-200"
+        className="relative z-10 manifest-docket p-8 max-w-md w-full shadow-xl"
       >
         <div className="flex justify-center mb-5">
           <Logo size="lg" />
         </div>
-        <h2 className="text-xl font-bold text-gray-900 text-center mb-1">
+        <h2 className="text-xl font-bold text-[#0B331E] text-center mb-1">
           Sign In to FoodShare
         </h2>
-        <p className="text-xs text-gray-500 text-center mb-6">
-          Access your donor, volunteer, NGO, or administrator dashboard
+        <p className="text-xs text-gray-600 text-center mb-6">
+          Access your donor, volunteer, NGO, or administrator operations console
         </p>
         <form onSubmit={handlesubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-700">
+            <label className="block text-xs font-semibold text-gray-800">
               Email Address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2.5 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700">
+            <label className="block text-xs font-semibold text-gray-800">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2.5 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-medium py-2 px-4 rounded-md text-sm transition-colors cursor-pointer disabled:bg-gray-300"
+            className="w-full bg-[#135936] hover:bg-[#0D4026] text-white font-bold py-2.5 px-4 rounded-md text-sm transition-colors cursor-pointer disabled:bg-gray-300 shadow-xs"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Signing in..." : "Sign In to Operations"}
           </button>
         </form>
 
         <div className="my-5 flex items-center gap-3">
-          <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-[11px] text-gray-500 uppercase tracking-wider font-medium">Evaluation Demo Access</span>
-          <div className="h-px bg-gray-200 flex-1" />
+          <div className="h-px bg-[#CBDBC7] flex-1" />
+          <span className="text-[11px] text-[#165E39] uppercase tracking-wider font-bold">Evaluation Demo Access</span>
+          <div className="h-px bg-[#CBDBC7] flex-1" />
         </div>
 
         <div className="grid grid-cols-2 gap-2 text-xs">
           <button
             type="button"
             onClick={() => handleQuickDemo("donor")}
-            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
+            className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold transition cursor-pointer"
           >
             Demo Donor
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("volunteer")}
-            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
+            className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold transition cursor-pointer"
           >
             Demo Volunteer
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("ngo")}
-            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
+            className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold transition cursor-pointer"
           >
             Demo NGO
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("admin")}
-            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
+            className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold transition cursor-pointer"
           >
             Demo Admin
           </button>
         </div>
 
-        <p className="text-xs text-gray-600 text-center mt-6">
+        <p className="text-xs text-gray-700 text-center mt-6 font-medium">
           Don’t have an account?{" "}
           <Link
             href="/"
-            className="text-emerald-700 font-semibold hover:underline"
+            className="text-[#135936] font-bold hover:underline"
           >
             Create an Account
           </Link>

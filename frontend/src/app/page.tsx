@@ -137,79 +137,79 @@ export default function SignupPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="relative z-10 bg-white shadow-md rounded-lg p-8 w-full max-w-md text-center border border-gray-200"
+          className="relative z-10 manifest-docket p-8 w-full max-w-md text-center shadow-xl"
         >
           <div className="flex justify-center mb-5">
             <Logo size="lg" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
+          <h2 className="text-xl font-bold text-[#0B331E] mb-1">
             Join the FoodShare Network
           </h2>
-          <p className="text-gray-500 mb-6 text-xs">Select your operational participation role:</p>
+          <p className="text-gray-600 mb-6 text-xs">Select your operational participation role:</p>
 
           <div className="flex flex-col gap-2.5">
             <button
               onClick={() => setRole("Donor")}
-              className="py-2.5 px-4 bg-emerald-700 text-white rounded-md text-xs font-medium hover:bg-emerald-800 transition cursor-pointer"
+              className="py-2.5 px-4 bg-[#135936] text-white rounded-md text-xs font-bold hover:bg-[#0D4026] transition cursor-pointer shadow-xs"
             >
               Food Donor (Restaurant / Caterer / Business)
             </button>
             <button
               onClick={() => setRole("Volunteer")}
-              className="py-2.5 px-4 bg-gray-900 text-white rounded-md text-xs font-medium hover:bg-gray-800 transition cursor-pointer"
+              className="py-2.5 px-4 bg-[#0B331E] text-white rounded-md text-xs font-bold hover:bg-[#072415] transition cursor-pointer shadow-xs"
             >
               Field Volunteer (Food Courier)
             </button>
             <button
               onClick={() => setRole("NGO")}
-              className="py-2.5 px-4 bg-white border border-gray-300 text-gray-800 rounded-md text-xs font-medium hover:bg-gray-50 transition cursor-pointer"
+              className="py-2.5 px-4 bg-[#E2ECE0] border border-[#CBDBC7] text-[#0B331E] rounded-md text-xs font-bold hover:bg-[#D5E4D2] transition cursor-pointer"
             >
               NGO / Community Receiving Shelter
             </button>
             <button
               onClick={() => setRole("Admin")}
-              className="py-2.5 px-4 bg-gray-100 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-200 transition cursor-pointer"
+              className="py-2.5 px-4 bg-[#EBF2E9] border border-[#CBDBC7] text-[#1E3E2B] rounded-md text-xs font-bold hover:bg-[#DCE7D9] transition cursor-pointer"
             >
               Platform Administrator
             </button>
           </div>
 
           <div className="my-5 flex items-center gap-3">
-            <div className="h-px bg-gray-200 flex-1" />
-            <span className="text-[11px] text-gray-400 uppercase tracking-wider font-medium">Evaluation Demo Access</span>
-            <div className="h-px bg-gray-200 flex-1" />
+            <div className="h-px bg-[#CBDBC7] flex-1" />
+            <span className="text-[11px] text-[#165E39] uppercase tracking-wider font-bold">Evaluation Demo Access</span>
+            <div className="h-px bg-[#CBDBC7] flex-1" />
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             <button
               onClick={() => handleQuickDemo("donor")}
-              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
+              className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold cursor-pointer transition"
             >
               Demo Donor
             </button>
             <button
               onClick={() => handleQuickDemo("volunteer")}
-              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
+              className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold cursor-pointer transition"
             >
               Demo Volunteer
             </button>
             <button
               onClick={() => handleQuickDemo("ngo")}
-              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
+              className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold cursor-pointer transition"
             >
               Demo NGO
             </button>
             <button
               onClick={() => handleQuickDemo("admin")}
-              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
+              className="p-2.5 border border-[#CBDBC7] bg-[#E2ECE0] hover:bg-[#D5E4D2] rounded text-[#0B331E] font-bold cursor-pointer transition"
             >
               Demo Admin
             </button>
           </div>
 
-          <p className="text-xs text-gray-600 text-center mt-6">
+          <p className="text-xs text-gray-700 text-center mt-6 font-medium">
             Already have an account?{" "}
-            <Link href="/login" className="text-emerald-700 font-semibold hover:underline">
+            <Link href="/login" className="text-[#135936] font-bold hover:underline">
               Sign In
             </Link>
           </p>
@@ -230,13 +230,13 @@ export default function SignupPage() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 bg-white shadow-md rounded-lg p-8 w-full max-w-xl border border-gray-200"
+        className="relative z-10 manifest-docket p-8 w-full max-w-xl shadow-xl"
       >
-        <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+        <div className="flex justify-between items-center mb-6 border-b border-[#CBDBC7] pb-4">
           <Logo size="sm" roleBadge={role} />
           <button
             onClick={() => setRole(null)}
-            className="text-xs text-gray-500 hover:text-gray-900 underline cursor-pointer"
+            className="text-xs text-[#135936] hover:text-[#0B331E] font-bold underline cursor-pointer"
           >
             ← Change Role
           </button>
@@ -244,73 +244,73 @@ export default function SignupPage() {
 
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-700">Full Name</label>
+            <label className="block text-xs font-semibold text-gray-800">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full p-2.5 rounded-md border border-[#CBDBC7] bg-[#FAFDF8] text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
 
           {(role === "Donor" || role === "NGO") && (
             <div>
-              <label className="block text-xs font-medium text-gray-700">Organization / Facility Name</label>
+              <label className="block text-xs font-semibold text-gray-800">Organization / Facility Name</label>
               <input
                 type="text"
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
                 placeholder="Business or foundation name"
-                className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
+                className="mt-1 w-full p-2.5 rounded-md border border-[#CBDBC7] bg-[#FAFDF8] text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-medium text-gray-700">Email Address</label>
+            <label className="block text-xs font-semibold text-gray-800">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full p-2.5 rounded-md border border-[#CBDBC7] bg-[#FAFDF8] text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-700">Phone Number</label>
+            <label className="block text-xs font-semibold text-gray-800">Phone Number</label>
             <input
               type="tel"
               value={phonenumber}
               onChange={(e) => setPhonenumber(e.target.value)}
               placeholder="+91 98765 43210"
-              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full p-2.5 rounded-md border border-[#CBDBC7] bg-[#FAFDF8] text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-700">Password</label>
+            <label className="block text-xs font-semibold text-gray-800">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
-              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
+              className="mt-1 w-full p-2.5 rounded-md border border-[#CBDBC7] bg-[#FAFDF8] text-sm focus:outline-none focus:border-[#135936] text-gray-900"
               required
             />
           </div>
 
           <div className="pt-2">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-gray-700">Facility Location</span>
+              <span className="text-xs font-semibold text-gray-800">Facility Location</span>
               <button
                 type="button"
                 onClick={getLocation}
-                className="text-xs text-emerald-700 hover:text-emerald-800 font-medium cursor-pointer"
+                className="text-xs text-[#135936] hover:text-[#0B331E] font-bold cursor-pointer"
               >
                 Auto-Detect GPS
               </button>
@@ -323,7 +323,7 @@ export default function SignupPage() {
                   value={locationData.pincode}
                   onChange={handleLocationChange}
                   placeholder="Postal Code"
-                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                  className="rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900 font-mono"
                 />
                 <input
                   type="text"
@@ -331,7 +331,7 @@ export default function SignupPage() {
                   value={locationData.area}
                   onChange={handleLocationChange}
                   placeholder="Area / Locality"
-                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                  className="rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                 />
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -341,14 +341,14 @@ export default function SignupPage() {
                   value={locationData.state}
                   onChange={handleLocationChange}
                   placeholder="State"
-                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                  className="rounded-md border border-[#CBDBC7] bg-[#FAFDF8] p-2 text-sm focus:outline-none focus:border-[#135936] text-gray-900"
                 />
                 <input
                   type="text"
                   name="country"
                   value={locationData.country}
                   readOnly
-                  className="rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500"
+                  className="rounded-md border border-[#CBDBC7] bg-[#EBF2E9] p-2 text-sm text-gray-600 font-medium cursor-not-allowed"
                 />
               </div>
             </div>
@@ -357,15 +357,15 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-md text-sm font-medium transition cursor-pointer mt-4 disabled:bg-gray-300"
+            className="w-full bg-[#135936] hover:bg-[#0D4026] text-white py-2.5 rounded-md text-sm font-bold transition cursor-pointer mt-4 disabled:bg-gray-300 shadow-xs"
           >
             {loading ? "Creating Account..." : "Register Account"}
           </button>
         </form>
 
-        <p className="text-xs text-gray-600 text-center mt-5">
+        <p className="text-xs text-gray-700 text-center mt-5 font-medium">
           Already have an account?{" "}
-          <Link href="/login" className="text-emerald-700 font-semibold hover:underline">
+          <Link href="/login" className="text-[#135936] font-bold hover:underline">
             Sign In
           </Link>
         </p>

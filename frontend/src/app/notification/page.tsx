@@ -56,24 +56,33 @@ export default function Notifications() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
+    <main className="min-h-screen bg-[#EEF4EC] text-[#111827]">
       <Navbar />
 
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        <div className="pb-2 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+        {/* Deep Forest Pine Command Banner */}
+        <div className="bg-[#0B331E] border border-[#184F31] rounded-lg p-6 text-white shadow-xs">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+              SYSTEM FEED
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+              SOCKET STATUS: LIVE
+            </span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-white">
             Activity & System Alerts
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">
-            Realtime updates on courier assignments, custody progress, and delivery confirmations
+          <p className="text-xs text-emerald-100/75 mt-1">
+            Realtime updates on courier assignments, custody progress, and verified delivery confirmations
           </p>
         </div>
 
         <div className="space-y-3">
           {loading && (
             <div className="space-y-2">
-              <div className="h-16 bg-white border border-gray-200 rounded-lg p-4" />
-              <div className="h-16 bg-white border border-gray-200 rounded-lg p-4" />
+              <div className="manifest-card h-16 p-4 animate-pulse" />
+              <div className="manifest-card h-16 p-4 animate-pulse" />
             </div>
           )}
 
@@ -81,16 +90,16 @@ export default function Notifications() {
             notifications.map((n) => (
               <div
                 key={n.id}
-                className="bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg p-4 flex justify-between items-center"
+                className="manifest-docket p-4 flex justify-between items-center transition-all hover:border-[#A2BFA0]"
               >
-                <div className="flex items-start gap-3 pr-4">
-                  <div className="p-2 bg-gray-50 rounded text-gray-600 mt-0.5">
+                <div className="flex items-start gap-3.5 pr-4">
+                  <div className="p-2.5 bg-[#E2ECE0] border border-[#CBDBC7] rounded-md text-[#165E39] mt-0.5 shrink-0">
                     <Bell className="size-4" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{n.message}</p>
-                    <p className="text-xs text-gray-400 mt-0.5 flex items-center gap-1">
-                      <Clock className="size-3" />
+                    <p className="text-sm font-semibold text-gray-900">{n.message}</p>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1.5 font-mono">
+                      <Clock className="size-3 text-[#165E39]" />
                       <span>{n.time}</span>
                     </p>
                   </div>
@@ -99,7 +108,7 @@ export default function Notifications() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDismiss(n.id)}
-                  className="text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded text-xs cursor-pointer"
+                  className="text-gray-500 hover:text-gray-900 hover:bg-[#E2ECE0] rounded text-xs cursor-pointer font-medium"
                 >
                   Dismiss
                 </Button>
@@ -107,10 +116,10 @@ export default function Notifications() {
             ))
           ) : (
             !loading && (
-              <div className="text-center bg-white border border-gray-200 p-12 rounded-lg">
-                <CheckCircle2 className="size-8 text-emerald-600 mx-auto mb-2" />
-                <p className="text-sm font-medium text-gray-900">All Caught Up</p>
-                <p className="text-xs text-gray-500 mt-1">No pending activity alerts right now.</p>
+              <div className="text-center manifest-card p-12">
+                <CheckCircle2 className="size-8 text-[#165E39] mx-auto mb-2" />
+                <p className="text-sm font-bold text-[#0B331E]">All Caught Up</p>
+                <p className="text-xs text-gray-600 mt-1">No pending activity alerts right now.</p>
               </div>
             )
           )}

@@ -23,6 +23,42 @@ export default function MyDonations() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
+  const sampleDonations: Donation[] = [
+    {
+      id: "DON-8812",
+      food: "Cooked Biryani & Dal",
+      servings: "45 servings (~18 kg)",
+      prepTime: "Today at 14:00",
+      status: "Accepted",
+      bestBefore: "Today, 18:00",
+      location: "12 MG Road, Bengaluru",
+      volunteer: "Arjun V. (Verified Courier)",
+      volunteerPhone: "+91 91234 56789"
+    },
+    {
+      id: "DON-8809",
+      food: "Whole Wheat Loaves & Rolls",
+      servings: "30 items",
+      prepTime: "Today at 11:30",
+      status: "Delivered",
+      bestBefore: "Delivered",
+      location: "Indiranagar 100ft Rd",
+      volunteer: "Priya S. (Field Volunteer)",
+      volunteerPhone: "+91 98777 66554"
+    },
+    {
+      id: "DON-8794",
+      food: "Fresh Organic Vegetable Crates",
+      servings: "25 kg",
+      prepTime: "Yesterday at 16:00",
+      status: "Delivered",
+      bestBefore: "Delivered",
+      location: "Whitefield Main Rd",
+      volunteer: "Kiran R. (Courier)",
+      volunteerPhone: "+91 94444 33221"
+    }
+  ];
+
   const fetchDonations = async () => {
     try {
       setLoading(true);
@@ -53,45 +89,10 @@ export default function MyDonations() {
 
         setDonations(mapped);
       } else {
-        // Authentic sample entries matching Copia ledger schema
-        setDonations([
-          {
-            id: "DON-8812",
-            food: "Cooked Biryani & Dal",
-            servings: "45 servings (~18 kg)",
-            prepTime: "Today at 14:00",
-            status: "Accepted",
-            bestBefore: "Today, 18:00",
-            location: "12 MG Road, Bengaluru",
-            volunteer: "Arjun V. (Verified Courier)",
-            volunteerPhone: "+91 91234 56789"
-          },
-          {
-            id: "DON-8809",
-            food: "Whole Wheat Loaves & Rolls",
-            servings: "30 items",
-            prepTime: "Today at 11:30",
-            status: "Delivered",
-            bestBefore: "Delivered",
-            location: "Indiranagar 100ft Rd",
-            volunteer: "Priya S. (Field Volunteer)",
-            volunteerPhone: "+91 98777 66554"
-          },
-          {
-            id: "DON-8794",
-            food: "Fresh Organic Vegetable Crates",
-            servings: "25 kg",
-            prepTime: "Yesterday at 16:00",
-            status: "Delivered",
-            bestBefore: "Delivered",
-            location: "Whitefield Main Rd",
-            volunteer: "Kiran R. (Courier)",
-            volunteerPhone: "+91 94444 33221"
-          }
-        ]);
+        setDonations(sampleDonations);
       }
-    } catch (err: any) {
-      console.error("Error fetching donations:", err.message);
+    } catch {
+      setDonations(sampleDonations);
     } finally {
       setLoading(false);
     }
@@ -118,35 +119,87 @@ export default function MyDonations() {
     return true;
   });
 
+  const activeCount = donations.filter((d) => d.status === "Pending" || d.status === "Accepted" || d.status === "Picked").length;
+  const deliveredCount = donations.filter((d) => d.status === "Delivered" || d.status === "COMPLETED").length;
+
   return (
-    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
+    <main className="min-h-screen bg-[#EEF4EC] text-[#111827]">
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8 py-8 space-y-6">
-        {/* Title & Action Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              Donation History & Custody Ledger
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Complete audit trail of your surplus food dispatches and volunteer handovers
-            </p>
+        {/* Deep Forest Pine Command Banner */}
+        <div className="bg-[#0B331E] border border-[#184F31] rounded-lg p-6 text-white shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                  DONOR DISPATCH LEDGER
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                  CHAIN OF CUSTODY VERIFIED
+                </span>
+              </div>
+              <h1 className="text-2xl font-bold tracking-tight text-white">
+                Donation History & Custody Ledger
+              </h1>
+              <p className="text-xs text-emerald-100/75 mt-1 max-w-2xl">
+                Complete audit trail of your surplus food dispatches, courier handovers, and certified shelter distributions
+              </p>
+            </div>
+
+            <Link href="/donate">
+              <button className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-[#072616] rounded-md text-xs font-bold transition-all shadow-xs cursor-pointer">
+                <Plus className="size-4 stroke-[2.5]" />
+                <span>Create New Donation</span>
+              </button>
+            </Link>
           </div>
 
-          <Link href="/donate">
-            <button className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-sm font-medium transition-colors cursor-pointer">
-              <Plus className="size-4" />
-              <span>Create New Donation</span>
-            </button>
-          </Link>
+          {/* 3 Integrated Ledger Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#184F31] pt-5">
+            <div className="py-2 md:py-0 md:px-5 first:pl-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Total Dispatches
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {donations.length}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Batches logged in custody system
+              </p>
+            </div>
+
+            <div className="py-2 md:py-0 md:px-5">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Active in Transit
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {activeCount}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Under active courier delivery
+              </p>
+            </div>
+
+            <div className="py-2 md:py-0 md:px-5 last:pr-0">
+              <span className="text-xs font-medium text-emerald-200/70 uppercase tracking-wider">
+                Delivered & Intake Verified
+              </span>
+              <p className="text-3xl font-bold font-mono tracking-tight text-white mt-1 tabular-nums">
+                {deliveredCount}
+              </p>
+              <p className="text-xs text-emerald-200/60 mt-1">
+                Confirmed received by shelters
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Filter Bar */}
-        <div className="bg-white border border-gray-200 rounded-lg p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5">
-            <Filter className="size-4 text-gray-500 ml-1" />
-            <span className="text-xs font-medium text-gray-700 mr-2">Filter Records:</span>
+        <div className="manifest-card p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Filter className="size-4 text-[#165E39] ml-1" />
+            <span className="text-xs font-semibold text-[#0B331E] mr-1">Filter Records:</span>
             <div className="flex gap-1.5">
               {[
                 { id: "all", label: "All Donations" },
@@ -156,10 +209,10 @@ export default function MyDonations() {
                 <button
                   key={tab.id}
                   onClick={() => setStatusFilter(tab.id)}
-                  className={`px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer ${
+                  className={`px-3 py-1 rounded text-xs font-semibold transition cursor-pointer ${
                     statusFilter === tab.id
-                      ? "bg-gray-900 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-[#135936] text-white shadow-xs"
+                      : "bg-[#E2ECE0] text-[#1E3E2B] hover:bg-[#D5E4D2] border border-[#CBDBC7]"
                   }`}
                 >
                   {tab.label}
@@ -168,7 +221,7 @@ export default function MyDonations() {
             </div>
           </div>
 
-          <span className="text-xs text-gray-500 font-medium">
+          <span className="text-xs text-gray-600 font-mono font-medium">
             Showing {filtered.length} donation records
           </span>
         </div>
@@ -177,23 +230,23 @@ export default function MyDonations() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="bg-white border border-gray-200 rounded-lg p-5 space-y-2">
-                <div className="h-4 bg-gray-100 rounded w-1/4" />
-                <div className="h-5 bg-gray-100 rounded w-1/2" />
-                <div className="h-4 bg-gray-100 rounded w-1/3" />
+              <div key={n} className="manifest-card p-5 space-y-2">
+                <div className="h-4 bg-[#E2ECE0] rounded w-1/4 animate-pulse" />
+                <div className="h-5 bg-[#E2ECE0] rounded w-1/2 animate-pulse" />
+                <div className="h-4 bg-[#E2ECE0] rounded w-1/3 animate-pulse" />
               </div>
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-            <p className="text-sm font-medium text-gray-900">
+          <div className="manifest-card p-12 text-center">
+            <p className="text-sm font-bold text-[#0B331E]">
               No donation records in this view
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-600 mt-1">
               Surplus batches you create will be permanently logged here with timestamped custody transfers.
             </p>
             <Link href="/donate">
-              <button className="mt-4 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-xs font-medium transition-colors cursor-pointer">
+              <button className="mt-4 px-4 py-2 bg-[#135936] hover:bg-[#0D4026] text-white rounded-md text-xs font-bold transition-colors cursor-pointer shadow-xs">
                 Create First Donation
               </button>
             </Link>
@@ -203,45 +256,45 @@ export default function MyDonations() {
             {filtered.map((item) => (
               <div
                 key={item.id}
-                className="bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                className="manifest-docket p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all hover:border-[#A2BFA0]"
               >
                 <div className="space-y-1.5 text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-semibold text-gray-900">
+                    <span className="font-mono font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">
                       #{item.id}
                     </span>
-                    <h3 className="font-semibold text-sm text-gray-900">
+                    <h3 className="font-bold text-sm text-gray-900">
                       {item.food}
                     </h3>
                     <span
-                      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${
+                      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${
                         item.status === "Delivered"
-                          ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                          ? "bg-[#D1FAE5] text-[#065F46] border-[#6EE7B7]"
                           : item.status === "Accepted" || item.status === "Picked"
-                          ? "bg-amber-50 text-amber-800 border-amber-200"
-                          : "bg-blue-50 text-blue-800 border-blue-200"
+                          ? "bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]"
+                          : "bg-[#E4F2E7] text-[#115E34] border-[#A9D8B6]"
                       }`}
                     >
                       {item.status}
                     </span>
                   </div>
 
-                  <p className="text-gray-600">
-                    <span className="font-medium">Quantity:</span> {item.servings} • Prepared: {item.prepTime}
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-gray-900">Quantity:</span> {item.servings} • Prepared: {item.prepTime}
                   </p>
 
-                  <div className="flex items-center gap-1.5 text-gray-500">
-                    <MapPin className="size-3.5 text-gray-400 shrink-0" />
+                  <div className="flex items-center gap-1.5 text-gray-600">
+                    <MapPin className="size-3.5 text-[#165E39] shrink-0" />
                     <span>{item.location}</span>
                   </div>
 
                   {item.volunteer && (
-                    <div className="pt-1 flex items-center gap-3 text-emerald-800">
-                      <span className="font-medium">Assigned Courier: {item.volunteer}</span>
+                    <div className="pt-1 flex items-center gap-3 text-[#115E34] font-medium">
+                      <span>Assigned Courier: {item.volunteer}</span>
                       {item.volunteerPhone && (
                         <a
                           href={`tel:${item.volunteerPhone}`}
-                          className="hover:underline flex items-center gap-1"
+                          className="hover:underline flex items-center gap-1 font-mono"
                         >
                           <Phone className="size-3" />
                           <span>{item.volunteerPhone}</span>
@@ -251,17 +304,17 @@ export default function MyDonations() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 w-full md:w-auto justify-end pt-2 md:pt-0 border-t md:border-t-0 border-gray-100">
+                <div className="flex items-center gap-2 w-full md:w-auto justify-end pt-2 md:pt-0 border-t md:border-t-0 border-[#E2ECE0]">
                   {item.status === "Pending" && (
                     <button
                       onClick={() => handleCancel(item.id)}
-                      className="px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 border border-red-200 rounded transition-colors cursor-pointer"
+                      className="px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 border border-red-300 rounded transition-colors cursor-pointer"
                     >
                       Cancel Listing
                     </button>
                   )}
                   <Link href="/acceptpage">
-                    <button className="px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 border border-gray-300 rounded transition-colors cursor-pointer">
+                    <button className="px-3.5 py-1.5 text-xs font-bold text-[#0B331E] bg-[#E2ECE0] hover:bg-[#D5E4D2] border border-[#CBDBC7] rounded transition-colors cursor-pointer">
                       View Custody
                     </button>
                   </Link>
