@@ -138,7 +138,7 @@ export default function Chatbot() {
               <div>
                 <h3 className="font-bold text-sm leading-tight flex items-center gap-1.5">
                   FoodShare AI
-                  <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="size-2 rounded-full bg-emerald-400" />
                 </h3>
                 <span className="text-[11px] text-green-200">Rescue Logistics Assistant</span>
               </div>
@@ -211,7 +211,7 @@ export default function Chatbot() {
         ) : (
           <div className="relative">
             <ChatIcon />
-            <span className="absolute -top-1 -right-1 size-2.5 bg-emerald-300 rounded-full ring-2 ring-white animate-pulse" />
+            <span className="absolute -top-1 -right-1 size-2.5 bg-emerald-300 rounded-full ring-2 ring-white" />
           </div>
         )}
       </button>

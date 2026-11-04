@@ -163,10 +163,10 @@ export default function AdminDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
                   SUPERVISORY GOVERNANCE
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
                   SYSTEM STATUS: OPERATIONAL
                 </span>
               </div>
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
               placeholder="Search batches by ID, food title, or donor..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-[#FAFDF8] border border-[#CBDBC7] rounded text-xs focus:outline-none focus:border-[#135936] text-gray-900"
+              className="w-full pl-9 pr-3 py-2 bg-[#FAFDF8] border border-[#CBDBC7] rounded text-xs focus:outline-none focus:border-[#135936] text-gray-900 placeholder-[#4A5D4E]"
             />
           </div>
 
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                   <div className="space-y-1 text-xs">
                     <div className="flex items-center gap-2">
                       <span className="font-mono font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">#{d.id}</span>
-                      <h3 className="font-bold text-sm text-gray-900">{d.foodType}</h3>
+                      <h2 className="font-bold text-sm text-gray-900">{d.foodType}</h2>
                       <span
                         className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${
                           d.status === "active"
@@ -327,9 +327,9 @@ export default function AdminDashboard() {
 
           {/* Detail Side Panel */}
           <div className="manifest-docket p-5 h-fit sticky top-20 space-y-3">
-            <h3 className="text-sm font-bold text-[#0B331E] pb-2 border-b border-[#CBDBC7]">
+            <h2 className="text-sm font-bold text-[#0B331E] pb-2 border-b border-[#CBDBC7]">
               Audit Inspection Docket
-            </h3>
+            </h2>
 
             {selected ? (
               <div className="space-y-2.5 text-xs">

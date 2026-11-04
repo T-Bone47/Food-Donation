@@ -150,10 +150,10 @@ function NgoDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
                   FACILITY INTAKE DOCK
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
                   BAY STATUS: ACTIVE
                 </span>
               </div>
@@ -262,8 +262,8 @@ function NgoDashboard() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-4 text-xs">
-                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+              <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#CBDBC7] pt-2 text-xs">
+                <div className="py-3 md:py-0 md:px-4 first:pl-0">
                   <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
                     <Thermometer className="size-4 text-[#165E39]" />
                     <span>Thermal Integrity</span>
@@ -273,7 +273,7 @@ function NgoDashboard() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+                <div className="py-3 md:py-0 md:px-4">
                   <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
                     <Package className="size-4 text-[#165E39]" />
                     <span>Sealed Packaging</span>
@@ -283,7 +283,7 @@ function NgoDashboard() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-[#F2F7F0] border border-[#CBDBC7] rounded-md">
+                <div className="py-3 md:py-0 md:px-4 last:pr-0">
                   <div className="flex items-center gap-2 font-bold text-[#0B331E] mb-1">
                     <Clock className="size-4 text-[#165E39]" />
                     <span>Prompt Handover</span>
@@ -299,9 +299,9 @@ function NgoDashboard() {
             <div className="manifest-card overflow-hidden">
               <div className="px-5 py-4 bg-[#E5EDE2] border-b border-[#CBDBC7] flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0B331E]">
+                  <h2 className="text-sm font-bold text-[#0B331E]">
                     Deliveries Awaiting Intake
-                  </h3>
+                  </h2>
                   <p className="text-xs text-gray-600">
                     Shipments arriving at your bay
                   </p>

@@ -142,13 +142,13 @@ export default function ServicePage() {
                 className={`size-8 rounded-full flex items-center justify-center font-bold text-xs ${
                   status === "Accepted" || status === "Picked" || status === "Delivered"
                     ? "bg-[#135936] text-white"
-                    : "bg-[#E6EFE4] text-gray-500 border border-[#BACDB6]"
+                    : "bg-[#E6EFE4] text-gray-700 border border-[#BACDB6]"
                 }`}
               >
                 1
               </div>
               <span className="text-xs font-bold text-[#0E3824] mt-2">Claimed</span>
-              <span className="text-[11px] text-gray-600">Pickup dispatched</span>
+              <span className="text-xs text-gray-700">Pickup dispatched</span>
             </div>
 
             {/* Step 2 */}
@@ -158,14 +158,14 @@ export default function ServicePage() {
                   status === "Picked" || status === "Delivered"
                     ? "bg-[#135936] text-white"
                     : status === "Accepted"
-                    ? "bg-amber-600 text-white ring-2 ring-amber-100"
-                    : "bg-[#E6EFE4] text-gray-500 border border-[#BACDB6]"
+                    ? "bg-[#78350F] text-white ring-2 ring-amber-200"
+                    : "bg-[#E6EFE4] text-gray-700 border border-[#BACDB6]"
                 }`}
               >
                 2
               </div>
               <span className="text-xs font-bold text-[#0E3824] mt-2">In Transit</span>
-              <span className="text-[11px] text-gray-600">Cargo on route</span>
+              <span className="text-xs text-gray-700">Cargo on route</span>
             </div>
 
             {/* Step 3 */}
@@ -174,13 +174,13 @@ export default function ServicePage() {
                 className={`size-8 rounded-full flex items-center justify-center font-bold text-xs ${
                   status === "Delivered"
                     ? "bg-[#135936] text-white"
-                    : "bg-[#E6EFE4] text-gray-500 border border-[#BACDB6]"
+                    : "bg-[#E6EFE4] text-gray-700 border border-[#BACDB6]"
                 }`}
               >
                 3
               </div>
               <span className="text-xs font-bold text-[#0E3824] mt-2">Delivered</span>
-              <span className="text-[11px] text-gray-600">Shelter confirmed</span>
+              <span className="text-xs text-gray-700">Shelter confirmed</span>
             </div>
           </div>
 
@@ -217,28 +217,28 @@ export default function ServicePage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Cargo Manifest */}
           <div className="manifest-card p-5 space-y-3">
-            <span className="text-xs font-semibold text-[#166534] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#166534] uppercase tracking-wider">
               Food Rescue Cargo Manifest
             </span>
-            <h3 className="text-base font-bold text-[#0E3824]">
+            <h2 className="text-base font-bold text-[#0E3824]">
               {donation.food}
-            </h3>
+            </h2>
 
             <div className="space-y-2 text-xs pt-2">
               <div className="flex justify-between py-1.5 border-b border-[#CBDBC7]/50">
-                <span className="text-gray-600">Quantity / Volume:</span>
+                <span className="text-gray-700 font-medium">Quantity / Volume:</span>
                 <span className="font-semibold text-[#0E3824] tabular-nums">{donation.servings}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-[#CBDBC7]/50">
-                <span className="text-gray-600">Food Classification:</span>
+                <span className="text-gray-700 font-medium">Food Classification:</span>
                 <span className="font-semibold text-[#0E3824]">{donation.type}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-[#CBDBC7]/50">
-                <span className="text-gray-600">Expiry Window:</span>
-                <span className="font-semibold text-amber-700">{donation.bestBefore}</span>
+                <span className="text-gray-700 font-medium">Expiry Window:</span>
+                <span className="font-semibold text-amber-800">{donation.bestBefore}</span>
               </div>
               <div className="flex justify-between py-1.5">
-                <span className="text-gray-600">Handling Requirement:</span>
+                <span className="text-gray-700 font-medium">Handling Requirement:</span>
                 <span className="font-medium text-[#0E3824]">Keep warm / insulated container</span>
               </div>
             </div>
@@ -246,14 +246,14 @@ export default function ServicePage() {
 
           {/* Facility & Contact Details */}
           <div className="manifest-card p-5 space-y-3">
-            <span className="text-xs font-semibold text-[#166534] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#166534] uppercase tracking-wider">
               Facility Pickup & Contact
             </span>
-            <h3 className="text-base font-bold text-[#0E3824]">
+            <h2 className="text-base font-bold text-[#0E3824]">
               {donation.donor}
-            </h3>
+            </h2>
 
-            <div className="flex items-start gap-2 text-xs text-gray-700">
+            <div className="flex items-start gap-2 text-xs text-gray-800">
               <MapPin className="size-4 text-[#166534] shrink-0 mt-0.5" />
               <span>{donation.location}</span>
             </div>
@@ -261,12 +261,12 @@ export default function ServicePage() {
             <div className="pt-2 flex flex-col gap-2">
               <a
                 href={`tel:${donation.donorPhone}`}
-                className="w-full py-2 bg-[#E6EFE4] hover:bg-[#D5E3D2] text-[#0E3824] rounded-md text-xs font-semibold text-center border border-[#BACDB6] transition-colors flex items-center justify-center gap-1.5"
+                className="w-full py-2 bg-[#E6EFE4] hover:bg-[#D5E3D2] text-[#0E3824] rounded-md text-xs font-bold text-center border border-[#BACDB6] transition-colors flex items-center justify-center gap-1.5"
               >
                 <Phone className="size-3.5 text-[#166534]" />
                 <span>Call Dispatch ({donation.donorPhone})</span>
               </a>
-              <p className="text-[11px] text-gray-500 text-center">
+              <p className="text-xs text-gray-600 text-center">
                 Contact facility manager if dock entrance is unattended
               </p>
             </div>

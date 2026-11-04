@@ -138,7 +138,7 @@ export default function AppNav() {
       {ready && user?.isDemo ? (
         <div className="bg-amber-500/15 border-b border-amber-500/30 px-4 py-1.5 text-xs font-semibold text-amber-900 dark:text-amber-200 sm:hidden flex items-center justify-between" /* taste-skill-ignore */>
           <div className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
+            <span className="size-2 rounded-full bg-amber-500 " />
             <span>DEMO MODE ({role?.toUpperCase()})</span>
           </div>
           <button
@@ -166,7 +166,7 @@ export default function AppNav() {
                 className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300"
                 title="You're exploring a demonstration environment. Changes are isolated from real accounts."
               >
-                <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
+                <span className="size-2 rounded-full bg-amber-500 " />
                 <span>DEMO MODE</span>
               </div>
               <Button

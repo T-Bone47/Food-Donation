@@ -218,7 +218,7 @@ export default function DemoRoleSelectorModal({
           )}
 
           {loadingRole && (
-            <div className="mb-4 flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3.5 text-xs text-primary font-medium animate-pulse">
+            <div className="mb-4 flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3.5 text-xs text-primary font-medium ">
               <Loader2 className="size-4 animate-spin shrink-0" />
               <span>Establishing authenticated {loadingRole.toUpperCase()} session and pre-warming workspace…</span>
             </div>

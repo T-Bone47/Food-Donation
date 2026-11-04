@@ -138,9 +138,9 @@ export default function AppHeader({
           <span
             className={`h-1.5 w-1.5 rounded-full ${
               realtime.status === "connected"
-                ? "bg-emerald-500 animate-pulse"
+                ? "bg-emerald-500"
                 : realtime.status === "connecting" || realtime.status === "reconnecting"
-                ? "bg-amber-500 animate-ping"
+                ? "bg-amber-500"
                 : "bg-stone-400"
             }`}
           />

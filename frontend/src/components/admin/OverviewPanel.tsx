@@ -116,7 +116,7 @@ export default function OverviewPanel({
               Platform Operations Overview
             </h2>
             <span className="px-2.5 py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] text-xs font-semibold flex items-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="size-1.5 rounded-full bg-[#10B981] " />
               Live Network
             </span>
           </div>

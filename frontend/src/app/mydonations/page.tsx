@@ -132,10 +132,10 @@ export default function MyDonations() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-[#184F31]">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
+                <span className="text-xs font-mono tracking-wider px-2.5 py-0.5 rounded bg-[#13492B] text-emerald-300 border border-[#21663F]">
                   DONOR DISPATCH LEDGER
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
                   CHAIN OF CUSTODY VERIFIED
                 </span>
               </div>
@@ -263,9 +263,9 @@ export default function MyDonations() {
                     <span className="font-mono font-bold text-[#0B331E] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">
                       #{item.id}
                     </span>
-                    <h3 className="font-bold text-sm text-gray-900">
+                    <h2 className="font-bold text-sm text-gray-900">
                       {item.food}
-                    </h3>
+                    </h2>
                     <span
                       className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${
                         item.status === "Delivered"

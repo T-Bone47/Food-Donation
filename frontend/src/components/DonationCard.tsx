@@ -94,22 +94,22 @@ export default function DonationCard({
   const quantity = donation.quantity ? `${donation.quantity} ${donation.unit || "servings"}` : "Standard batch";
 
   return (
-    <div className="manifest-card hover:border-[#8EAF8B] transition-colors p-5 flex flex-col justify-between border-t-3 border-t-[#165E39]">
+    <div className="manifest-card hover:border-[#8EAF8B] transition-colors p-5 flex flex-col justify-between shadow-xs">
       <div>
         {/* Top Header Row */}
-        <div className="flex items-center justify-between mb-2 pb-2 border-b border-[#CBDBC7]/60">
-          <span className="text-xs font-mono font-semibold text-[#0E3824]">
+        <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-[#CBDBC7]/80">
+          <span className="text-xs font-mono font-bold text-[#0E3824] bg-[#E2ECE0] px-2 py-0.5 rounded border border-[#CBDBC7]">
             #{donation.id ? String(donation.id).slice(-6).toUpperCase() : "TASK-01"}
           </span>
-          <span className="text-xs text-[#166534] font-semibold bg-[#E2ECE0] px-2 py-0.5 rounded">
+          <span className="text-xs text-[#166534] font-semibold bg-[#E2ECE0] px-2.5 py-0.5 rounded border border-[#CBDBC7]">
             ~1.4 km radius
           </span>
         </div>
 
         {/* Title & Category */}
-        <h3 className="text-base font-bold text-[#0E3824] tracking-tight">
+        <h2 className="text-base font-bold text-[#0E3824] tracking-tight">
           {foodTitle}
-        </h3>
+        </h2>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-600 mt-1">
           <MapPin className="size-3.5 text-[#166534] shrink-0" />
