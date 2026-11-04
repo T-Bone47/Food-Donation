@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { authApi } from "@/lib/api-client";
+import { Logo } from "@/components/ui/Logo";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -136,12 +137,15 @@ export default function SignupPage() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-md text-center"
+          className="relative z-10 bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-md text-center border border-green-100"
         >
-          <h2 className="text-3xl font-extrabold text-green-700 mb-2">
-            Join the Food Waste Network 🌍
+          <div className="flex justify-center mb-5">
+            <Logo size="lg" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-1">
+            Join the Food Rescue Mission 🌍
           </h2>
-          <p className="text-gray-600 mb-6 text-sm">Choose your role to get started:</p>
+          <p className="text-gray-500 mb-6 text-xs">Choose your role to get started:</p>
 
           <div className="flex flex-col gap-3">
             <motion.button
@@ -236,10 +240,8 @@ export default function SignupPage() {
         transition={{ duration: 0.5 }}
         className="relative z-10 bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-xl"
       >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-green-700">
-            Sign Up as {role}
-          </h2>
+        <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+          <Logo size="sm" roleBadge={role} />
           <button
             onClick={() => setRole(null)}
             className="text-xs text-gray-500 hover:text-green-700 underline cursor-pointer"

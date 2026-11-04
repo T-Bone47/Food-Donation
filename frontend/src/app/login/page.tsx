@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import axios from "axios";
 import { authApi } from "@/lib/api-client";
+import { Logo } from "@/components/ui/Logo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -96,9 +97,15 @@ export default function LoginPage() {
         transition={{ duration: 0.6 }}
         className="relative z-10 bg-white shadow-xl rounded-2xl p-8 max-w-md w-full border border-green-100"
       >
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">
+        <div className="flex justify-center mb-5">
+          <Logo size="lg" />
+        </div>
+        <h2 className="text-xl font-bold text-gray-800 text-center mb-1">
           Welcome Back 👋
         </h2>
+        <p className="text-xs text-gray-500 text-center mb-6">
+          Sign in to your FoodShare account
+        </p>
         <form onSubmit={handlesubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">

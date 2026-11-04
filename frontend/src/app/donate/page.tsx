@@ -160,9 +160,16 @@ export default function DonatePage() {
 
       <div className="py-12 px-6">
         <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-8 border border-green-100">
-          <h1 className="text-2xl font-bold text-green-700 mb-6 text-center">
-            Donate Food
-          </h1>
+          <div className="text-center mb-6">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 border border-green-200 text-green-800 text-xs font-semibold rounded-full mb-2">
+              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+              FoodShare Rescue Creation
+            </span>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-green-900 tracking-tight">
+              Create Food Rescue Donation
+            </h1>
+            <p className="text-xs text-gray-500 mt-1">List fresh surplus batches for rapid volunteer collection</p>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Number of Food Types */}

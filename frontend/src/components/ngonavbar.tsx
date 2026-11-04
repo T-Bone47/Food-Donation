@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser } from "@/lib/session";
+import { Logo } from "@/components/ui/Logo";
 
 export default function NgoNavbar() {
   const router = useRouter();
@@ -53,10 +54,8 @@ export default function NgoNavbar() {
     : "hub";
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center sticky top-0 z-40">
-      <Link href="/ngodash" className="text-2xl font-bold text-green-700 flex items-center gap-2">
-        <span>FeedChain NGO</span>
-      </Link>
+    <nav className="bg-white/95 backdrop-blur-md shadow-xs border-b border-green-100 px-6 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-all">
+      <Logo href="/ngodash" roleBadge="NGO Hub" size="md" />
 
       <div className="w-[460px] max-w-full hidden md:block">
         <Tabs value={currentTab} className="w-full">

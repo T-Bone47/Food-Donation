@@ -1,0 +1,23 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fsLeafGrad" x1="10" y1="8" x2="38" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="60%" stop-color="#16a34a" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+    <linearGradient id="fsHandGrad" x1="6" y1="24" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="50%" stop-color="#166534" />
+      <stop offset="100%" stop-color="#14532d" />
+    </linearGradient>
+    <linearGradient id="fsSeedGrad" x1="22" y1="16" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="23" fill="#15803d" />
+  <path d="M10 26C10 33.732 16.268 40 24 40C30.2 40 35.48 35.98 37.3 30.4C37.8 28.9 36.6 27.5 35 27.5C33.7 27.5 32.6 28.4 32.1 29.6C30.7 33 27.6 35.5 24 35.5C18.753 35.5 14.5 31.247 14.5 26C14.5 24.2 15 22.5 15.9 21.1C16.6 19.9 15.9 18.5 14.5 18.5C13.8 18.5 13.1 18.9 12.6 19.5C11 21.4 10 23.6 10 26Z" fill="#dcfce7" />
+  <path d="M24 8C24 8 36 12 36 24C36 30 31 35 24 35C17 35 12 30 12 24C12 16 20 9 24 8Z" fill="url(#fsLeafGrad)" />
+  <path d="M24 12V32M24 18L30 14M24 23L31 20M24 28L28 26M24 18L18 15M24 23L17 21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" />
+  <circle cx="24" cy="21" r="3.2" fill="url(#fsSeedGrad)" />
+</svg>

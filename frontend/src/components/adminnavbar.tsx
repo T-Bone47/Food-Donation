@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser } from "@/lib/session";
+import { Logo } from "@/components/ui/Logo";
 
 export default function AdminNavbar() {
   const router = useRouter();
@@ -49,12 +50,10 @@ export default function AdminNavbar() {
     : "home";
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center sticky top-0 z-40">
-      <Link href="/adminpage" className="text-2xl font-bold text-green-700 flex items-center gap-2">
-        <span>FeedChain Admin</span>
-      </Link>
+    <nav className="bg-white/95 backdrop-blur-md shadow-xs border-b border-green-100 px-6 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-all">
+      <Logo href="/adminpage" roleBadge="Admin" size="md" />
 
-      <div className="w-[420px] max-w-full hidden md:block">
+      <div className="w-[440px] max-w-full hidden md:block">
         <Tabs value={currentTab} className="w-full">
           <TabsList className="w-full justify-center">
             <TabsTrigger value="home" onClick={() => handleTabClick("/adminpage")}>

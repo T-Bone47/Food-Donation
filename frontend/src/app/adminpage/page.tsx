@@ -128,10 +128,14 @@ export default function AdminDashboard() {
       <Navbar />
 
       {/* Header Section */}
-      <section className="bg-green-100 py-12 text-center px-6">
-        <h1 className="text-4xl font-bold text-green-800 mb-2">Admin Dashboard</h1>
+      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-12 text-center px-6 border-b border-green-100/60">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-3 shadow-2xs">
+          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+          FoodShare Administrative Console
+        </div>
+        <h1 className="text-4xl font-extrabold text-green-900 tracking-tight mb-2">Platform Command Center</h1>
         <p className="text-gray-700 max-w-xl mx-auto text-sm sm:text-base">
-          Monitor donors, volunteers, and food pickups across the entire platform in real-time.
+          Monitor donors, volunteers, and food pickups across the entire platform in real-time with full audit oversight.
         </p>
       </section>
 

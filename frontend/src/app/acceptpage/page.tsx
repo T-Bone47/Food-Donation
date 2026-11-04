@@ -102,9 +102,17 @@ export default function ServicePage() {
 
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
-        <h1 className="text-3xl font-bold text-green-800 mb-6">
-          Pickup Tracking 🚴‍♂️
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 mb-2">
+              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+              Live Custody Transfer
+            </div>
+            <h1 className="text-3xl font-extrabold text-green-900 tracking-tight">
+              Pickup & Delivery Tracking 🚴‍♂️
+            </h1>
+          </div>
+        </div>
 
         {loading ? (
           <p className="text-center text-gray-500 py-8">Loading mission dispatch details...</p>

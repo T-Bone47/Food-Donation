@@ -87,13 +87,16 @@ export default function DonorDashboard() {
       <Navbar />
 
       {/* Hero / Intro Section */}
-      <section className="bg-green-100 py-16 px-6 text-center">
-        <h1 className="text-4xl font-bold text-green-800 mb-4">
+      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-14 px-6 text-center border-b border-green-100/60">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-4 shadow-2xs">
+          <span className="size-2 rounded-full bg-green-500 animate-pulse" />
+          FoodShare Active Rescue Network
+        </div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-green-900 tracking-tight mb-4">
           Together Against Food Waste
         </h1>
-        <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-          Connecting restaurants, caterers, and donors with volunteers to reduce
-          food waste and feed the needy. Be part of the change.
+        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+          FoodShare connects restaurants, caterers, and citizens with field volunteers and community shelters to eliminate food waste with dignity.
         </p>
       </section>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { LogoMark } from "@/components/ui/Logo";
 
 // Icon for the chat bubble
 const ChatIcon = () => (
@@ -127,16 +128,24 @@ export default function Chatbot() {
     <>
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-5 w-84 h-[480px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-green-200 overflow-hidden">
+        <div className="fixed bottom-24 right-5 w-88 h-[490px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-green-200 overflow-hidden">
           {/* Header */}
-          <div className="bg-green-700 text-white p-3.5 flex justify-between items-center shadow-sm">
-            <div className="flex items-center gap-2">
-              <span className="size-2.5 rounded-full bg-green-300 animate-pulse" />
-              <h3 className="font-bold text-base">Team Feed Chain Assistant</h3>
+          <div className="bg-gradient-to-r from-green-800 to-green-700 text-white p-3.5 flex justify-between items-center shadow-sm">
+            <div className="flex items-center gap-2.5">
+              <div className="bg-white/10 p-1 rounded-full">
+                <LogoMark className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-bold text-sm leading-tight flex items-center gap-1.5">
+                  FoodShare AI
+                  <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                </h3>
+                <span className="text-[11px] text-green-200">Rescue Logistics Assistant</span>
+              </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="hover:bg-green-800 p-1.5 rounded-full transition cursor-pointer"
+              className="hover:bg-green-800/80 p-1.5 rounded-full transition cursor-pointer text-green-100 hover:text-white"
             >
               <CloseIcon />
             </button>
@@ -194,10 +203,17 @@ export default function Chatbot() {
       {/* Floating Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-5 right-5 bg-green-700 text-white size-14 rounded-full shadow-xl flex items-center justify-center hover:bg-green-800 focus:outline-none z-50 cursor-pointer transition hover:scale-105"
-        aria-label="Toggle AI Assistant"
+        className="fixed bottom-5 right-5 bg-gradient-to-tr from-green-800 to-green-600 text-white size-14 rounded-full shadow-2xl flex items-center justify-center hover:from-green-900 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-400/30 z-50 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 group border-2 border-white/40"
+        aria-label="Toggle FoodShare AI Assistant"
       >
-        {isOpen ? <CloseIcon /> : <ChatIcon />}
+        {isOpen ? (
+          <CloseIcon />
+        ) : (
+          <div className="relative">
+            <ChatIcon />
+            <span className="absolute -top-1 -right-1 size-2.5 bg-emerald-300 rounded-full ring-2 ring-white animate-pulse" />
+          </div>
+        )}
       </button>
     </>
   );
