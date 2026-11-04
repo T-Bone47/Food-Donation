@@ -148,6 +148,17 @@ function subscribeStore(callback: () => void) {
   };
 }
 
+const SERVER_SNAPSHOT: RealtimeStore = Object.freeze({
+  status: "offline",
+  lastEvent: null,
+  lastEventTime: null,
+  clientCount: 0,
+});
+
+function getServerSnapshot(): RealtimeStore {
+  return SERVER_SNAPSHOT;
+}
+
 function getStoreSnapshot() {
   return store;
 }
@@ -156,12 +167,7 @@ function getStoreSnapshot() {
  * React hook to observe current real-time SSE stream status.
  */
 export function useRealtimeStatus(): RealtimeStore {
-  return useSyncExternalStore(subscribeStore, getStoreSnapshot, () => ({
-    status: "offline",
-    lastEvent: null,
-    lastEventTime: null,
-    clientCount: 0,
-  }));
+  return useSyncExternalStore(subscribeStore, getStoreSnapshot, getServerSnapshot);
 }
 
 /**
