@@ -1,175 +1,160 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { Package } from "lucide-react";
-
-import AppShell from "@/components/shell/AppShell";
-import DonationCard from "@/components/DonationCard";
-import { Button } from "@/components/ui/button";
-import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import { Field } from "@/components/ui/field";
-import { controlClass } from "@/components/ui/input";
-import { Pager } from "@/components/ui/pager";
-import { EmptyState, ErrorState, InlineAlert, ListSkeleton, PageHeader } from "@/components/ui/states";
-import { useToast } from "@/components/ui/toast";
+import { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
 import { donationsApi } from "@/lib/api-client";
-import { formatDateTime, statusLabel } from "@/lib/format";
-import { useResource } from "@/lib/use-resource";
-import { DONATION_STATUSES, type Donation, type DonationStatus } from "@/lib/types";
 
-const PAGE_SIZE = 12;
-
-// Where each donation is, in the donor's words.
-const STATUS_NOTE: Record<DonationStatus, string> = {
-  AVAILABLE: "Waiting for a volunteer to claim it.",
-  ASSIGNED: "A volunteer has claimed it and will collect it.",
-  PICKED_UP: "Collected. On its way to an NGO.",
-  DELIVERED: "Delivered. Waiting for the NGO to confirm receipt.",
-  COMPLETED: "Receipt confirmed by the NGO. Thank you.",
-  CANCELLED: "You cancelled this donation.",
-  EXPIRED: "This listing expired before it was collected.",
-};
-
-export default function MyDonationsPage() {
-  return (
-    <AppShell roles={["Donor"]}>
-      <MyDonations />
-    </AppShell>
-  );
+interface Donation {
+  id: string;
+  food: string;
+  servings: number | string;
+  prepTime: string;
+  status: string;
+  volunteer?: string;
+  volunteerPhone?: string;
+  bestBefore: string;
+  location: string;
 }
 
-function MyDonations() {
-  const toast = useToast();
-  const [status, setStatus] = useState<"" | DonationStatus>("");
-  const [page, setPage] = useState(0);
-  const [target, setTarget] = useState<Donation | null>(null);
-  const list = useResource(
-    async () => (await donationsApi.getMine({ status: status || undefined, limit: PAGE_SIZE, offset: page * PAGE_SIZE })).data.donations,
-    `donor:mine:${status}|${page}`
-  );
-  const rows = list.data ?? [];
+export default function MyDonations() {
+  const [donations, setDonations] = useState<Donation[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDonations = async () => {
+    try {
+      setLoading(true);
+      const res = await donationsApi.getMine({ limit: 50 });
+      const raw = res.data?.donations || [];
+
+      if (Array.isArray(raw)) {
+        const mapped: Donation[] = raw.map((d: any) => ({
+          id: d.id,
+          food: d.title || d.food_category || "Cooked Meals",
+          servings: d.quantity ? `${d.quantity} ${d.unit || "servings"}` : "25 servings",
+          prepTime: d.prepared_at ? new Date(d.prepared_at).toLocaleString() : "Recently prepared",
+          status:
+            d.status === "AVAILABLE"
+              ? "Pending"
+              : d.status === "ASSIGNED"
+              ? "Accepted"
+              : d.status === "PICKED_UP"
+              ? "Picked"
+              : d.status === "DELIVERED" || d.status === "COMPLETED"
+              ? "Delivered"
+              : d.status,
+          bestBefore: d.expires_at ? new Date(d.expires_at).toLocaleTimeString() : "Within 6 hours",
+          location: d.pickup_address || `${d.area || "Local Area"}, ${d.state || ""}`,
+          volunteer: d.assignment?.volunteer?.name,
+          volunteerPhone: d.assignment?.volunteer?.phonenumber,
+        }));
+
+        setDonations(mapped);
+      }
+    } catch (err: any) {
+      console.error("Error fetching donations:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDonations();
+  }, []);
+
+  const handleCancel = async (id: string) => {
+    if (!confirm("Are you sure you want to cancel this donation?")) return;
+    try {
+      await donationsApi.cancel(id);
+      alert("Donation cancelled successfully.");
+      fetchDonations();
+    } catch (err: any) {
+      alert(err.response?.data?.error?.message || "Could not cancel donation.");
+    }
+  };
 
   return (
-    <>
-      <PageHeader
-        title="My donations"
-        description="Everything you've listed, and where each donation is right now."
-        actions={
-          <Button asChild>
-            <Link href="/donate">Donate food</Link>
-          </Button>
-        }
-      />
+    <main className="min-h-screen bg-green-50">
+      <Navbar />
 
-      <div className="mb-4 max-w-xs rounded-lg border bg-card p-4 shadow-card">
-        <Field label="Show">
-          {(c) => (
-            <select
-              {...c}
-              className={controlClass}
-              value={status}
-              onChange={(e) => {
-                setStatus(e.target.value as "" | DonationStatus);
-                setPage(0);
-              }}
+      <section className="py-16 px-6 text-center bg-green-100">
+        <h1 className="text-4xl font-bold text-green-800 mb-4">
+          My Donations 🍲
+        </h1>
+        <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          Track all your donations, see their status, and know which volunteers
+          accepted them.
+        </p>
+      </section>
+
+      <section className="py-8 px-6 max-w-4xl mx-auto space-y-6">
+        {loading && (
+          <p className="text-center text-gray-500 py-8">Loading your donation history...</p>
+        )}
+
+        {!loading &&
+          donations.map((donation) => (
+            <div
+              key={donation.id}
+              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition border border-green-100"
             >
-              <option value="">All donations</option>
-              {DONATION_STATUSES.map((s) => (
-                <option key={s} value={s}>
-                  {statusLabel(s)}
-                </option>
-              ))}
-            </select>
-          )}
-        </Field>
-      </div>
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-xl font-semibold text-green-700">
+                  {donation.food}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${
+                      donation.status === "Pending"
+                        ? "bg-gray-200 text-gray-700"
+                        : donation.status === "Accepted"
+                        ? "bg-blue-500 text-white"
+                        : donation.status === "Picked"
+                        ? "bg-yellow-500 text-white"
+                        : "bg-green-700 text-white"
+                    }`}
+                  >
+                    {donation.status}
+                  </span>
+                  {donation.status === "Pending" && (
+                    <button
+                      onClick={() => handleCancel(donation.id)}
+                      className="text-xs text-red-600 hover:text-red-800 underline ml-2 cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
 
-      {list.error && list.data ? (
-        <InlineAlert tone="warning" className="mb-4">
-          <p>We couldn&apos;t refresh this list. You&apos;re seeing the last version we loaded.</p>
-        </InlineAlert>
-      ) : null}
+              <p className="text-gray-700 text-sm mt-1">🥘 Servings: {donation.servings}</p>
+              <p className="text-gray-700 text-sm mt-1">⏰ Preparation Time: {donation.prepTime}</p>
+              <p className="text-gray-700 text-sm mt-1">📍 Location: {donation.location}</p>
+              <p className="text-gray-700 text-sm mt-1">⏱️ Best Before: {donation.bestBefore}</p>
 
-      {list.loading && !list.data ? (
-        <ListSkeleton count={4} className="lg:grid-cols-2" />
-      ) : list.error && !list.data ? (
-        <ErrorState error={list.error} onRetry={() => list.reload()} />
-      ) : rows.length === 0 && page === 0 ? (
-        <EmptyState
-          icon={Package}
-          title={status ? `No ${statusLabel(status).toLowerCase()} donations` : "You haven't donated yet"}
-          action={
-            status ? (
-              <Button variant="outline" onClick={() => setStatus("")}>
-                Show all donations
-              </Button>
-            ) : (
-              <Button asChild>
-                <Link href="/donate">Donate food</Link>
-              </Button>
-            )
-          }
-        >
-          {status ? "Try another status." : "Your donations will be listed here, with their progress."}
-        </EmptyState>
-      ) : (
-        <div aria-busy={list.loading} className={list.loading ? "opacity-60" : undefined}>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {rows.map((d) => (
-              <li key={d.id}>
-                <DonationCard heading="h2" donation={d} showStatus showDeadlines={d.status === "AVAILABLE" || d.status === "ASSIGNED"}>
-                  <p className="text-sm text-ink-soft">{STATUS_NOTE[d.status]}</p>
-                  <p className="text-meta text-muted-foreground">Listed {formatDateTime(d.created_at)}</p>
-                  <div className="flex flex-wrap gap-2">
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={`/acceptpage/${d.id}`}>
-                        View progress<span className="sr-only"> for {d.title}</span>
-                      </Link>
-                    </Button>
-                    {d.status === "AVAILABLE" || d.status === "ASSIGNED" ? (
-                      <Button variant="outline" size="sm" onClick={() => setTarget(d)}>
-                        Cancel donation<span className="sr-only"> {d.title}</span>
-                      </Button>
-                    ) : null}
-                  </div>
-                </DonationCard>
-              </li>
-            ))}
-          </ul>
-          <Pager label="My donations pages" page={page} pageSize={PAGE_SIZE} count={rows.length} loading={list.loading} onPage={setPage} />
-        </div>
-      )}
+              {donation.volunteer && (
+                <div className="mt-4 bg-green-50 p-3 rounded-md border-l-4 border-green-700 text-sm">
+                  <p className="text-green-900 font-semibold mb-1">Courier Assigned:</p>
+                  <p className="text-gray-700">👤 Name: {donation.volunteer}</p>
+                  {donation.volunteerPhone && (
+                    <p className="text-gray-700">📞 Phone: {donation.volunteerPhone}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
 
-      <ConfirmDialog
-        open={target !== null}
-        tone="destructive"
-        title="Cancel this donation?"
-        description={
-          target ? (
-            <p>
-              <strong>{target.title}</strong> will be removed.{" "}
-              {target.status === "ASSIGNED"
-                ? "A volunteer has already claimed it. Cancelling cancels their pickup, and they'll be notified in the app. "
-                : "Volunteers will no longer be able to claim it. "}
-              This can&apos;t be undone.
-            </p>
-          ) : undefined
-        }
-        confirmLabel="Cancel donation"
-        cancelLabel="Keep donation"
-        onConfirm={async () => {
-          if (!target) return;
-          await donationsApi.cancel(target.id);
-          toast.show(`“${target.title}” was cancelled.`);
-          await list.reload(true);
-        }}
-        // 403/404/409: it changed under us (e.g. already collected). Show the reason and refresh the list.
-        onError={(err) => {
-          if (err.status === 403 || err.status === 404 || err.status === 409) void list.reload(true);
-        }}
-        onClose={() => setTarget(null)}
-      />
-    </>
+        {!loading && donations.length === 0 && (
+          <div className="text-center py-12 bg-white rounded-xl shadow-sm p-8 border border-green-100">
+            <p className="text-gray-600 text-lg mb-4">You have not donated any food yet.</p>
+            <a
+              href="/donate"
+              className="inline-block bg-green-700 hover:bg-green-800 text-white px-6 py-2.5 rounded-lg font-medium transition"
+            >
+              Make Your First Donation
+            </a>
+          </div>
+        )}
+      </section>
+    </main>
   );
 }

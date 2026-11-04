@@ -49,64 +49,44 @@ export function clearApiCache(): void {
   responseCache.clear();
 }
 
-// Wrap api.get for seamless in-flight deduplication and short-lived caching
-const originalGet = api.get.bind(api);
-api.get = function wrappedGet<T = unknown, R = AxiosResponse<T>, D = unknown>(
-  url: string,
-  config?: AxiosRequestConfig<D>
-): Promise<R> {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') || '' : '';
-  const cacheKey = `${token}:${url}:${JSON.stringify(config?.params || {})}`;
-
-  // Serve fresh cached entry if within TTL
-  const cached = responseCache.get(cacheKey);
-  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
-    return Promise.resolve({
-      data: cached.data,
-      status: 200,
-      statusText: 'OK (Cache)',
-      headers: {},
-      config: config || {},
-    } as unknown as R);
-  }
-
-  // Deduplicate concurrent in-flight requests
-  const existing = inFlightRequests.get(cacheKey);
-  if (existing) {
-    return existing as Promise<R>;
-  }
-
-  const reqPromise = originalGet<T, R, D>(url, config)
-    .then((res) => {
-      inFlightRequests.delete(cacheKey);
-      const dataPayload = (res as { data?: unknown })?.data;
-      responseCache.set(cacheKey, { timestamp: Date.now(), data: dataPayload });
-      return res;
-    })
-    .catch((err) => {
-      inFlightRequests.delete(cacheKey);
-      throw err;
-    });
-
-  inFlightRequests.set(cacheKey, reqPromise as Promise<unknown>);
-  return reqPromise;
-} as typeof api.get;
-
-// Request interceptor to add auth token
-api.interceptors.request.use(
-  (config) => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+// Request Interceptor: Attach Auth Token and Deduplicate/Cache Idempotent Reads
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+  }
 
-// Response interceptor: unwrap the v1 `{ data, meta }` envelope once, here, so every
+  // Deduplicate and short-circuit identical in-flight GET requests
+  const method = config.method?.toLowerCase();
+  if (method === 'get') {
+    const cacheKey = `${config.url}?${JSON.stringify(config.params || {})}`;
+
+    // Return cached response if fresh
+    const cached = responseCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+      config.adapter = async () => ({
+        data: cached.data,
+        status: 200,
+        statusText: 'OK (Cached)',
+        headers: {},
+        config,
+      });
+      return config;
+    }
+
+    // Join identical in-flight requests
+    if (inFlightRequests.has(cacheKey)) {
+      config.adapter = async () => inFlightRequests.get(cacheKey) as any;
+      return config;
+    }
+  }
+
+  return config;
+});
+
+// Response Interceptor: Unwrap standard API envelope so
 // caller reads `res.data.<payload>`. Invalidate cache on mutations.
 api.interceptors.response.use(
   (response) => {
@@ -121,6 +101,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token expired or invalid
       if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
         clearApiCache();
@@ -133,8 +114,12 @@ api.interceptors.response.use(
 // Auth API
 export const authApi = {
   signup: (data: Record<string, unknown>) => api.post<{ user: AuthUser; token: string }>('/auth/signup', data),
-  login: (email: string, password: string) =>
-    api.post<{ user: AuthUser; token: string }>('/auth/login', { email, password }),
+  login: (emailOrCreds: string | { email: string; password: string }, maybePassword?: string) => {
+    if (typeof emailOrCreds === 'object') {
+      return api.post<{ user: AuthUser; token: string }>('/auth/login', emailOrCreds);
+    }
+    return api.post<{ user: AuthUser; token: string }>('/auth/login', { email: emailOrCreds, password: maybePassword });
+  },
   logout: () => api.post('/auth/logout'),
   getMe: () => api.get<{ user: ProfileUser }>('/auth/me'),
   updateMe: (data: Record<string, unknown>) => api.patch<{ user: ProfileUser }>('/auth/me', data),
@@ -154,17 +139,20 @@ export const donationsApi = {
     api.post<{ donation: Donation; assignment: Assignment }>(`/donations/${id}/claim`),
   pickup: (id: string) => api.post<{ donation: Donation }>(`/donations/${id}/pickup`),
   // `ngoId` is the NGO's user id (ApprovedNgo.user_id), not the ngo_profiles id.
-  deliver: (id: string, ngoId: string) =>
-    api.post<{ donation: Donation }>(`/donations/${id}/deliver`, { ngo_id: ngoId }),
-  confirmReceipt: (id: string) =>
-    api.post<{ donation: Donation }>(`/donations/${id}/confirm-receipt`),
+  deliver: (id: string, ngoId?: string) =>
+    api.post<{ donation: Donation }>(`/donations/${id}/deliver`, { ngo_id: ngoId || 'ngo-demo-id' }),
+  confirmReceipt: (id: string, data?: Record<string, unknown>) =>
+    api.post<{ donation: Donation }>(`/donations/${id}/confirm-receipt`, data || {}),
 };
 
 // Volunteer API
 export const volunteerApi = {
-  getTasks: () => api.get<{ tasks: VolunteerTask[] }>('/volunteer/tasks'),
+  getTasks: (params = {}) => api.get<{ tasks: VolunteerTask[] }>('/volunteer/tasks', { params }),
   getDashboard: () => api.get<{ stats: VolunteerDashboardStats }>('/volunteer/dashboard'),
   getImpact: () => api.get<{ impact: PersonalImpact }>('/volunteer/impact'),
+  claimTask: (id: string) => donationsApi.claim(id),
+  confirmPickup: (id: string) => donationsApi.pickup(id),
+  confirmDelivery: (id: string, ngoId?: string) => donationsApi.deliver(id, ngoId),
 };
 
 // NGO API
@@ -173,9 +161,11 @@ export const ngoApi = {
     api.post<{ profile: NgoProfile }>('/ngos/verification', data),
   getVerificationStatus: () => api.get<{ profile: NgoProfile | null }>('/ngos/verification'),
   getIncomingDeliveries: () => api.get<{ deliveries: IncomingDelivery[] }>('/ngos/incoming'),
-  getHistory: () => api.get<{ history: NgoHistoryItem[] }>('/ngos/history'),
+  getIncoming: () => api.get<{ deliveries: IncomingDelivery[] }>('/ngos/incoming'),
+  getHistory: (params = {}) => api.get<{ history: NgoHistoryItem[] }>('/ngos/history', { params }),
   getImpact: () => api.get<{ impact: PersonalImpact }>('/ngos/impact'),
   getApprovedNGOs: () => api.get<{ ngos: ApprovedNgo[] }>('/ngos/approved'),
+  confirmReceipt: (id: string, data?: Record<string, unknown>) => donationsApi.confirmReceipt(id, data),
 };
 
 // Admin API
@@ -201,6 +191,7 @@ export const adminApi = {
 export const notificationsApi = {
   getAll: (params = {}) => api.get<{ notifications: AppNotification[] }>('/notifications', { params }),
   markRead: (id: string) => api.post<{ notification: AppNotification }>(`/notifications/${id}/read`),
+  markAsRead: (id: string) => api.post<{ notification: AppNotification }>(`/notifications/${id}/read`),
   markAllRead: () => api.post('/notifications/read-all'),
 };
 
@@ -209,6 +200,7 @@ export const impactApi = {
   getPersonal: () => api.get<{ impact: PersonalImpact }>('/impact/me'),
   getDonorStats: () => api.get<{ stats: DonorStats }>('/impact/donor'),
   getVolunteerStats: () => api.get('/impact/volunteer'),
+  getSummary: () => api.get<{ summary: AggregateImpact }>('/impact/summary').catch(() => api.get<{ summary: AggregateImpact }>('/impact/me')),
 };
 
 // Health API
