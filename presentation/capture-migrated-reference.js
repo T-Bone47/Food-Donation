@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const playwrightPath = path.resolve(__dirname, '../Food-Donation-main/frontend/node_modules/playwright');
+const playwrightPath = fs.existsSync(path.resolve(__dirname, '../frontend/node_modules/playwright'))
+  ? path.resolve(__dirname, '../frontend/node_modules/playwright')
+  : path.resolve(__dirname, '../../frontend/node_modules/playwright');
 const { chromium } = require(playwrightPath);
 
 async function run() {

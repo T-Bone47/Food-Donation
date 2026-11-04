@@ -131,94 +131,86 @@ export default function SignupPage() {
         className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat p-6 relative"
         style={{ backgroundImage: "url('/images/signupbg.png')" }}
       >
-        <div className="absolute inset-0 bg-green-950/40 backdrop-blur-xs" />
+        <div className="absolute inset-0 bg-slate-900/35" />
 
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-md text-center border border-green-100"
+          transition={{ duration: 0.4 }}
+          className="relative z-10 bg-white shadow-md rounded-lg p-8 w-full max-w-md text-center border border-gray-200"
         >
           <div className="flex justify-center mb-5">
             <Logo size="lg" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-1">
-            Join the Food Rescue Mission 🌍
+          <h2 className="text-xl font-bold text-gray-900 mb-1">
+            Join the FoodShare Network
           </h2>
-          <p className="text-gray-500 mb-6 text-xs">Choose your role to get started:</p>
+          <p className="text-gray-500 mb-6 text-xs">Select your operational participation role:</p>
 
-          <div className="flex flex-col gap-3">
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+          <div className="flex flex-col gap-2.5">
+            <button
               onClick={() => setRole("Donor")}
-              className="py-3 bg-green-600 text-white rounded-xl font-semibold shadow-md hover:bg-green-700 transition cursor-pointer"
+              className="py-2.5 px-4 bg-emerald-700 text-white rounded-md text-xs font-medium hover:bg-emerald-800 transition cursor-pointer"
             >
-              Food Donor (Restaurant / Caterer / Individual)
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              Food Donor (Restaurant / Caterer / Business)
+            </button>
+            <button
               onClick={() => setRole("Volunteer")}
-              className="py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-md hover:bg-blue-700 transition cursor-pointer"
+              className="py-2.5 px-4 bg-gray-900 text-white rounded-md text-xs font-medium hover:bg-gray-800 transition cursor-pointer"
             >
-              Field Volunteer (Food Rescue & Delivery)
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              Field Volunteer (Food Courier)
+            </button>
+            <button
               onClick={() => setRole("NGO")}
-              className="py-3 bg-purple-600 text-white rounded-xl font-semibold shadow-md hover:bg-purple-700 transition cursor-pointer"
+              className="py-2.5 px-4 bg-white border border-gray-300 text-gray-800 rounded-md text-xs font-medium hover:bg-gray-50 transition cursor-pointer"
             >
-              NGO / Community Shelter
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              NGO / Community Receiving Shelter
+            </button>
+            <button
               onClick={() => setRole("Admin")}
-              className="py-3 bg-emerald-800 text-white rounded-xl font-semibold shadow-md hover:bg-emerald-900 transition cursor-pointer"
+              className="py-2.5 px-4 bg-gray-100 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-200 transition cursor-pointer"
             >
               Platform Administrator
-            </motion.button>
+            </button>
           </div>
 
           <div className="my-5 flex items-center gap-3">
             <div className="h-px bg-gray-200 flex-1" />
-            <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Or Presentation Demo</span>
+            <span className="text-[11px] text-gray-400 uppercase tracking-wider font-medium">Evaluation Demo Access</span>
             <div className="h-px bg-gray-200 flex-1" />
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
             <button
               onClick={() => handleQuickDemo("donor")}
-              className="p-2 border border-green-300 rounded-lg text-green-700 hover:bg-green-50 font-medium"
+              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
             >
-              ⚡ Demo Donor
+              Demo Donor
             </button>
             <button
               onClick={() => handleQuickDemo("volunteer")}
-              className="p-2 border border-blue-300 rounded-lg text-blue-700 hover:bg-blue-50 font-medium"
+              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
             >
-              ⚡ Demo Volunteer
+              Demo Volunteer
             </button>
             <button
               onClick={() => handleQuickDemo("ngo")}
-              className="p-2 border border-purple-300 rounded-lg text-purple-700 hover:bg-purple-50 font-medium"
+              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
             >
-              ⚡ Demo NGO
+              Demo NGO
             </button>
             <button
               onClick={() => handleQuickDemo("admin")}
-              className="p-2 border border-emerald-300 rounded-lg text-emerald-800 hover:bg-emerald-50 font-medium"
+              className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium cursor-pointer"
             >
-              ⚡ Demo Admin
+              Demo Admin
             </button>
           </div>
 
-          <p className="text-sm text-gray-600 text-center mt-6">
+          <p className="text-xs text-gray-600 text-center mt-6">
             Already have an account?{" "}
-            <Link href="/login" className="text-green-700 font-semibold hover:underline">
-              Login here
+            <Link href="/login" className="text-emerald-700 font-semibold hover:underline">
+              Sign In
             </Link>
           </p>
         </motion.div>
@@ -232,19 +224,19 @@ export default function SignupPage() {
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat p-6 relative py-12"
       style={{ backgroundImage: "url('/images/signupbg.png')" }}
     >
-      <div className="absolute inset-0 bg-green-950/40 backdrop-blur-xs" />
+      <div className="absolute inset-0 bg-slate-900/35" />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative z-10 bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-10 w-full max-w-xl"
+        transition={{ duration: 0.3 }}
+        className="relative z-10 bg-white shadow-md rounded-lg p-8 w-full max-w-xl border border-gray-200"
       >
         <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
           <Logo size="sm" roleBadge={role} />
           <button
             onClick={() => setRole(null)}
-            className="text-xs text-gray-500 hover:text-green-700 underline cursor-pointer"
+            className="text-xs text-gray-500 hover:text-gray-900 underline cursor-pointer"
           >
             ← Change Role
           </button>
@@ -252,84 +244,86 @@ export default function SignupPage() {
 
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Full Name</label>
+            <label className="block text-xs font-medium text-gray-700">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="mt-1 w-full p-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm outline-none"
+              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
 
           {(role === "Donor" || role === "NGO") && (
             <div>
-              <label className="block text-sm font-medium text-gray-700">Organization / Restaurant Name</label>
+              <label className="block text-xs font-medium text-gray-700">Organization / Facility Name</label>
               <input
                 type="text"
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
                 placeholder="Business or foundation name"
-                className="mt-1 w-full p-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm outline-none"
+                className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email ID</label>
+            <label className="block text-xs font-medium text-gray-700">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1 w-full p-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm outline-none"
+              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+            <label className="block text-xs font-medium text-gray-700">Phone Number</label>
             <input
               type="tel"
               value={phonenumber}
               onChange={(e) => setPhonenumber(e.target.value)}
-              placeholder="+91 9876543210"
-              className="mt-1 w-full p-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm outline-none"
+              placeholder="+91 98765 43210"
+              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-xs font-medium text-gray-700">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a strong password"
-              className="mt-1 w-full p-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm outline-none"
+              placeholder="Create a password"
+              className="mt-1 w-full p-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
 
           <div className="pt-2">
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Location Details</h3>
-            <div className="space-y-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-medium text-gray-700">Facility Location</span>
               <button
                 type="button"
                 onClick={getLocation}
-                className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-xs transition cursor-pointer"
+                className="text-xs text-emerald-700 hover:text-emerald-800 font-medium cursor-pointer"
               >
-                📍 Use My Current Location
+                Auto-Detect GPS
               </button>
+            </div>
+            <div className="space-y-2">
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="text"
                   name="pincode"
                   value={locationData.pincode}
                   onChange={handleLocationChange}
-                  placeholder="Pincode"
-                  className="rounded-lg border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-green-500 outline-none"
+                  placeholder="Postal Code"
+                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
                 />
                 <input
                   type="text"
@@ -337,7 +331,7 @@ export default function SignupPage() {
                   value={locationData.area}
                   onChange={handleLocationChange}
                   placeholder="Area / Locality"
-                  className="rounded-lg border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-green-500 outline-none"
+                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
                 />
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -347,34 +341,32 @@ export default function SignupPage() {
                   value={locationData.state}
                   onChange={handleLocationChange}
                   placeholder="State"
-                  className="rounded-lg border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-green-500 outline-none"
+                  className="rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
                 />
                 <input
                   type="text"
                   name="country"
                   value={locationData.country}
                   readOnly
-                  className="rounded-lg border border-gray-300 bg-gray-100 p-2 text-sm text-gray-500"
+                  className="rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500"
                 />
               </div>
             </div>
           </div>
 
-          <motion.button
+          <button
             type="submit"
             disabled={loading}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-xl font-semibold text-base shadow-md transition cursor-pointer mt-4 disabled:bg-gray-400"
+            className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-md text-sm font-medium transition cursor-pointer mt-4 disabled:bg-gray-300"
           >
-            {loading ? "Creating Account..." : "Sign Up"}
-          </motion.button>
+            {loading ? "Creating Account..." : "Register Account"}
+          </button>
         </form>
 
-        <p className="text-sm text-gray-600 text-center mt-5">
+        <p className="text-xs text-gray-600 text-center mt-5">
           Already have an account?{" "}
-          <Link href="/login" className="text-green-700 font-semibold hover:underline">
-            Login here
+          <Link href="/login" className="text-emerald-700 font-semibold hover:underline">
+            Sign In
           </Link>
         </p>
       </motion.div>

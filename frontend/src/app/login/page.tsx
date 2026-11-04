@@ -87,62 +87,62 @@ export default function LoginPage() {
         style={{ backgroundImage: "url('/images/signupbg.png')" }}
       ></div>
 
-      {/* Gradient overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50/85 to-green-200/85 backdrop-blur-xs"></div>
+      {/* Overlay for legibility */}
+      <div className="absolute inset-0 bg-slate-900/30"></div>
 
       {/* Login Card */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10 bg-white shadow-xl rounded-2xl p-8 max-w-md w-full border border-green-100"
+        transition={{ duration: 0.4 }}
+        className="relative z-10 bg-white shadow-md rounded-lg p-8 max-w-md w-full border border-gray-200"
       >
         <div className="flex justify-center mb-5">
           <Logo size="lg" />
         </div>
-        <h2 className="text-xl font-bold text-gray-800 text-center mb-1">
-          Welcome Back 👋
+        <h2 className="text-xl font-bold text-gray-900 text-center mb-1">
+          Sign In to FoodShare
         </h2>
         <p className="text-xs text-gray-500 text-center mb-6">
-          Sign in to your FoodShare account
+          Access your donor, volunteer, NGO, or administrator dashboard
         </p>
         <form onSubmit={handlesubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email ID
+            <label className="block text-xs font-medium text-gray-700">
+              Email Address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
+              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-xs font-medium text-gray-700">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
+              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all cursor-pointer shadow-xs disabled:bg-gray-400"
+            className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-medium py-2 px-4 rounded-md text-sm transition-colors cursor-pointer disabled:bg-gray-300"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
         <div className="my-5 flex items-center gap-3">
           <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Instant Demo Access</span>
+          <span className="text-[11px] text-gray-500 uppercase tracking-wider font-medium">Evaluation Demo Access</span>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
 
@@ -150,44 +150,41 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleQuickDemo("donor")}
-            className="p-2 border border-green-300 rounded-lg text-green-700 hover:bg-green-50 font-medium transition cursor-pointer"
+            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
           >
-            ⚡ Demo Donor
+            Demo Donor
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("volunteer")}
-            className="p-2 border border-blue-300 rounded-lg text-blue-700 hover:bg-blue-50 font-medium transition cursor-pointer"
+            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
           >
-            ⚡ Demo Volunteer
+            Demo Volunteer
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("ngo")}
-            className="p-2 border border-purple-300 rounded-lg text-purple-700 hover:bg-purple-50 font-medium transition cursor-pointer"
+            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
           >
-            ⚡ Demo NGO
+            Demo NGO
           </button>
           <button
             type="button"
             onClick={() => handleQuickDemo("admin")}
-            className="p-2 border border-emerald-300 rounded-lg text-emerald-800 hover:bg-emerald-50 font-medium transition cursor-pointer"
+            className="p-2 border border-gray-200 bg-gray-50 hover:bg-gray-100 rounded text-gray-800 font-medium transition cursor-pointer"
           >
-            ⚡ Demo Admin
+            Demo Admin
           </button>
         </div>
 
-        <p className="text-sm text-gray-600 text-center mt-6">
+        <p className="text-xs text-gray-600 text-center mt-6">
           Don’t have an account?{" "}
           <Link
             href="/"
-            className="text-green-600 font-semibold hover:underline"
+            className="text-emerald-700 font-semibold hover:underline"
           >
-            Sign Up
+            Create an Account
           </Link>
-        </p>
-        <p className="text-xs text-gray-500 text-center mt-2">
-          Together, let’s reduce food waste and feed communities 💚
         </p>
       </motion.div>
     </div>

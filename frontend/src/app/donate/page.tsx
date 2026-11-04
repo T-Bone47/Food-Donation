@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
 import { donationsApi } from "@/lib/api-client";
+import { MapPin, Plus } from "lucide-react";
 
 export default function DonatePage() {
   const router = useRouter();
@@ -155,31 +156,29 @@ export default function DonatePage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
+    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
       <Navbar />
 
-      <div className="py-12 px-6">
-        <div className="max-w-2xl mx-auto bg-white shadow-premium rounded-2xl p-8 border border-emerald-950/8">
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold rounded-full mb-3 shadow-2xs">
-              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              FoodShare Verified Donor Dispatch
-            </span>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
-              Create Surplus Food Donation
-            </h1>
-            <p className="text-xs text-gray-500 mt-1 max-w-md mx-auto">
-              Your surplus food will be immediately visible to nearby field volunteers for rapid pickup and community shelter handover.
-            </p>
-          </div>
+      <div className="py-8 px-6 max-w-2xl mx-auto space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Create Food Donation
+          </h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            Log surplus inventory for rapid volunteer courier pickup and community distribution
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Number of Food Types */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-3">Food Details</h3>
+              <h2 className="text-sm font-semibold text-gray-900 mb-3 pb-1 border-b border-gray-100">
+                Food Batch Details
+              </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
                     Number of Different Food Items
                   </label>
                   <input
@@ -189,8 +188,7 @@ export default function DonatePage() {
                     name="numFoods"
                     value={numFoods}
                     onChange={handleNumFoodsChange}
-                    placeholder="Number of food types"
-                    className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
+                    className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
                     required
                   />
                 </div>
@@ -198,16 +196,16 @@ export default function DonatePage() {
                 {/* Dropdowns for each food */}
                 {Array.from({ length: numFoods }).map((_, index) => (
                   <div key={index}>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
                       Food Item #{index + 1}
                     </label>
                     <select
                       value={selectedFoods[index] || ""}
                       onChange={(e) => handleFoodSelection(index, e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none bg-white"
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500 bg-white"
                       required
                     >
-                      <option value="">Select Food Type</option>
+                      <option value="">Select Food Item</option>
                       {foodOptions.map((food, i) => (
                         <option key={i} value={food}>
                           {food}
@@ -217,124 +215,131 @@ export default function DonatePage() {
                   </div>
                 ))}
 
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">
-                    Number of Servings
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    name="quantity"
-                    value={foodData.quantity}
-                    onChange={(e) => setFoodData({ ...foodData, quantity: e.target.value })}
-                    placeholder="Number of Servings"
-                    className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
-                    required
-                  />
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      Servings / Quantity
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      name="quantity"
+                      value={foodData.quantity}
+                      onChange={(e) => setFoodData({ ...foodData, quantity: e.target.value })}
+                      placeholder="e.g. 25"
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">
-                    Prepared Time (HH:MM)
-                  </label>
-                  <input
-                    type="text"
-                    name="preparedTime"
-                    value={foodData.preparedTime}
-                    onChange={(e) => setFoodData({ ...foodData, preparedTime: e.target.value })}
-                    placeholder="e.g. 12:30 PM"
-                    className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
-                    required
-                  />
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      Prepared Time (HH:MM)
+                    </label>
+                    <input
+                      type="text"
+                      name="preparedTime"
+                      value={foodData.preparedTime}
+                      onChange={(e) => setFoodData({ ...foodData, preparedTime: e.target.value })}
+                      placeholder="e.g. 12:30 PM"
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Location Section */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-3">Location Details</h3>
-              <div className="space-y-4">
+              <div className="flex items-center justify-between mb-3 pb-1 border-b border-gray-100">
+                <h2 className="text-sm font-semibold text-gray-900">
+                  Facility Pickup Address
+                </h2>
                 <button
                   type="button"
                   onClick={getLocation}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-lg shadow-xs text-sm font-medium transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition cursor-pointer"
                 >
-                  📍 Use My Current Location
+                  <MapPin className="size-3 text-gray-500" />
+                  <span>Auto-Detect GPS</span>
                 </button>
-                <input
-                  type="text"
-                  name="pincode"
-                  value={locationData.pincode}
-                  onChange={handleLocationChange}
-                  placeholder="Pincode"
-                  className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
-                />
-                <input
-                  type="text"
-                  name="area"
-                  value={locationData.area}
-                  onChange={handleLocationChange}
-                  placeholder="Area / Street"
-                  className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
-                />
-                <input
-                  type="text"
-                  name="state"
-                  value={locationData.state}
-                  onChange={handleLocationChange}
-                  placeholder="State"
-                  className="w-full rounded-lg border border-gray-300 shadow-xs focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2.5 text-sm outline-none"
-                />
-                <input
-                  type="text"
-                  name="country"
-                  value={locationData.country}
-                  readOnly
-                  className="w-full rounded-lg border border-gray-300 bg-gray-100 p-2.5 text-sm text-gray-500 cursor-not-allowed"
-                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Postal Code</label>
+                    <input
+                      type="text"
+                      name="pincode"
+                      value={locationData.pincode}
+                      onChange={handleLocationChange}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Area / Street</label>
+                    <input
+                      type="text"
+                      name="area"
+                      value={locationData.area}
+                      onChange={handleLocationChange}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">State / Province</label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={locationData.state}
+                      onChange={handleLocationChange}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:border-gray-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Country</label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={locationData.country}
+                      readOnly
+                      className="w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500 cursor-not-allowed"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Map Section */}
-            <div className="flex items-center my-6">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-4 text-gray-500 font-medium text-xs">OR</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
-
+            {/* Map Reference */}
             <div>
-              <h3 className="text-base font-semibold text-gray-700 mb-3 text-center">
-                Select Location Using Map
-              </h3>
+              <p className="text-xs font-medium text-gray-700 mb-2">
+                Pickup Zone Reference
+              </p>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9856515405814!2d77.5945627!3d12.9715987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru!5e0!3m2!1sen!2sin!4v1694800000000!5m2!1sen!2sin"
                 width="100%"
-                height="240"
+                height="180"
                 allowFullScreen
                 loading="lazy"
-                className="rounded-lg shadow-sm border border-gray-200"
+                className="rounded-md border border-gray-200"
               ></iframe>
-              <p className="text-xs text-gray-500 mt-2 text-center">
-                📍 Drag/zoom the map to confirm your exact location.
-              </p>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white px-6 py-4 rounded-xl font-bold shadow-premium transition cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2 text-base"
+              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-md text-sm font-medium transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2"
             >
               {loading ? (
-                <span className="inline-flex items-center gap-2">
-                  <span className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Broadcasting to Courier Fleet...
-                </span>
+                <span>Dispatching to Couriers...</span>
               ) : (
-                <>
-                  <span>Broadcast Food Rescue Request</span>
-                  <span>🚀</span>
-                </>
+                <span>Schedule Food Rescue Dispatch</span>
               )}
             </button>
           </form>

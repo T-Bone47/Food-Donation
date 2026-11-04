@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { volunteerApi } from "@/lib/api-client";
+import { MapPin, Package, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 
-// Reference frontend shelf life in hours
+// Reference shelf life in hours
 const shelfLifeHours: { [key: string]: number; _default: number } = {
   chapathi: 8,
   roti: 8,
@@ -14,7 +15,6 @@ const shelfLifeHours: { [key: string]: number; _default: number } = {
   _default: 4,
 };
 
-// Helper function to format the time remaining
 const formatTime = (seconds: number) => {
   if (seconds <= 0) return "Expired";
   const h = Math.floor(seconds / 3600);
@@ -41,7 +41,7 @@ export default function DonationCard({
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({
     text: isInitiallyClaimed ? "Assigned" : "Fresh",
-    color: isInitiallyClaimed ? "bg-green-500" : "bg-gray-400",
+    badge: isInitiallyClaimed ? "bg-amber-50 text-amber-800 border-amber-200" : "bg-emerald-50 text-emerald-800 border-emerald-200",
   });
 
   // Countdown timer calculation
@@ -54,11 +54,11 @@ export default function DonationCard({
       setTimeRemaining(remainingSeconds);
 
       if (remainingSeconds <= 0) {
-        setStatus({ text: "Expired", color: "bg-red-500" });
+        setStatus({ text: "Expired", badge: "bg-red-50 text-red-800 border-red-200" });
       } else if (remainingSeconds < 3600) {
-        setStatus({ text: "Expiring Soon", color: "bg-yellow-500" });
+        setStatus({ text: "Expiring Soon", badge: "bg-amber-50 text-amber-800 border-amber-200" });
       } else {
-        setStatus({ text: "Fresh", color: "bg-green-500" });
+        setStatus({ text: "Fresh", badge: "bg-emerald-50 text-emerald-800 border-emerald-200" });
       }
     }, 1000);
 
@@ -68,7 +68,6 @@ export default function DonationCard({
   const handleAccept = async () => {
     setLoading(true);
     try {
-      // Connect to real backend
       await volunteerApi.claimTask(donation.id);
 
       const prep = donation.prepared_at || donation.prepared_time || new Date().toISOString();
@@ -82,7 +81,6 @@ export default function DonationCard({
       if (onClaimed) onClaimed(donation.id);
     } catch (err: any) {
       console.error("Claim error:", err);
-      // Fallback optimistic accept for presentation
       setIsAccepted(true);
       if (onClaimed) onClaimed(donation.id);
     } finally {
@@ -97,85 +95,74 @@ export default function DonationCard({
   const quantity = donation.quantity ? `${donation.quantity} ${donation.unit || "servings"}` : "Standard batch";
 
   return (
-    <div className="bg-white shadow-premium hover:shadow-premium-lg transition-all duration-300 rounded-2xl p-6 border border-emerald-950/8 flex flex-col justify-between group hover:-translate-y-1">
+    <div className="bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg p-5 flex flex-col justify-between">
       <div>
         {/* Top Header Row */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
-            <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            #{donation.id ? String(donation.id).slice(-6).toUpperCase() : "FS-TASK"}
-          </div>
-          <span className="text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-2 py-0.5 rounded-md border border-emerald-100">
-            📍 ~1.4 km
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-mono font-medium text-gray-500">
+            #{donation.id ? String(donation.id).slice(-6).toUpperCase() : "TASK-01"}
+          </span>
+          <span className="text-xs text-gray-500 font-medium">
+            ~1.4 km away
           </span>
         </div>
 
         {/* Title & Category */}
-        <h3 className="text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">
+        <h3 className="text-base font-semibold text-gray-900 tracking-tight">
           {foodTitle}
         </h3>
 
-        <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-          <span className="font-medium text-gray-700">{area}</span>
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
+          <MapPin className="size-3.5 text-gray-400 shrink-0" />
+          <span className="truncate">{area}</span>
           {state && <span>• {state}</span>}
-        </p>
+        </div>
 
-        {/* Batch Metadata Pills */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-50 text-gray-700 font-medium border border-gray-150">
-            📦 {quantity}
+        {/* Metadata */}
+        <div className="flex flex-wrap items-center gap-2 mt-3.5 pt-3 border-t border-gray-100 text-xs text-gray-600">
+          <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded">
+            <Package className="size-3 text-gray-400" />
+            <span className="tabular-nums">{quantity}</span>
           </span>
           {prepTime && (
-            <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-50 text-gray-700 font-medium border border-gray-150">
-              🕒 Cooked {new Date(prepTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded">
+              <Clock className="size-3 text-gray-400" />
+              <span>Prepared {new Date(prepTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </span>
           )}
         </div>
       </div>
 
       {/* Action / Countdown Area */}
-      <div className="mt-5 pt-4 border-t border-gray-100">
+      <div className="mt-4 pt-3 border-t border-gray-100">
         {!isAccepted ? (
           <button
             onClick={handleAccept}
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white rounded-xl font-semibold text-sm shadow-xs transition-all duration-200 cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2 group-hover:bg-emerald-700"
+            className="w-full py-2 px-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md text-xs font-medium transition-colors cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-1.5"
           >
             {loading ? (
-              <span className="inline-flex items-center gap-2">
-                <span className="size-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Assigning Courier...
-              </span>
+              <span>Assigning Task...</span>
             ) : (
               <>
-                <span>Claim Rescue Task</span>
-                <span className="text-xs opacity-80 group-hover:translate-x-0.5 transition-transform">→</span>
+                <span>Accept Dispatch Task</span>
+                <ArrowRight className="size-3.5" />
               </>
             )}
           </button>
         ) : (
-          <div className="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/50">
+          <div className="p-3 rounded-md border border-gray-200 bg-gray-50/70">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-bold text-emerald-900 uppercase tracking-wider text-[10px]">
-                Shelf-Life Remaining
+              <span className="font-medium text-gray-700">
+                Shelf-Life Window
               </span>
-              <span className={`px-2.5 py-0.5 text-[11px] text-white font-bold rounded-full ${status.color}`}>
+              <span className={`px-2 py-0.5 text-[11px] font-medium rounded border ${status.badge}`}>
                 {status.text}
               </span>
             </div>
-            <div className="mt-2 text-center text-2xl font-mono font-bold text-emerald-950 tabular-nums tracking-tight">
-              {timeRemaining !== null ? formatTime(timeRemaining) : "Calculating..."}
+            <div className="mt-1.5 text-lg font-mono font-bold text-gray-900 tabular-nums">
+              {timeRemaining !== null ? formatTime(timeRemaining) : "Active in transit"}
             </div>
-            {timeRemaining !== null && (
-              <div className="w-full bg-emerald-200/60 rounded-full h-1.5 mt-2.5 overflow-hidden">
-                <div
-                  className="bg-emerald-600 h-1.5 rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${Math.max(0, Math.min(100, (timeRemaining / (4 * 3600)) * 100))}%`,
-                  }}
-                />
-              </div>
-            )}
           </div>
         )}
       </div>

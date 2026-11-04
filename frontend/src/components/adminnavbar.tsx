@@ -50,43 +50,62 @@ export default function AdminNavbar() {
     : "home";
 
   return (
-    <nav className="bg-white/95 backdrop-blur-md shadow-xs border-b border-green-100 px-6 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-all">
+    <nav className="bg-white border-b border-gray-200 px-6 lg:px-8 py-2.5 flex justify-between items-center sticky top-0 z-40">
       <Logo href="/adminpage" roleBadge="Admin" size="md" />
 
-      <div className="w-[440px] max-w-full hidden md:block">
+      <div className="w-[420px] max-w-full hidden md:block">
         <Tabs value={currentTab} className="w-full">
-          <TabsList className="w-full justify-center">
-            <TabsTrigger value="home" onClick={() => handleTabClick("/adminpage")}>
+          <TabsList className="w-full justify-center bg-gray-100/80 p-0.5 rounded-md border border-gray-200">
+            <TabsTrigger
+              value="home"
+              onClick={() => handleTabClick("/adminpage")}
+              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+            >
               Console
             </TabsTrigger>
-            <TabsTrigger value="users" onClick={() => handleTabClick("/adminpage?tab=users")}>
-              Users
+            <TabsTrigger
+              value="users"
+              onClick={() => handleTabClick("/adminpage?tab=users")}
+              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+            >
+              Users & Audit
             </TabsTrigger>
-            <TabsTrigger value="notification" onClick={() => handleTabClick("/notification")}>
-              Notification
+            <TabsTrigger
+              value="notification"
+              onClick={() => handleTabClick("/notification")}
+              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+            >
+              Alerts
             </TabsTrigger>
-            <TabsTrigger value="profile" onClick={() => handleTabClick("/profile")}>
+            <TabsTrigger
+              value="profile"
+              onClick={() => handleTabClick("/profile")}
+              className="rounded px-3 py-1 text-xs font-medium data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-none transition-none cursor-pointer"
+            >
               Profile
             </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         <DropdownMenu>
-          <DropdownMenuTrigger className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer outline-none">
-            {mounted && user?.name ? user.name.split(" ")[0] : "Admin"}
+          <DropdownMenuTrigger className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 px-2.5 py-1.5 rounded-md text-xs font-medium border border-gray-200 transition-colors cursor-pointer outline-none">
+            <span className="size-5 rounded bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-[10px]">
+              {mounted && user?.name ? user.name[0].toUpperCase() : "A"}
+            </span>
+            <span>{mounted && user?.name ? user.name.split(" ")[0] : "Admin"}</span>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-white shadow-xl rounded-xl p-2 border border-gray-100">
-            <DropdownMenuLabel className="font-semibold text-green-800">
+          <DropdownMenuContent align="end" className="w-56 bg-white shadow-md rounded-md p-1.5 border border-gray-200">
+            <DropdownMenuLabel className="font-semibold text-gray-900 text-xs">
               {user?.name || "Administrator"}
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-xs text-gray-500 py-1">
-              Role: <span className="font-medium text-gray-800 ml-1">Admin</span>
+            <DropdownMenuSeparator className="bg-gray-100" />
+            <DropdownMenuItem className="text-xs text-gray-600 py-1 cursor-default">
+              Role: <span className="font-semibold text-gray-900 ml-1">Platform Admin</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-xs text-gray-500 py-1">
-              Email: <span className="font-medium text-gray-800 ml-1 truncate">{user?.email || "—"}</span>
+            <DropdownMenuItem className="text-xs text-gray-600 py-1 cursor-default">
+              Email: <span className="font-medium text-gray-900 ml-1 truncate">{user?.email || "—"}</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

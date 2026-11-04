@@ -61,129 +61,121 @@ export default function Profile() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
+    <main className="min-h-screen bg-[#F9FAFB] text-[#111827]">
       <Navbar />
 
-      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-3 shadow-2xs">
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-            Verified Platform Identity
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">My Profile</h1>
-          <p className="text-base text-gray-600 max-w-md mx-auto leading-relaxed">
-            Manage your FoodShare credentials, contact channels, and delivery hub locations.
+      <div className="max-w-xl mx-auto px-6 py-8 space-y-6">
+        <div className="pb-2 border-b border-gray-200">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Account Profile</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            Manage your FoodShare credentials, contact details, and organization settings
           </p>
         </div>
-      </section>
 
-      <section className="py-10 px-6 flex justify-center">
-        <Card className="w-full max-w-lg bg-white shadow-premium rounded-2xl border border-emerald-950/8">
-          <CardContent className="p-8">
-            <div className="space-y-4">
-              <div>
-                <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">
-                  Full Name
-                </Label>
-                {isEditing ? (
-                  <Input
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full"
-                  />
-                ) : (
-                  <p className="text-gray-800 p-2 bg-gray-50 rounded border border-gray-100 font-medium">
-                    {profile.name}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">
-                  Email Address
-                </Label>
-                <p className="text-gray-800 p-2 bg-gray-100 rounded border border-gray-150 text-sm">
-                  {profile.email}
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="space-y-4">
+            <div>
+              <Label className="block text-xs font-medium text-gray-700 mb-1">
+                Full Name
+              </Label>
+              {isEditing ? (
+                <Input
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full text-sm"
+                />
+              ) : (
+                <p className="text-gray-900 p-2 bg-gray-50 rounded border border-gray-200 text-sm font-medium">
+                  {profile.name}
                 </p>
-              </div>
-
-              <div>
-                <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">
-                  Role
-                </Label>
-                <p className="text-green-800 p-2 bg-green-50 rounded border border-green-200 text-sm font-semibold">
-                  {profile.role}
-                </p>
-              </div>
-
-              <div>
-                <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">
-                  Phone Number
-                </Label>
-                {isEditing ? (
-                  <Input
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full"
-                  />
-                ) : (
-                  <p className="text-gray-800 p-2 bg-gray-50 rounded border border-gray-100 font-medium">
-                    {profile.phone}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">
-                  Organization / Address
-                </Label>
-                {isEditing ? (
-                  <Input
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full"
-                  />
-                ) : (
-                  <p className="text-gray-800 p-2 bg-gray-50 rounded border border-gray-100 font-medium">
-                    {profile.address}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100">
-                {isEditing ? (
-                  <>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setFormData(profile);
-                        setIsEditing(false);
-                      }}
-                      className="cursor-pointer"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      className="bg-green-700 hover:bg-green-800 text-white cursor-pointer font-semibold"
-                      disabled={saving}
-                      onClick={handleSave}
-                    >
-                      {saving ? "Saving..." : "Save Changes"}
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    className="bg-green-700 hover:bg-green-800 text-white cursor-pointer font-semibold"
-                    onClick={handleEdit}
-                  >
-                    Edit Profile
-                  </Button>
-                )}
-              </div>
+              )}
             </div>
-          </CardContent>
-        </Card>
-      </section>
+
+            <div>
+              <Label className="block text-xs font-medium text-gray-700 mb-1">
+                Email Address
+              </Label>
+              <p className="text-gray-600 p-2 bg-gray-50 rounded border border-gray-200 text-sm">
+                {profile.email}
+              </p>
+            </div>
+
+            <div>
+              <Label className="block text-xs font-medium text-gray-700 mb-1">
+                Role Classification
+              </Label>
+              <p className="inline-block text-emerald-800 px-2.5 py-1 bg-emerald-50 rounded border border-emerald-200 text-xs font-semibold">
+                {profile.role}
+              </p>
+            </div>
+
+            <div>
+              <Label className="block text-xs font-medium text-gray-700 mb-1">
+                Phone Number
+              </Label>
+              {isEditing ? (
+                <Input
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full text-sm"
+                />
+              ) : (
+                <p className="text-gray-900 p-2 bg-gray-50 rounded border border-gray-200 text-sm font-medium">
+                  {profile.phone}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label className="block text-xs font-medium text-gray-700 mb-1">
+                Organization / Facility Address
+              </Label>
+              {isEditing ? (
+                <Input
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full text-sm"
+                />
+              ) : (
+                <p className="text-gray-900 p-2 bg-gray-50 rounded border border-gray-200 text-sm font-medium">
+                  {profile.address}
+                </p>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-2.5 mt-6 pt-4 border-t border-gray-100">
+              {isEditing ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setFormData(profile);
+                      setIsEditing(false);
+                    }}
+                    className="cursor-pointer text-xs"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer font-medium text-xs"
+                    disabled={saving}
+                    onClick={handleSave}
+                  >
+                    {saving ? "Saving..." : "Save Changes"}
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer font-medium text-xs"
+                  onClick={handleEdit}
+                >
+                  Edit Profile
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
