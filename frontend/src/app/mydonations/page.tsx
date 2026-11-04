@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { donationsApi } from "@/lib/api-client";
 
@@ -73,90 +74,149 @@ export default function MyDonations() {
   };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
-      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-14 px-6 text-center border-b border-green-100/60">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-4 shadow-2xs">
-          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          Donor Rescue Ledger
+      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-3 shadow-2xs">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            Live Custody Chain Registry
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">
+            My Food Rescue Ledger
+          </h1>
+          <p className="text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+            Monitor all your active listings, inspect courier handovers in real time, and verify community drop-off.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-green-900 tracking-tight mb-4">
-          My Food Donations 🍲
-        </h1>
-        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
-          Track all your active and historical donations, view real-time courier custody status, and verify community delivery.
-        </p>
       </section>
 
-      <section className="py-8 px-6 max-w-4xl mx-auto space-y-6">
+      <section className="py-10 px-6 max-w-4xl mx-auto space-y-5">
         {loading && (
-          <p className="text-center text-gray-500 py-8">Loading your donation history...</p>
+          <div className="space-y-4">
+            <div className="h-44 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+            <div className="h-44 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+          </div>
+        )}
+
+        {!loading && donations.length === 0 && (
+          <div className="text-center bg-white p-12 rounded-2xl border border-emerald-950/8 shadow-premium-xs max-w-md mx-auto">
+            <span className="text-4xl">📦</span>
+            <h3 className="text-lg font-bold text-gray-900 mt-3">No Active Donations Yet</h3>
+            <p className="text-xs text-gray-500 mt-1 mb-6">
+              When you post surplus meals, their real-time dispatch and delivery progress will appear here.
+            </p>
+            <Link href="/donate">
+              <button className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-xs cursor-pointer">
+                Create First Donation
+              </button>
+            </Link>
+          </div>
         )}
 
         {!loading &&
           donations.map((donation) => (
             <div
               key={donation.id}
-              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition border border-green-100"
+              className="bg-white shadow-premium hover:shadow-premium-lg transition-all duration-300 rounded-2xl p-6 border border-emerald-950/8"
             >
-              <div className="flex justify-between items-center mb-3">
-                <h2 className="text-xl font-semibold text-green-700">
-                  {donation.food}
-                </h2>
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-gray-100">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">
+                      #{String(donation.id).slice(-6).toUpperCase()}
+                    </span>
+                    <span className="text-xs text-gray-400">•</span>
+                    <span className="text-xs text-gray-500">{donation.location}</span>
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">{donation.food}</h2>
+                </div>
+
+                <div className="flex items-center gap-3">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
                       donation.status === "Pending"
-                        ? "bg-gray-200 text-gray-700"
+                        ? "bg-amber-50 text-amber-800 border border-amber-200"
                         : donation.status === "Accepted"
-                        ? "bg-blue-500 text-white"
+                        ? "bg-blue-50 text-blue-800 border border-blue-200"
                         : donation.status === "Picked"
-                        ? "bg-yellow-500 text-white"
-                        : "bg-green-700 text-white"
+                        ? "bg-purple-50 text-purple-800 border border-purple-200"
+                        : "bg-emerald-50 text-emerald-800 border border-emerald-200"
                     }`}
                   >
+                    <span
+                      className={`size-1.5 rounded-full ${
+                        donation.status === "Pending"
+                          ? "bg-amber-500 animate-pulse"
+                          : donation.status === "Accepted"
+                          ? "bg-blue-500 animate-pulse"
+                          : donation.status === "Picked"
+                          ? "bg-purple-500 animate-pulse"
+                          : "bg-emerald-500"
+                      }`}
+                    />
                     {donation.status}
                   </span>
+
                   {donation.status === "Pending" && (
                     <button
                       onClick={() => handleCancel(donation.id)}
-                      className="text-xs text-red-600 hover:text-red-800 underline ml-2 cursor-pointer"
+                      className="text-xs text-red-600 hover:text-red-800 font-semibold cursor-pointer px-2 py-1 hover:bg-red-50 rounded"
                     >
-                      Cancel
+                      Cancel Listing
                     </button>
                   )}
                 </div>
               </div>
 
-              <p className="text-gray-700 text-sm mt-1">🥘 Servings: {donation.servings}</p>
-              <p className="text-gray-700 text-sm mt-1">⏰ Preparation Time: {donation.prepTime}</p>
-              <p className="text-gray-700 text-sm mt-1">📍 Location: {donation.location}</p>
-              <p className="text-gray-700 text-sm mt-1">⏱️ Best Before: {donation.bestBefore}</p>
+              {/* Grid of Attributes */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs mb-4">
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-150">
+                  <span className="text-gray-400 block text-[10px] uppercase font-semibold">Volume</span>
+                  <span className="font-semibold text-gray-900">{donation.servings}</span>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-150">
+                  <span className="text-gray-400 block text-[10px] uppercase font-semibold">Preparation</span>
+                  <span className="font-semibold text-gray-900">{donation.prepTime || "Just now"}</span>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-150">
+                  <span className="text-gray-400 block text-[10px] uppercase font-semibold">Shelf Life</span>
+                  <span className="font-semibold text-amber-700">{donation.bestBefore}</span>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-150">
+                  <span className="text-gray-400 block text-[10px] uppercase font-semibold">Custody Status</span>
+                  <span className="font-semibold text-emerald-800">{donation.status}</span>
+                </div>
+              </div>
 
+              {/* Courier Banner */}
               {donation.volunteer && (
-                <div className="mt-4 bg-green-50 p-3 rounded-md border-l-4 border-green-700 text-sm">
-                  <p className="text-green-900 font-semibold mb-1">Courier Assigned:</p>
-                  <p className="text-gray-700">👤 Name: {donation.volunteer}</p>
+                <div className="bg-emerald-50/70 p-4 rounded-xl border border-emerald-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-3">
+                    <span className="size-8 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">
+                      {donation.volunteer[0]}
+                    </span>
+                    <div>
+                      <p className="font-bold text-emerald-950">
+                        Courier: {donation.volunteer}
+                        <span className="text-emerald-700 font-normal ml-2">✓ Verified Rescuer</span>
+                      </p>
+                      <p className="text-gray-500 text-[11px] mt-0.5">Assigned to transport cargo directly to shelter</p>
+                    </div>
+                  </div>
                   {donation.volunteerPhone && (
-                    <p className="text-gray-700">📞 Phone: {donation.volunteerPhone}</p>
+                    <a
+                      href={`tel:${donation.volunteerPhone}`}
+                      className="px-3 py-1.5 bg-white hover:bg-emerald-100 text-emerald-900 font-semibold rounded-lg border border-emerald-300 transition"
+                    >
+                      📞 {donation.volunteerPhone}
+                    </a>
                   )}
                 </div>
               )}
             </div>
           ))}
-
-        {!loading && donations.length === 0 && (
-          <div className="text-center py-12 bg-white rounded-xl shadow-sm p-8 border border-green-100">
-            <p className="text-gray-600 text-lg mb-4">You have not donated any food yet.</p>
-            <a
-              href="/donate"
-              className="inline-block bg-green-700 hover:bg-green-800 text-white px-6 py-2.5 rounded-lg font-medium transition"
-            >
-              Make Your First Donation
-            </a>
-          </div>
-        )}
       </section>
     </main>
   );

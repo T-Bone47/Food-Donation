@@ -56,48 +56,65 @@ export default function Notifications() {
   };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
-      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-12 px-6 text-center border-b border-green-100/60">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-3 shadow-2xs">
-          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          Realtime Rescue Feed
+      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-3 shadow-2xs">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            Realtime Rescue Dispatch Stream
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">
+            Activity & System Alerts
+          </h1>
+          <p className="text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+            Instant updates on courier claims, custody progress, and verified delivery confirmations.
+          </p>
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-green-900 tracking-tight mb-2">
-          Platform Activity & Alerts
-        </h1>
-        <p className="text-sm md:text-base text-gray-700 max-w-xl mx-auto">
-          Stay updated on custody handoffs, volunteer claims, and completed deliveries in real time.
-        </p>
       </section>
 
-      <section className="py-8 px-6 flex flex-col items-center gap-4 max-w-2xl mx-auto">
-        {loading && <p className="text-gray-500 py-4">Checking for new updates...</p>}
+      <section className="py-10 px-6 flex flex-col items-center gap-3.5 max-w-2xl mx-auto">
+        {loading && (
+          <div className="w-full space-y-3">
+            <div className="h-20 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+            <div className="h-20 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+          </div>
+        )}
 
         {!loading && notifications.length > 0 ? (
           notifications.map((n) => (
-            <Card
+            <div
               key={n.id}
-              className="w-full bg-white shadow-md hover:shadow-lg transition-all rounded-xl border border-green-100"
+              className="w-full bg-white shadow-premium-xs hover:shadow-premium transition-all duration-200 rounded-2xl border border-emerald-950/8 p-4 flex justify-between items-center"
             >
-              <CardContent className="p-4 flex justify-between items-center">
-                <div className="text-left pr-4">
-                  <p className="text-base font-semibold text-green-800">{n.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">⏰ {n.time}</p>
+              <div className="flex items-center gap-3.5 text-left pr-4">
+                <span className="size-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-200/60">
+                  🔔
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">{n.message}</p>
+                  <p className="text-xs text-gray-400 mt-0.5 font-mono">⏰ {n.time}</p>
                 </div>
-                <Button
-                  variant="ghost"
-                  className="text-green-600 hover:text-green-800 text-xs font-semibold cursor-pointer shrink-0"
-                  onClick={() => handleDismiss(n.id)}
-                >
-                  Dismiss
-                </Button>
-              </CardContent>
-            </Card>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDismiss(n.id)}
+                className="text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-lg text-xs"
+              >
+                Dismiss
+              </Button>
+            </div>
           ))
         ) : (
-          !loading && <p className="text-gray-600 mt-8">No new notifications</p>
+          !loading && (
+            <div className="text-center bg-white p-12 rounded-2xl border border-emerald-950/8 shadow-premium-xs max-w-md mx-auto">
+              <span className="text-3xl">✨</span>
+              <p className="text-sm font-semibold text-gray-900 mt-2">All Caught Up</p>
+              <p className="text-xs text-gray-400 mt-1">No pending activity alerts right now.</p>
+            </div>
+          )
         )}
       </section>
     </main>

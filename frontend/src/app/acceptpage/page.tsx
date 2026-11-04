@@ -97,114 +97,187 @@ export default function ServicePage() {
       };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto py-10 px-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 mb-2">
               <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              Live Custody Transfer
+              Live Custody Chain Transfer
             </div>
-            <h1 className="text-3xl font-extrabold text-green-900 tracking-tight">
-              Pickup & Delivery Tracking 🚴‍♂️
+            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              Mission Dispatch & Handover
             </h1>
+            <p className="text-xs text-gray-500 mt-0.5">Tracking custody transfer from donor to verified community hub</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-500 font-mono">MISSION ID:</span>
+            <span className="text-xs font-bold font-mono text-emerald-900 bg-emerald-100/70 px-2.5 py-1 rounded-md">
+              {donation.id}
+            </span>
           </div>
         </div>
 
         {loading ? (
-          <p className="text-center text-gray-500 py-8">Loading mission dispatch details...</p>
+          <div className="bg-white p-8 rounded-2xl border border-emerald-950/8 shadow-premium-xs space-y-4">
+            <div className="h-6 w-1/3 rounded-md animate-shimmer" />
+            <div className="h-4 w-1/2 rounded-md animate-shimmer" />
+            <div className="h-32 w-full rounded-xl animate-shimmer" />
+          </div>
         ) : (
           <>
-            {/* Donation Info Card */}
-            <div className="bg-white shadow-md p-6 rounded-xl mb-6 space-y-2 border border-green-100">
-              <h2 className="text-2xl font-bold text-green-700">{donation.food}</h2>
-              <p className="text-gray-700">📍 <strong>Location:</strong> {donation.location}</p>
-              <p className="text-gray-700">👤 <strong>Donor:</strong> {donation.donor}</p>
-              <p className="text-gray-700">📞 <strong>Phone:</strong> {donation.donorPhone}</p>
-              <p className="text-gray-700">📧 <strong>Email:</strong> {donation.donorEmail}</p>
-              <p className="text-gray-700">🍴 <strong>Type:</strong> {donation.type}</p>
-              <p className="text-gray-700">🥘 <strong>Servings:</strong> {donation.servings}</p>
-              <p className="text-gray-700">⏰ <strong>Best Before:</strong> {donation.bestBefore}</p>
-            </div>
+            {/* Interactive Progress Stepper */}
+            <div className="bg-white p-6 rounded-2xl mb-6 border border-emerald-950/8 shadow-premium-xs">
+              <div className="flex items-center justify-between relative mb-6">
+                <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-0.5 bg-gray-200 -z-0" />
+                
+                {/* Step 1 */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <div
+                    className={`size-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                      status === "Accepted" || status === "Picked" || status === "Delivered"
+                        ? "bg-emerald-600 text-white ring-4 ring-emerald-100"
+                        : "bg-gray-100 text-gray-400"
+                    }`}
+                  >
+                    ✓
+                  </div>
+                  <span className="text-xs font-bold text-gray-900 mt-2">Claimed</span>
+                  <span className="text-[10px] text-gray-400">Step 1</span>
+                </div>
 
-            {/* Status Section */}
-            <div className="bg-green-100 p-6 rounded-xl mb-6 border border-green-200">
-              <h3 className="text-lg font-semibold text-green-800 mb-4">
-                Order Status
-              </h3>
-              <div className="flex gap-3 mb-4">
-                <div
-                  className={`flex-1 p-3 rounded-lg text-center font-semibold text-sm transition ${
-                    status === "Accepted"
-                      ? "bg-green-600 text-white shadow-xs"
-                      : "bg-white border border-gray-200 text-gray-700"
-                  }`}
-                >
-                  Accepted
+                {/* Step 2 */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <div
+                    className={`size-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                      status === "Picked" || status === "Delivered"
+                        ? "bg-emerald-600 text-white ring-4 ring-emerald-100"
+                        : status === "Accepted"
+                        ? "bg-amber-500 text-white ring-4 ring-amber-100 animate-pulse"
+                        : "bg-gray-100 text-gray-400"
+                    }`}
+                  >
+                    2
+                  </div>
+                  <span className="text-xs font-bold text-gray-900 mt-2">Picked Up</span>
+                  <span className="text-[10px] text-gray-400">In Cargo Transit</span>
                 </div>
-                <div
-                  className={`flex-1 p-3 rounded-lg text-center font-semibold text-sm transition ${
-                    status === "Picked"
-                      ? "bg-green-600 text-white shadow-xs"
-                      : "bg-white border border-gray-200 text-gray-700"
-                  }`}
-                >
-                  Picked
-                </div>
-                <div
-                  className={`flex-1 p-3 rounded-lg text-center font-semibold text-sm transition ${
-                    status === "Delivered"
-                      ? "bg-green-600 text-white shadow-xs"
-                      : "bg-white border border-gray-200 text-gray-700"
-                  }`}
-                >
-                  Delivered
+
+                {/* Step 3 */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <div
+                    className={`size-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                      status === "Delivered"
+                        ? "bg-emerald-600 text-white ring-4 ring-emerald-100"
+                        : "bg-gray-100 text-gray-400"
+                    }`}
+                  >
+                    3
+                  </div>
+                  <span className="text-xs font-bold text-gray-900 mt-2">Delivered</span>
+                  <span className="text-[10px] text-gray-400">Shelter Verified</span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-3">
+              {/* Action Buttons with High-Tactile States */}
+              <div className="pt-4 border-t border-gray-100">
                 {status === "Accepted" && (
                   <button
                     onClick={handlePicked}
                     disabled={actionLoading}
-                    className="flex-1 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition font-semibold cursor-pointer shadow-md disabled:bg-gray-400"
+                    className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white rounded-xl text-sm font-semibold shadow-premium transition cursor-pointer flex items-center justify-center gap-2"
                   >
-                    {actionLoading ? "Updating..." : "Confirm Cargo Handover: Picked ✅"}
+                    {actionLoading ? "Signing Cryptographic Handover..." : "Confirm Physical Pickup From Donor ✅"}
                   </button>
                 )}
                 {status === "Picked" && (
                   <button
                     onClick={handleDelivered}
                     disabled={actionLoading}
-                    className="flex-1 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition font-semibold cursor-pointer shadow-md disabled:bg-gray-400"
+                    className="w-full py-3.5 bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white rounded-xl text-sm font-semibold shadow-premium transition cursor-pointer flex items-center justify-center gap-2"
                   >
-                    {actionLoading ? "Updating..." : "Confirm NGO Dock Handover: Delivered 🏁"}
+                    {actionLoading ? "Verifying Intake Bay..." : "Confirm Intake Delivery to Shelter 🏁"}
                   </button>
                 )}
                 {status === "Delivered" && (
-                  <div className="w-full text-center py-2 text-green-800 font-semibold text-sm">
-                    ✓ Mission completed! Delivery registered with the community hub.
+                  <div className="p-3 bg-emerald-50 text-emerald-800 rounded-xl text-center text-xs font-semibold border border-emerald-200">
+                    🎉 Delivery Complete! Food safely transferred into community custody.
                   </div>
                 )}
               </div>
             </div>
 
+            {/* Donation Details & Contact Card Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              {/* Batch Manifest */}
+              <div className="bg-white p-6 rounded-2xl border border-emerald-950/8 shadow-premium-xs space-y-3">
+                <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                  Rescue Cargo Manifest
+                </span>
+                <h3 className="text-xl font-bold text-gray-900">{donation.food}</h3>
+
+                <div className="space-y-2 text-xs pt-2">
+                  <div className="flex justify-between py-1 border-b border-gray-50">
+                    <span className="text-gray-500">Servings Volume:</span>
+                    <span className="font-semibold text-gray-900">{donation.servings}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-gray-50">
+                    <span className="text-gray-500">Food Category:</span>
+                    <span className="font-semibold text-gray-900">{donation.type}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-gray-50">
+                    <span className="text-gray-500">Best Consumed:</span>
+                    <span className="font-semibold text-amber-700">{donation.bestBefore}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Donor Contact & Coordinates */}
+              <div className="bg-white p-6 rounded-2xl border border-emerald-950/8 shadow-premium-xs space-y-3">
+                <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                  Pickup Location & Contact
+                </span>
+                <h3 className="text-lg font-bold text-gray-900">{donation.donor}</h3>
+                <p className="text-xs text-gray-600">📍 {donation.location}</p>
+
+                <div className="pt-2 flex flex-col gap-2">
+                  <a
+                    href={`tel:${donation.donorPhone}`}
+                    className="w-full py-2 bg-emerald-50 hover:bg-emerald-100/80 text-emerald-800 rounded-lg text-xs font-semibold text-center border border-emerald-200/80 transition"
+                  >
+                    📞 Call Donor: {donation.donorPhone}
+                  </a>
+                  <a
+                    href={`mailto:${donation.donorEmail}`}
+                    className="w-full py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg text-xs font-semibold text-center border border-gray-200 transition"
+                  >
+                    📧 {donation.donorEmail}
+                  </a>
+                </div>
+              </div>
+            </div>
+
             {/* Map Section */}
-            <div className="bg-white p-6 rounded-xl shadow-md border border-green-100 text-center">
-              <h3 className="text-lg font-semibold text-green-800 mb-3 text-left">
-                Live Location Map 🗺️
-              </h3>
+            <div className="bg-white p-6 rounded-2xl shadow-premium-xs border border-emerald-950/8 text-center">
+              <div className="flex items-center justify-between mb-3 text-left">
+                <h3 className="text-sm font-bold text-gray-900">
+                  Live Dispatch Route & Navigation 🗺️
+                </h3>
+                <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">
+                  Open in Google Maps ↗
+                </span>
+              </div>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9856515405814!2d77.5945627!3d12.9715987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru!5e0!3m2!1sen!2sin!4v1694800000000!5m2!1sen!2sin"
                 width="100%"
                 height="280"
                 allowFullScreen
                 loading="lazy"
-                className="w-full rounded-lg shadow-xs border border-gray-200"
+                className="w-full rounded-xl shadow-xs border border-gray-200"
               ></iframe>
             </div>
           </>

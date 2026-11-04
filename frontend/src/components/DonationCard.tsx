@@ -97,41 +97,88 @@ export default function DonationCard({
   const quantity = donation.quantity ? `${donation.quantity} ${donation.unit || "servings"}` : "Standard batch";
 
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg hover:shadow-lg transition-all border border-green-100">
-      <h3 className="text-xl font-bold text-green-700">{foodTitle}</h3>
-      <p className="text-gray-600 mt-1">
-        📍 {area}{state ? `, ${state}` : ""}
-      </p>
-      {prepTime && (
-        <p className="text-gray-600 mt-1">
-          ⏰ Prepared at: {new Date(prepTime).toLocaleString()}
-        </p>
-      )}
-      <p className="text-gray-600 mt-1">
-        📦 Quantity: {quantity}
-      </p>
-
-      {!isAccepted ? (
-        <button
-          onClick={handleAccept}
-          disabled={loading}
-          className="mt-4 w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition font-medium cursor-pointer disabled:bg-gray-400"
-        >
-          {loading ? "Accepting..." : "Accept Donation"}
-        </button>
-      ) : (
-        <div className="mt-4 p-4 rounded-lg border border-green-200 bg-green-50/50">
-          <div className="flex justify-between items-center">
-            <span className="font-bold text-gray-700">Status:</span>
-            <span className={`px-3 py-1 text-sm text-white font-bold rounded-full ${status.color}`}>
-              {status.text}
-            </span>
+    <div className="bg-white shadow-premium hover:shadow-premium-lg transition-all duration-300 rounded-2xl p-6 border border-emerald-950/8 flex flex-col justify-between group hover:-translate-y-1">
+      <div>
+        {/* Top Header Row */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+            <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            #{donation.id ? String(donation.id).slice(-6).toUpperCase() : "FS-TASK"}
           </div>
-          <div className="mt-2 text-center text-2xl font-mono text-gray-800">
-            {timeRemaining !== null ? formatTime(timeRemaining) : "Calculating..."}
-          </div>
+          <span className="text-xs font-semibold text-emerald-700 bg-emerald-50/80 px-2 py-0.5 rounded-md border border-emerald-100">
+            📍 ~1.4 km
+          </span>
         </div>
-      )}
+
+        {/* Title & Category */}
+        <h3 className="text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">
+          {foodTitle}
+        </h3>
+
+        <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+          <span className="font-medium text-gray-700">{area}</span>
+          {state && <span>• {state}</span>}
+        </p>
+
+        {/* Batch Metadata Pills */}
+        <div className="flex flex-wrap gap-2 mt-4">
+          <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-50 text-gray-700 font-medium border border-gray-150">
+            📦 {quantity}
+          </span>
+          {prepTime && (
+            <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-gray-50 text-gray-700 font-medium border border-gray-150">
+              🕒 Cooked {new Date(prepTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Action / Countdown Area */}
+      <div className="mt-5 pt-4 border-t border-gray-100">
+        {!isAccepted ? (
+          <button
+            onClick={handleAccept}
+            disabled={loading}
+            className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white rounded-xl font-semibold text-sm shadow-xs transition-all duration-200 cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2 group-hover:bg-emerald-700"
+          >
+            {loading ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="size-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Assigning Courier...
+              </span>
+            ) : (
+              <>
+                <span>Claim Rescue Task</span>
+                <span className="text-xs opacity-80 group-hover:translate-x-0.5 transition-transform">→</span>
+              </>
+            )}
+          </button>
+        ) : (
+          <div className="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/50">
+            <div className="flex justify-between items-center text-xs">
+              <span className="font-bold text-emerald-900 uppercase tracking-wider text-[10px]">
+                Shelf-Life Remaining
+              </span>
+              <span className={`px-2.5 py-0.5 text-[11px] text-white font-bold rounded-full ${status.color}`}>
+                {status.text}
+              </span>
+            </div>
+            <div className="mt-2 text-center text-2xl font-mono font-bold text-emerald-950 tabular-nums tracking-tight">
+              {timeRemaining !== null ? formatTime(timeRemaining) : "Calculating..."}
+            </div>
+            {timeRemaining !== null && (
+              <div className="w-full bg-emerald-200/60 rounded-full h-1.5 mt-2.5 overflow-hidden">
+                <div
+                  className="bg-emerald-600 h-1.5 rounded-full transition-all duration-1000"
+                  style={{
+                    width: `${Math.max(0, Math.min(100, (timeRemaining / (4 * 3600)) * 100))}%`,
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

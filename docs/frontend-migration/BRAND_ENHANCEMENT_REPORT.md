@@ -53,3 +53,4 @@ The brand mark represents the core mission of dignity, nourishment, and zero-was
    - Floating chat trigger button upgraded with glowing aura and dual-tone gradient.
 7. **Operational Page Heros:**
    - Upgraded hero sections across `/donordash`, `/volunteerdash`, `/ngodash`, `/adminpage`, `/mydonations`, `/donate`, `/notification`, and `/profile` with subtle gradient fades, brand subtitle chips, and typography contrast.
+

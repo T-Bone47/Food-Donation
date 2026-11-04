@@ -155,20 +155,22 @@ export default function DonatePage() {
   };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
       <div className="py-12 px-6">
-        <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-8 border border-green-100">
-          <div className="text-center mb-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 border border-green-200 text-green-800 text-xs font-semibold rounded-full mb-2">
+        <div className="max-w-2xl mx-auto bg-white shadow-premium rounded-2xl p-8 border border-emerald-950/8">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold rounded-full mb-3 shadow-2xs">
               <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              FoodShare Rescue Creation
+              FoodShare Verified Donor Dispatch
             </span>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-green-900 tracking-tight">
-              Create Food Rescue Donation
+            <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+              Create Surplus Food Donation
             </h1>
-            <p className="text-xs text-gray-500 mt-1">List fresh surplus batches for rapid volunteer collection</p>
+            <p className="text-xs text-gray-500 mt-1 max-w-md mx-auto">
+              Your surplus food will be immediately visible to nearby field volunteers for rapid pickup and community shelter handover.
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
@@ -321,9 +323,19 @@ export default function DonatePage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-700 hover:bg-green-800 text-white px-6 py-3.5 rounded-lg font-semibold shadow-md transition cursor-pointer disabled:bg-gray-400"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white px-6 py-4 rounded-xl font-bold shadow-premium transition cursor-pointer disabled:bg-gray-300 flex items-center justify-center gap-2 text-base"
             >
-              {loading ? "Submitting Donation..." : "Submit Donation"}
+              {loading ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Broadcasting to Courier Fleet...
+                </span>
+              ) : (
+                <>
+                  <span>Broadcast Food Rescue Request</span>
+                  <span>🚀</span>
+                </>
+              )}
             </button>
           </form>
         </div>

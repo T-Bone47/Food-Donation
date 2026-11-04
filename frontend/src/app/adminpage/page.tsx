@@ -124,36 +124,61 @@ export default function AdminDashboard() {
   const filtered = filteredList();
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
       {/* Header Section */}
-      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-12 text-center px-6 border-b border-green-100/60">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-3 shadow-2xs">
-          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          FoodShare Administrative Console
+      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-3 shadow-2xs">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            Platform Governance • Realtime PostgreSQL Synced
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">
+            Platform Command Center
+          </h1>
+          <p className="text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+            Monitor donors, couriers, and NGO distributions across the entire ecosystem with full audit and override controls.
+          </p>
         </div>
-        <h1 className="text-4xl font-extrabold text-green-900 tracking-tight mb-2">Platform Command Center</h1>
-        <p className="text-gray-700 max-w-xl mx-auto text-sm sm:text-base">
-          Monitor donors, volunteers, and food pickups across the entire platform in real-time with full audit oversight.
-        </p>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-8 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Active Available Meals</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">{activeCount}</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Awaiting Courier Claim</span>
+          </div>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">In-Transit / Delivered</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">{pickedCount}</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Under Verified Custody</span>
+          </div>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Total Platform Batches</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">{donations.length}</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Registered in Database</span>
+          </div>
+        </div>
       </section>
 
       {/* Filters & Search */}
-      <section className="p-6 bg-white shadow-md rounded-xl max-w-5xl mx-auto mt-6 border border-green-100">
-        <div className="flex flex-col md:flex-row justify-between gap-4 items-center">
+      <section className="px-6 max-w-6xl mx-auto mb-8">
+        <div className="p-4 bg-white shadow-premium-xs rounded-2xl border border-emerald-950/8 flex flex-col md:flex-row justify-between gap-3 items-center">
           <input
             type="text"
-            placeholder="Search donations by ID, food, or donor..."
+            placeholder="Search donations by ID, food title, or donor..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full md:w-1/2 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full md:w-1/2 px-4 py-2.5 border border-gray-250 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 outline-none bg-[#FAFBF9]"
           />
           <div className="flex items-center gap-3 w-full md:w-auto">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value as "all" | "active" | "picked")}
-              className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 outline-none bg-white cursor-pointer"
+              className="px-3.5 py-2.5 border border-gray-250 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 outline-none bg-[#FAFBF9] cursor-pointer"
             >
               <option value="all">All Batches</option>
               <option value="active">Active Available</option>
@@ -161,28 +186,10 @@ export default function AdminDashboard() {
             </select>
             <button
               onClick={() => alert(`Platform Analytics:\nTotal Donated Batches: ${donations.length}\nActive Live Batches: ${activeCount}\nRescued: ${totalRescuedKg} kg`)}
-              className="px-5 py-2.5 bg-green-700 text-white rounded-lg hover:bg-green-800 transition text-sm font-semibold cursor-pointer shadow-xs whitespace-nowrap"
+              className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl transition text-xs font-semibold cursor-pointer shadow-xs whitespace-nowrap"
             >
-              Analytics
+              📊 System Analytics
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-8 px-6 text-center bg-green-50">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">{activeCount}</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Active Available Meals</p>
-          </div>
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">{pickedCount}</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Picked Up / Delivered</p>
-          </div>
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">{donations.length}</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Total Platform Batches</p>
           </div>
         </div>
       </section>

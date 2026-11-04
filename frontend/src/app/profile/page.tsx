@@ -61,23 +61,25 @@ export default function Profile() {
   };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <Navbar />
 
-      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-12 px-6 text-center border-b border-green-100/60">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-3 shadow-2xs">
-          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          Verified Account
+      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-3 shadow-2xs">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            Verified Platform Identity
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">My Profile</h1>
+          <p className="text-base text-gray-600 max-w-md mx-auto leading-relaxed">
+            Manage your FoodShare credentials, contact channels, and delivery hub locations.
+          </p>
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-green-900 tracking-tight mb-2">My Profile</h1>
-        <p className="text-sm md:text-base text-gray-700 max-w-md mx-auto">
-          Manage your FoodShare credentials, contact channels, and delivery hub locations.
-        </p>
       </section>
 
       <section className="py-10 px-6 flex justify-center">
-        <Card className="w-full max-w-lg bg-white shadow-md rounded-xl hover:shadow-lg transition-all border border-green-100">
-          <CardContent className="p-6">
+        <Card className="w-full max-w-lg bg-white shadow-premium rounded-2xl border border-emerald-950/8">
+          <CardContent className="p-8">
             <div className="space-y-4">
               <div>
                 <Label className="block text-sm font-medium text-gray-700 capitalize mb-1">

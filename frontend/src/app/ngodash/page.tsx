@@ -75,109 +75,138 @@ function NgoDashboard() {
   };
 
   return (
-    <main className="min-h-screen bg-green-50">
+    <main className="min-h-screen bg-[#F9FAF8] text-[#1F2923]">
       <NgoNavbar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-green-100 via-green-50 to-green-50 py-14 px-6 text-center border-b border-green-100/60">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/80 rounded-full text-xs font-semibold text-green-800 border border-green-200 mb-4 shadow-2xs">
-          <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          FoodShare Distribution Partner Hub
-        </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-green-900 tracking-tight mb-4">
-          NGO Receiving Hub & Quality Inspection 🏢
-        </h1>
-        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
-          Verify incoming food rescue deliveries, inspect safety criteria, and distribute nutrition to communities in need.
-        </p>
+      <section className="relative overflow-hidden pt-12 pb-12 px-6 lg:px-12 border-b border-emerald-950/6 bg-gradient-to-b from-emerald-50/50 via-[#F9FAF8] to-[#F9FAF8]">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-emerald-50 rounded-full text-xs font-semibold text-emerald-800 border border-emerald-200/60 mb-4 shadow-2xs">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            Distribution Logistics Bay • Verified Community Partner
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-3">
+            Receiving Dock & Quality Verification
+          </h1>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Inspect inbound cargo, certify temperature control and packaging safety, and log verified nutrition into community shelter distributions.
+          </p>
 
-        {/* Navigation Switcher Pills */}
-        <div className="flex justify-center gap-3 mt-8">
-          <button
-            onClick={() => {
-              setActiveTab("hub");
-              router.push("/ngodash");
-            }}
-            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer shadow-xs ${
-              activeTab === "hub"
-                ? "bg-green-700 text-white shadow-md"
-                : "bg-white text-green-800 hover:bg-green-50 border border-green-200"
-            }`}
-          >
-            Receiving Hub Overview
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("incoming");
-              router.push("/ngodash?tab=incoming");
-            }}
-            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer shadow-xs ${
-              activeTab === "incoming"
-                ? "bg-green-700 text-white shadow-md"
-                : "bg-white text-green-800 hover:bg-green-50 border border-green-200"
-            }`}
-          >
-            Incoming Bay ({incoming.length})
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("history");
-              router.push("/ngodash?tab=history");
-            }}
-            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer shadow-xs ${
-              activeTab === "history"
-                ? "bg-green-700 text-white shadow-md"
-                : "bg-white text-green-800 hover:bg-green-50 border border-green-200"
-            }`}
-          >
-            Intake Ledger ({history.length})
-          </button>
+          {/* Cold-Storage & Warehouse Bay Capacity Bar */}
+          <div className="mt-8 max-w-xl mx-auto bg-white p-4 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <div className="flex justify-between items-center text-xs mb-2">
+              <span className="font-semibold text-gray-800 flex items-center gap-1.5">
+                <span>❄️ Cold-Chain & Staging Bay Capacity</span>
+              </span>
+              <span className="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                74% Occupied
+              </span>
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+              <div className="bg-emerald-600 h-2 rounded-full" style={{ width: "74%" }} />
+            </div>
+            <p className="text-[11px] text-gray-400 mt-2">
+              3 Chilled Bays Available • Ambient Shelves Ready for Inbound Cargo
+            </p>
+          </div>
+
+          {/* Navigation Switcher Pills */}
+          <div className="flex justify-center gap-2 mt-8">
+            <button
+              onClick={() => {
+                setActiveTab("hub");
+                router.push("/ngodash");
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer shadow-2xs ${
+                activeTab === "hub"
+                  ? "bg-emerald-700 text-white shadow-xs"
+                  : "bg-white text-gray-700 hover:bg-emerald-50/60 border border-emerald-950/8"
+              }`}
+            >
+              Receiving Hub Overview
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab("incoming");
+                router.push("/ngodash?tab=incoming");
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer shadow-2xs flex items-center gap-1.5 ${
+                activeTab === "incoming"
+                  ? "bg-emerald-700 text-white shadow-xs"
+                  : "bg-white text-gray-700 hover:bg-emerald-50/60 border border-emerald-950/8"
+              }`}
+            >
+              <span>Incoming Bay</span>
+              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono text-[11px]">({incoming.length})</span>
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab("history");
+                router.push("/ngodash?tab=history");
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer shadow-2xs ${
+                activeTab === "history"
+                  ? "bg-emerald-700 text-white shadow-xs"
+                  : "bg-white text-gray-700 hover:bg-emerald-50/60 border border-emerald-950/8"
+              }`}
+            >
+              Intake Ledger ({history.length})
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-10 px-6 text-center bg-green-50">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-5xl mx-auto">
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">{incoming.length}</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Inbound Deliveries</p>
+      <section className="py-10 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Inbound Shipments</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">{incoming.length}</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Active Courier Transits</span>
           </div>
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">1,840</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Meals Distributed</p>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Meals Distributed</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">1,840</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Total Verified Portions</span>
           </div>
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">{history.length + 18}</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Verified Intakes</p>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Intake Audits Passed</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">{history.length + 18}</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">100% Quality Rate</span>
           </div>
-          <div className="bg-white shadow-md p-6 rounded-xl w-60 text-center hover:shadow-lg transition border border-green-100">
-            <p className="text-3xl font-bold text-green-700">14</p>
-            <p className="text-sm text-gray-600 mt-1 font-medium">Partner Shelters</p>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-950/8 shadow-premium-xs text-left">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Partner Shelters</span>
+            <p className="text-3xl font-extrabold font-mono text-emerald-800 mt-1 tabular-nums">14</p>
+            <span className="text-[11px] text-emerald-600 mt-1 inline-block">Affiliated Distribution Hubs</span>
           </div>
         </div>
       </section>
 
       {/* Main Tab Content */}
-      <section className="max-w-5xl mx-auto px-6 pb-16">
+      <section className="max-w-6xl mx-auto px-6 pb-16">
         {loading && (
-          <p className="text-center text-gray-500 py-12">Loading NGO dock and inventory data...</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="h-40 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+            <div className="h-40 rounded-2xl bg-white border border-emerald-950/8 shadow-premium-xs animate-shimmer" />
+          </div>
         )}
 
         {/* Tab 1: Receiving Hub Overview */}
         {!loading && activeTab === "hub" && (
           <div className="space-y-8">
-            <div className="bg-white rounded-xl shadow-md p-8 border border-green-100">
-              <h2 className="text-2xl font-bold text-green-800 mb-3">
-                Community Distribution & Safety Protocol
+            <div className="bg-white rounded-2xl shadow-premium-xs p-8 border border-emerald-950/8">
+              <h2 className="text-xl font-bold text-gray-900 mb-2">
+                Standardized 3-Point Food Safety Protocol
               </h2>
-              <p className="text-gray-700 text-sm leading-relaxed mb-6">
+              <p className="text-gray-600 text-xs leading-relaxed mb-6">
                 All food rescues delivered to your facility must undergo the standardized 3-point digital safety inspection (temperature check, container seal verification, sensory quality check) before community handover.
               </p>
 
               <div className="grid md:grid-cols-3 gap-4 text-center">
-                <div className="bg-green-50 p-5 rounded-xl border border-green-200">
+                <div className="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-100">
                   <span className="text-2xl">🌡️</span>
-                  <h4 className="font-semibold text-green-900 mt-2">Thermal Integrity</h4>
+                  <h4 className="font-bold text-emerald-950 text-sm mt-2">Thermal Integrity</h4>
                   <p className="text-xs text-gray-600 mt-1">Cooked food &gt;60°C or chilled &lt;4°C</p>
                 </div>
                 <div className="bg-green-50 p-5 rounded-xl border border-green-200">
